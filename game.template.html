@@ -734,6 +734,7 @@ function enterDay(){
   const sc = curScene();
   S.pending = null; S.feedback = null;
   if (sc.kind === 'gate' && S.day === 15 && !S.event){ openGateTax(); }
+  if (sc.id === 'hongqiao' && S.day === 12 && !S.event){ openBridgeEvent(); }
   if (sc.kind === 'exam'){
     S.phase = 'exam';
     if (S.day === 25 && S.flags.juan && !S.flags.juanReply){
@@ -863,6 +864,19 @@ function openLodge(){
         msg: '僧舍清静，只是进城要走半个时辰。' },
       { label: '投同乡举子（需人缘 ≥5，免费）', req: { yuan: 5 }, gain: { yuan: 1 },
         msg: '同乡挤出一张榻给你，还借了你半刀纸。' }
+    ] };
+}
+
+function openBridgeEvent(){
+  S.event = { title: '桥 头', done: false, safeKey: '',
+    text: '桥头围着一圈人，说书人正说到“仁宗皇帝夜半批章”，惊堂木一拍，满圈叫好。旁边一个牙人凑过来：“举子要住店么？桥东有间上房，一日只要二百文。”',
+    choice: [
+      { label: '听一段书（盘缠 -1，智力 +1）', cost: { money: 1 }, gain: { zhi: 1 },
+        msg: '他说得热闹，你却听出几处与史不合，反倒把《长编》里的记载记牢了。' },
+      { label: '跟牙人去看房（盘缠 -3，精力 +2）', cost: { money: 3 }, gain: { jing: 2 },
+        msg: '房钱比别处贵些，好在临河，夜里睡得沉。' },
+      { label: '只在桥头站着（免费，人缘 +1，精力 -1）', cost: { jing: 1 }, gain: { yuan: 1 },
+        msg: '你挤在人堆里看了一回热闹，直到闸门开了才回船。' }
     ] };
 }
 
@@ -1442,7 +1456,7 @@ if (typeof module !== 'undefined' && module.exports){
     nextExamQuestion, nextPalaceQuestion,
     meetNpc, openPoem, submitPoem, gradePoem, NPCS, POEM_THEMES, EVENTS, BANDITS,
     handleClick, chooseEvent, maybeBandit, showBandit, splitByTerms, GLOSSARY, annotateTerms,
-    openLodge, openGateTax, examStrikeLetter,
+    openLodge, openGateTax, openBridgeEvent, examStrikeLetter,
     render, renderOverlay
   };
 }

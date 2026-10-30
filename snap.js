@@ -165,6 +165,19 @@ var s897 = G.getS(); s897.day = 12; s897.scene = G.sceneForDay(12); s897.ap = 4;
 G.render();
 snapshot('18-hongqiao');
 
+// 8.98 桥头遭遇
+reset();
+var s898 = G.getS(); s898.day = 12; s898.scene = G.sceneForDay(12); s898.ap = 4; s898.money = 35; s898.phase = 'play';
+s898.event = { title: '桥 头', done: false, safeKey: '',
+  text: '桥头围着一圈人，说书人正说到“仁宗皇帝夜半批章”，惊堂木一拍，满圈叫好。旁边一个牙人凑过来：“举子要住店么？桥东有间上房，一日只要二百文。”',
+  choice: [
+    { label: '听一段书（盘缠 -1，智力 +1）', cost: { money: 1 }, gain: { zhi: 1 }, msg: '…' },
+    { label: '跟牙人去看房（盘缠 -3，精力 +2）', cost: { money: 3 }, gain: { jing: 2 }, msg: '…' },
+    { label: '只在桥头站着（免费，人缘 +1，精力 -1）', cost: { jing: 1 }, gain: { yuan: 1 }, msg: '…' }
+  ] };
+G.render();
+snapshot('19-bridge');
+
 // 9 省试前夜的短笺
 reset();
 var s9 = G.getS();
