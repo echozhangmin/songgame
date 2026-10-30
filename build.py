@@ -15,6 +15,7 @@ BANK = os.path.join(HERE, "data", "quiz_150.json")
 if not os.path.exists(BANK):
     BANK = os.path.join(HERE, "..", "history-quiz", "quiz_150.json")
 OUT = os.path.join(HERE, "北宋赶考记.html")
+INDEX = os.path.join(HERE, "index.html")   # GitHub Pages 入口
 
 
 QUOTE_RE = re.compile(r"'([^']*)'")
@@ -54,8 +55,10 @@ def main():
         raise SystemExit("模板缺少 __QUESTIONS__ 占位符")
     html = html.replace("__QUESTIONS__", payload, 1)
     open(OUT, "w", encoding="utf-8").write(html)
+    open(INDEX, "w", encoding="utf-8").write(html)
     print(f"题库注入：{len(qs)} 题")
     print(f"输出：{OUT}  ({os.path.getsize(OUT)/1024:.1f} KB)")
+    print(f"输出：{INDEX}（Pages 入口）")
 
 
 if __name__ == "__main__":

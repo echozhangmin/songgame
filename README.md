@@ -211,3 +211,12 @@ python3 build.py     # 读 game.template.html + ../history-quiz/quiz_150.json �
 它做三件事：`build.py` 重新生成 → `git add -A` 并提交 → `git push`。
 
 仓库里还装了 `.git/hooks/post-commit`：**任何一次提交都会自动推送**，所以就算你直接 `git commit`，也会同步到 GitHub。推送失败不会阻塞提交，日志在 `/tmp/git-autopush.log`。
+
+### 在线游玩（GitHub Pages）
+
+`build.py` 会同时生成 `index.html`（与 `北宋赶考记.html` 内容相同），专门给 Pages 当入口。
+
+开启方式：仓库 **Settings → Pages → Source: Deploy from a branch → Branch: `main` / `(root)` → Save**。
+一两分钟后可访问 **https://echozhangmin.github.io/songgame/** ，手机浏览器也能玩（进度存在该浏览器的 localStorage 里，与本地文件不互通）。
+
+> 注意：Pages 是公开站点，任何拿到链接的人都能玩；页面里不含任何私密数据。

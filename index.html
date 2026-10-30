@@ -1,0 +1,1407 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>北宋赶考记 · 嘉祐二年</title>
+<style>
+:root{
+  --paper:#efe4cc; --paper2:#e7d9ba; --paper3:#dccdab;
+  --ink:#2b2621; --ink2:#5a4f43; --ink3:#8a7a66;
+  --red:#a63a2c; --gold:#a8802f; --blue:#3d5a66; --green:#5c6b4a;
+  --line:rgba(43,38,33,.26);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; padding:0; color:var(--ink);
+  font-family:"Songti SC","STSong","SimSun","Noto Serif CJK SC",serif;
+  background:#efe4cc;
+  background-image:
+    radial-gradient(120% 80% at 15% 0%, rgba(255,250,235,.92), transparent 60%),
+    radial-gradient(90% 60% at 100% 100%, rgba(190,165,120,.35), transparent 65%),
+    repeating-linear-gradient(0deg, rgba(120,95,60,.05) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(90deg, rgba(120,95,60,.04) 0 1px, transparent 1px 5px);
+  min-height:100vh;
+}
+body::after{
+  content:""; position:fixed; inset:0; pointer-events:none; opacity:.32; z-index:1;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/><feColorMatrix type='saturate' values='0'/></filter><rect width='160' height='160' filter='url(%23n)' opacity='.18'/></svg>");
+  mix-blend-mode:multiply;
+}
+#app{max-width:1180px; margin:0 auto; padding:26px 22px 40px; position:relative; z-index:2}
+
+/* ---------- 页眉 ---------- */
+.head{display:flex; align-items:flex-end; gap:18px; padding-bottom:14px; border-bottom:1px solid var(--line)}
+.head h1{margin:0; font-size:34px; letter-spacing:.22em; font-weight:600}
+.head h1 small{display:block; font-size:12px; letter-spacing:.42em; color:var(--ink3); margin-top:8px; font-weight:400}
+.seal{width:44px;height:44px;background:var(--red);color:#f6ecdb;display:flex;align-items:center;justify-content:center;
+  font-size:14px;line-height:1.05;letter-spacing:0;border-radius:3px;transform:rotate(-2.5deg);
+  box-shadow:0 1px 0 rgba(0,0,0,.12); text-align:center; padding:2px; margin-left:auto}
+.head .meta{margin-left:auto; text-align:right; font-size:12.5px; color:var(--ink2); line-height:1.9}
+.head .meta button{background:none;border:none;color:var(--ink3);font-size:12px;text-decoration:underline;text-underline-offset:3px;padding:0;cursor:pointer}
+
+/* ---------- 主体 ---------- */
+.main{display:grid; grid-template-columns:1.55fr .95fr; gap:22px; margin-top:20px; align-items:start}
+.card{background:linear-gradient(180deg, rgba(255,252,242,.72), rgba(240,229,204,.5));
+  border:1px solid var(--line); box-shadow:0 1px 0 rgba(255,255,255,.5) inset, 0 6px 24px rgba(80,60,30,.06);
+  padding:24px 26px; position:relative; overflow:hidden}
+.stage{min-height:430px}
+.glyph{position:absolute; right:-2%; top:-12%; font-size:min(30vw,360px); line-height:.8; font-weight:700;
+  color:var(--ink); opacity:.045; user-select:none; pointer-events:none; letter-spacing:0}
+.scene-name{margin:0 0 4px; font-size:26px; letter-spacing:.12em; font-weight:600; position:relative}
+.scene-tag{font-size:12px; letter-spacing:.3em; color:var(--red); opacity:.8; margin-bottom:14px; position:relative}
+.scene-desc{font-size:15.5px; line-height:2.05; color:var(--ink2); margin:0 0 22px; position:relative; max-width:44em}
+.scene-desc b{color:var(--ink)}
+
+.stage-foot{margin-top:26px; padding-top:12px; border-top:1px dashed var(--line);
+  display:flex; justify-content:space-between; gap:14px; font-size:12px; color:var(--ink3); letter-spacing:.04em; position:relative}
+.stage-foot b{color:var(--ink2); font-weight:600}
+.acts{display:grid; grid-template-columns:repeat(auto-fill,minmax(168px,1fr)); gap:10px; position:relative}
+button{font-family:inherit; cursor:pointer; color:var(--ink)}
+.act{background:rgba(255,252,244,.6); border:1px solid var(--line); padding:12px 14px; text-align:left;
+  transition:.16s; position:relative; border-radius:2px}
+.act b{display:block; font-size:15px; font-weight:600; letter-spacing:.06em}
+.act span{display:block; font-size:11.5px; color:var(--ink3); margin-top:5px; letter-spacing:.04em}
+.act:hover:not(:disabled){background:rgba(43,38,33,.055); border-color:rgba(43,38,33,.45); transform:translateY(-1px)}
+.act:disabled{opacity:.38; cursor:not-allowed}
+.act.primary{background:rgba(166,58,44,.08); border-color:rgba(166,58,44,.32)}
+.act.primary b{color:var(--red)}
+
+/* ---------- 状态栏 ---------- */
+.status .card{padding:20px 22px}
+.row{display:flex; justify-content:space-between; align-items:baseline; padding:7px 0; font-size:13.5px; color:var(--ink2)}
+.row b{font-size:15px; color:var(--ink); font-weight:600}
+.sep{height:1px; background:var(--line); margin:12px 0}
+.stat{margin:13px 0}
+.stat .top{display:flex; justify-content:space-between; font-size:13px; margin-bottom:6px; letter-spacing:.08em}
+.stat .top i{font-style:normal; color:var(--ink3); font-size:11.5px; letter-spacing:.02em}
+.pips{display:flex; gap:4px}
+.pip{flex:1; height:7px; background:rgba(43,38,33,.09); border-radius:1px}
+.pip.on{opacity:.85}
+.pip.on.zhi{background:var(--blue)} .pip.on.jing{background:var(--gold)} .pip.on.yuan{background:var(--red)}
+.ap{display:flex; align-items:center; gap:8px; font-size:13px; margin-top:14px}
+.ap .dots{display:flex; gap:6px}
+.ap .dot{width:11px;height:11px;border-radius:50%;border:1px solid var(--ink3)}
+.ap .dot.on{background:var(--ink); border-color:var(--ink)}
+
+.log{margin-top:16px; max-height:200px; overflow:auto; font-size:12.5px; line-height:1.85; color:var(--ink2);
+  border-top:1px dashed var(--line); padding-top:10px}
+.log div{padding:2px 0}
+.log span{color:var(--ink3); margin-right:6px; font-size:11px}
+.gloss{border-bottom:1px dotted rgba(166,58,44,.55); cursor:help}
+.gloss:hover{background:rgba(166,58,44,.08)}
+.gloss-src{font-size:13.5px; line-height:1.95; color:var(--ink2); margin-top:10px; padding-left:12px; border-left:2px solid rgba(168,128,47,.45)}
+.gloss-src b{color:var(--ink)}
+.log .hist{color:var(--ink3); font-size:11.5px; padding-left:8px; border-left:2px solid rgba(168,128,47,.35)}
+
+/* ---------- 弹层 ---------- */
+.overlay{position:fixed; inset:0; background:rgba(38,31,24,.42); display:flex; align-items:center; justify-content:center;
+  padding:20px; z-index:50}
+.sheet{background:linear-gradient(180deg,#f7efdc,#eadfc6); border:1px solid rgba(43,38,33,.4);
+  width:min(680px,100%); max-height:88vh; overflow:auto; padding:30px 34px 26px; position:relative;
+  box-shadow:0 22px 60px rgba(40,28,12,.28)}
+.sheet .stamp{position:absolute; top:18px; right:20px; width:40px; height:40px; background:var(--red); color:#f6ecdb;
+  display:flex; align-items:center; justify-content:center; font-size:13px; border-radius:2px; transform:rotate(3deg); opacity:.92}
+.sheet h3{margin:0 0 6px; font-size:19px; letter-spacing:.06em; font-weight:600; line-height:1.75; padding-right:52px}
+.sheet .qtag{font-size:11.5px; letter-spacing:.2em; color:var(--red); opacity:.85; margin-bottom:14px}
+.opts{display:grid; gap:9px; margin-top:6px}
+.opt{display:flex; gap:12px; align-items:flex-start; background:rgba(255,252,244,.65); border:1px solid var(--line);
+  padding:11px 14px; text-align:left; font-size:14.5px; line-height:1.7; transition:.15s; width:100%}
+.opt:hover:not(:disabled){background:rgba(43,38,33,.06); border-color:rgba(43,38,33,.4)}
+.opt em{font-style:normal; color:var(--ink3); font-size:12px; padding-top:3px; min-width:12px}
+.opt.right{background:rgba(92,107,74,.14); border-color:rgba(92,107,74,.5)}
+.opt.wrong{background:rgba(166,58,44,.1); border-color:rgba(166,58,44,.4)}
+.opt:disabled{cursor:default}
+.opt.off{opacity:.42}
+.fb{margin-top:16px; font-size:13.5px; line-height:1.95; color:var(--ink2); border-left:3px solid var(--gold);
+  padding:8px 0 8px 14px; background:rgba(168,128,47,.07)}
+.fb b{color:var(--ink)}
+.poem-box{width:100%; margin-top:14px; padding:14px 16px; font-family:inherit; font-size:15px;
+  line-height:2.1; color:var(--ink); background:rgba(255,252,244,.62); border:1px solid var(--line);
+  resize:vertical; outline:none; min-height:132px}
+.poem-box::placeholder{color:var(--ink3); opacity:.6}
+.poem-box:focus{border-color:rgba(43,38,33,.45); background:rgba(255,252,244,.9)}
+.center{display:flex; gap:10px; justify-content:flex-end; margin-top:18px}
+.btn{background:var(--ink); color:#f4ead6; border:1px solid var(--ink); padding:9px 22px; font-size:14px; letter-spacing:.12em}
+.btn.ghost{background:transparent; color:var(--ink)}
+
+/* ---------- 结局 ---------- */
+.final{text-align:center; padding:30px 10px 10px; position:relative}
+.final .rank{font-size:clamp(34px,7vw,52px); letter-spacing:.22em; margin:12px 0 8px; font-weight:600}
+.final .rank.red{color:var(--red)} .final .rank.dim{color:var(--ink3)}
+.final p{color:var(--ink2); line-height:2.1; font-size:14.5px; max-width:34em; margin:10px auto}
+.tally{display:flex; gap:26px; justify-content:center; margin:22px 0; font-size:13px; color:var(--ink2); flex-wrap:wrap}
+.tally b{display:block; font-size:20px; color:var(--ink); letter-spacing:.06em}
+
+@media (max-width:860px){
+  .main{grid-template-columns:1fr}
+  .head h1{font-size:26px} .stage{min-height:0}
+  .glyph{font-size:60vw; opacity:.04}
+  .sheet{padding:24px 20px}
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+"use strict";
+const QUESTIONS = [{"id":1,"era":"先秦","stem":"我国历史上第一个王朝夏朝的建立者是","options":{"A":"禹","B":"尧","C":"汤","D":"黄帝"},"answer":"A","explain":"约公元前2070年，禹建立夏朝，这是我国历史上第一个王朝。"},{"id":2,"era":"先秦","stem":"商朝时期刻在龟甲和兽骨上的文字被称为","options":{"A":"隶书","B":"小篆","C":"金文","D":"甲骨文"},"answer":"D","explain":"甲骨文是商朝时期刻在龟甲、兽骨上的文字，是我国已发现的最早的成熟文字。"},{"id":3,"era":"先秦","stem":"西周实行分封制的主要目的是","options":{"A":"巩固统治","B":"抵御外族","C":"传播文化","D":"发展经济"},"answer":"A","explain":"西周通过分封诸侯，以拱卫王室、巩固周王朝的统治。"},{"id":4,"era":"先秦","stem":"西周时期，土地制度的基本形式是","options":{"A":"井田制","B":"屯田制","C":"均田制","D":"租庸调制"},"answer":"A","explain":"井田制是西周时期的土地制度，土地名义上属于周王，实际由贵族占有。"},{"id":5,"era":"先秦","stem":"春秋时期首先称霸的诸侯是","options":{"A":"齐桓公","B":"楚庄王","C":"秦穆公","D":"晋文公"},"answer":"A","explain":"齐桓公任用管仲改革，打着“尊王攘夷”旗号，成为春秋时期第一个霸主。"},{"id":6,"era":"先秦","stem":"战国七雄中，地理位置最靠西的是","options":{"A":"楚国","B":"秦国","C":"燕国","D":"齐国"},"answer":"B","explain":"战国七雄为齐、楚、燕、韩、赵、魏、秦，其中秦国位于最西。"},{"id":7,"era":"先秦","stem":"商鞅变法中，对后世地方行政制度影响最大的是","options":{"A":"奖励军功","B":"建立县制","C":"奖励耕织","D":"统一度量衡"},"answer":"B","explain":"商鞅在秦国推行县制，由国君直接派官吏治理，为后来的郡县制奠定基础。"},{"id":8,"era":"先秦","stem":"孔子思想的核心是","options":{"A":"兼爱非攻","B":"法治","C":"无为而治","D":"仁"},"answer":"D","explain":"“仁”是孔子思想的核心，主张“仁者爱人”，倡导以德治国。"},{"id":9,"era":"先秦","stem":"主张“无为而治”的思想家是","options":{"A":"孔子","B":"老子","C":"墨子","D":"韩非子"},"answer":"B","explain":"老子是道家学派创始人，主张顺应自然、无为而治。"},{"id":10,"era":"先秦","stem":"战国时期，主张“兼爱”“非攻”的思想家是","options":{"A":"墨子","B":"庄子","C":"孟子","D":"荀子"},"answer":"A","explain":"墨子是墨家学派创始人，主张兼爱、非攻、尚贤、节用。"},{"id":11,"era":"先秦","stem":"战国时期修建的都江堰，其主持者是","options":{"A":"郑国","B":"商鞅","C":"西门豹","D":"李冰"},"answer":"D","explain":"公元前256年，秦国蜀郡太守李冰主持修建都江堰，至今仍发挥重要作用。"},{"id":12,"era":"先秦","stem":"我国农业史上，铁犁牛耕开始推广于","options":{"A":"秦汉时期","B":"春秋战国时期","C":"西周时期","D":"夏商时期"},"answer":"B","explain":"春秋战国时期，铁制农具和牛耕开始出现并逐步推广，极大提高了农业生产力。"},{"id":13,"era":"先秦","stem":"西周宗法制的核心是","options":{"A":"礼乐制","B":"分封制","C":"嫡长子继承制","D":"井田制"},"answer":"C","explain":"宗法制以血缘关系为纽带，核心是嫡长子继承制，与分封制互为表里。"},{"id":14,"era":"先秦","stem":"西周“礼乐制度”的主要作用是","options":{"A":"促进文化交流","B":"加强军事训练","C":"维护等级秩序","D":"发展音乐艺术"},"answer":"C","explain":"礼乐制度是维护宗法分封制下贵族等级秩序的重要工具。"},{"id":15,"era":"先秦","stem":"下列关于分封制与宗法制关系的表述，正确的是","options":{"A":"两者互不相干","B":"两者互为表里","C":"宗法制取代分封制","D":"分封制源于宗法制"},"answer":"B","explain":"分封制是宗法制在政治上的体现，宗法制是分封制的血缘纽带，二者互为表里。"},{"id":16,"era":"先秦","stem":"甲骨文的发现地点主要在","options":{"A":"湖北荆州","B":"陕西西安","C":"山东曲阜","D":"河南安阳"},"answer":"D","explain":"甲骨文主要出土于河南安阳殷墟，即商朝后期都城遗址。"},{"id":17,"era":"先秦","stem":"“国人暴动”发生在","options":{"A":"商朝","B":"春秋","C":"西周","D":"夏朝"},"answer":"C","explain":"公元前841年，西周都城镐京发生“国人暴动”，周厉王出逃，此后有“共和行政”。"},{"id":18,"era":"先秦","stem":"春秋时期社会变革的根本原因是","options":{"A":"生产力发展","B":"周王室衰微","C":"诸侯争霸","D":"百家争鸣"},"answer":"A","explain":"铁犁牛耕的使用和推广促进了生产力发展，这是春秋时期社会大变革的根本原因。"},{"id":19,"era":"先秦","stem":"战国时期，各国变法中最全面、最彻底的是","options":{"A":"申不害变法","B":"商鞅变法","C":"吴起变法","D":"李悝变法"},"answer":"B","explain":"商鞅变法内容全面、推行彻底，使秦国迅速强大，为统一六国奠定基础。"},{"id":20,"era":"先秦","stem":"韩非子的思想主张是","options":{"A":"仁政","B":"无为","C":"兼爱","D":"以法治国"},"answer":"D","explain":"韩非子是法家集大成者，主张以法治国、中央集权，深受秦王嬴政赏识。"},{"id":21,"era":"先秦","stem":"孟子思想的核心是","options":{"A":"性恶论","B":"兼爱","C":"法术势","D":"仁政"},"answer":"D","explain":"孟子继承发展孔子学说，主张“仁政”，提出“民为贵，社稷次之，君为轻”。"},{"id":22,"era":"先秦","stem":"主张“制天命而用之”的思想家是","options":{"A":"孟子","B":"墨子","C":"庄子","D":"荀子"},"answer":"D","explain":"荀子提出“制天命而用之”，强调人应发挥主观能动性去认识、利用自然规律。"},{"id":23,"era":"先秦","stem":"战国时期，兵家中最著名的著作《孙子兵法》的作者是","options":{"A":"孙武","B":"尉缭","C":"吴起","D":"孙膑"},"answer":"A","explain":"《孙子兵法》为春秋末期孙武所著，是我国现存最早的兵书。"},{"id":24,"era":"先秦","stem":"下列属于先秦时期科技成果的是","options":{"A":"《甘石星经》","B":"活字印刷术","C":"造纸术","D":"指南针"},"answer":"A","explain":"《甘石星经》是战国时期甘德、石申所著的天文学著作，是我国现存最早的天文著作之一。"},{"id":25,"era":"先秦","stem":"“三家分晋”中的“三家”是指","options":{"A":"秦、齐、楚","B":"齐、楚、燕","C":"韩、赵、魏","D":"晋、宋、卫"},"answer":"C","explain":"春秋末，晋国被韩、赵、魏三家瓜分，标志着战国时期的开始。"},{"id":26,"era":"先秦","stem":"灭掉夏朝、建立商朝的是","options":{"A":"禹","B":"盘庚","C":"汤","D":"周武王"},"answer":"C","explain":"约公元前1600年，商汤灭夏，建立商朝，这是我国历史上第二个王朝。"},{"id":27,"era":"先秦","stem":"商朝把都城迁到殷的国王是","options":{"A":"汤","B":"纣王","C":"盘庚","D":"武丁"},"answer":"C","explain":"商朝前期多次迁都，盘庚迁都到殷（今河南安阳），此后商朝稳定下来，因此商朝又称“殷商”。"},{"id":28,"era":"先秦","stem":"西周灭亡是在","options":{"A":"公元前770年","B":"公元前1046年","C":"公元前771年","D":"公元前841年"},"answer":"C","explain":"公元前771年，犬戎攻破镐京，周幽王被杀，西周灭亡。"},{"id":29,"era":"先秦","stem":"东周开始的标志是","options":{"A":"国人暴动","B":"犬戎攻破镐京","C":"周平王东迁洛邑","D":"三家分晋"},"answer":"C","explain":"公元前770年，周平王迁都洛邑，史称东周。东周分为春秋和战国两个时期。"},{"id":30,"era":"先秦","stem":"春秋时期，齐桓公为称霸而打出的口号是","options":{"A":"变法图强","B":"尊王攘夷","C":"兼爱非攻","D":"富国强兵"},"answer":"B","explain":"齐桓公任用管仲改革，以“尊王攘夷”为口号，成为春秋时期第一个霸主。"},{"id":31,"era":"先秦","stem":"城濮之战中，晋国战胜楚国，与这一战役相关的成语是","options":{"A":"卧薪尝胆","B":"纸上谈兵","C":"退避三舍","D":"围魏救赵"},"answer":"C","explain":"公元前632年城濮之战，晋文公履行诺言“退避三舍”，晋军大败楚军，晋文公成为中原霸主。"},{"id":32,"era":"先秦","stem":"孔子在教育上主张","options":{"A":"学在官府","B":"罢黜百家","C":"有教无类","D":"以吏为师"},"answer":"C","explain":"孔子创办私学，主张“有教无类”，无论贵贱贫富都可以受教育，他还提倡“因材施教”。"},{"id":33,"era":"先秦","stem":"战国时期，主张“合纵”“连横”的纵横家代表人物是","options":{"A":"李悝和吴起","B":"苏秦和张仪","C":"孟子和荀子","D":"墨子和庄子"},"answer":"B","explain":"苏秦主张合纵，联合六国抗秦；张仪主张连横，使六国分别与秦结盟。"},{"id":34,"era":"秦汉","stem":"秦朝统一六国的时间是","options":{"A":"公元前221年","B":"公元前202年","C":"公元前230年","D":"公元前209年"},"answer":"A","explain":"公元前221年，秦王嬴政灭六国，建立我国历史上第一个统一的中央集权国家。"},{"id":35,"era":"秦汉","stem":"秦朝在地方上推行的行政制度是","options":{"A":"三省六部制","B":"行省制","C":"郡县制","D":"分封制"},"answer":"C","explain":"秦朝在地方废分封、行郡县，郡守县令由中央任免，加强了中央集权。"},{"id":36,"era":"秦汉","stem":"秦朝中央设立的“三公”不包括","options":{"A":"太尉","B":"太仆","C":"丞相","D":"御史大夫"},"answer":"B","explain":"秦朝中央设丞相、太尉、御史大夫，合称“三公”；太仆是九卿之一。"},{"id":37,"era":"秦汉","stem":"秦始皇为加强思想控制采取的措施是","options":{"A":"八股取士","B":"罢黜百家","C":"焚书坑儒","D":"设立太学"},"answer":"C","explain":"秦始皇焚书坑儒，钳制思想、摧残文化，加剧了社会矛盾。"},{"id":38,"era":"秦汉","stem":"我国历史上第一次大规模农民起义是","options":{"A":"黄巾起义","B":"绿林赤眉起义","C":"陈胜吴广起义","D":"黄巢起义"},"answer":"C","explain":"公元前209年，陈胜、吴广在大泽乡起义，是我国历史上第一次大规模农民起义。"},{"id":39,"era":"秦汉","stem":"西汉的建立者是","options":{"A":"刘秀","B":"项羽","C":"刘备","D":"刘邦"},"answer":"D","explain":"公元前202年，刘邦建立西汉，定都长安。"},{"id":40,"era":"秦汉","stem":"西汉初期出现的治世局面是","options":{"A":"文景之治","B":"开元盛世","C":"贞观之治","D":"光武中兴"},"answer":"A","explain":"汉文帝、汉景帝时期轻徭薄赋、与民休息，史称“文景之治”。"},{"id":41,"era":"秦汉","stem":"汉武帝为加强中央集权，在思想上采取的措施是","options":{"A":"焚书坑儒","B":"罢黜百家、独尊儒术","C":"设立科举","D":"八股取士"},"answer":"B","explain":"汉武帝接受董仲舒建议，“罢黜百家，独尊儒术”，确立儒家思想的正统地位。"},{"id":42,"era":"秦汉","stem":"汉武帝为削弱诸侯王势力颁布的法令是","options":{"A":"均田令","B":"一条鞭法","C":"推恩令","D":"摊丁入亩"},"answer":"C","explain":"汉武帝颁布“推恩令”，允许诸侯王将封地分给子弟，从而削弱诸侯国势力。"},{"id":43,"era":"秦汉","stem":"张骞出使西域的最初目的是","options":{"A":"联络大月氏夹击匈奴","B":"传播文化","C":"发展贸易","D":"开拓疆土"},"answer":"A","explain":"汉武帝派张骞出使西域，最初目的是联络大月氏共同夹击匈奴。"},{"id":44,"era":"秦汉","stem":"丝绸之路的开通，主要得益于","options":{"A":"班超经营西域","B":"玄奘西行","C":"郑和下西洋","D":"张骞出使西域"},"answer":"D","explain":"张骞出使西域，开辟了从长安经河西走廊通往中亚、西亚的丝绸之路。"},{"id":45,"era":"秦汉","stem":"汉代选拔官员的主要制度是","options":{"A":"察举制","B":"科举制","C":"九品中正制","D":"世袭制"},"answer":"A","explain":"汉代实行察举制，由地方长官考察推荐人才，以孝廉为主要科目。"},{"id":46,"era":"秦汉","stem":"西汉初期在地方推行的制度是","options":{"A":"郡县制","B":"郡国并行制","C":"分封制","D":"行省制"},"answer":"B","explain":"西汉初年实行郡国并行制，既有郡县又有封国，后引发七国之乱。"},{"id":47,"era":"秦汉","stem":"“七国之乱”发生在","options":{"A":"汉文帝时期","B":"汉高祖时期","C":"汉武帝时期","D":"汉景帝时期"},"answer":"D","explain":"公元前154年，汉景帝时吴楚等七国以“清君侧”为名叛乱，被周亚夫平定。"},{"id":48,"era":"秦汉","stem":"东汉的建立者是","options":{"A":"刘裕","B":"刘秀","C":"刘备","D":"刘邦"},"answer":"B","explain":"公元25年，刘秀建立东汉，定都洛阳，史称“光武中兴”。"},{"id":49,"era":"秦汉","stem":"东汉后期政治腐败的重要表现是","options":{"A":"宦官专权于唐","B":"藩镇割据","C":"外戚宦官交替专权","D":"朋党之争"},"answer":"C","explain":"东汉后期外戚与宦官交替专权，政治黑暗，社会矛盾激化。"},{"id":50,"era":"秦汉","stem":"改进造纸术的东汉人物是","options":{"A":"华佗","B":"蔡伦","C":"张衡","D":"张仲景"},"answer":"B","explain":"东汉蔡伦改进造纸术，用树皮、麻头等原料造纸，被称为“蔡侯纸”。"},{"id":51,"era":"秦汉","stem":"我国第一部纪传体通史是","options":{"A":"《资治通鉴》","B":"《史记》","C":"《汉书》","D":"《春秋》"},"answer":"B","explain":"《史记》由西汉司马迁所著，是我国第一部纪传体通史。"},{"id":52,"era":"秦汉","stem":"我国第一部纪传体断代史是","options":{"A":"《三国志》","B":"《史记》","C":"《后汉书》","D":"《汉书》"},"answer":"D","explain":"东汉班固所著《汉书》是我国第一部纪传体断代史。"},{"id":53,"era":"秦汉","stem":"王莽篡汉建立的新朝，其改制最终","options":{"A":"加剧社会矛盾","B":"取得成功","C":"缓和了阶级矛盾","D":"恢复井田制成效显著"},"answer":"A","explain":"王莽改制脱离实际，加剧了社会矛盾，最终引发绿林、赤眉起义。"},{"id":54,"era":"秦汉","stem":"东汉末年爆发的农民起义是","options":{"A":"黄巾起义","B":"陈胜吴广起义","C":"黄巢起义","D":"绿林赤眉起义"},"answer":"A","explain":"184年，张角领导黄巾起义，沉重打击了东汉统治。"},{"id":55,"era":"秦汉","stem":"秦朝统一后，为加强各地经济联系采取的措施是","options":{"A":"开凿灵渠","B":"统一货币度量衡","C":"修筑长城","D":"统一文字"},"answer":"B","explain":"秦统一货币（圆形方孔半两钱）和度量衡，促进了各地经济交流。"},{"id":56,"era":"秦汉","stem":"秦朝为加强思想文化统一，把哪种字体作为标准文字","options":{"A":"金文","B":"小篆","C":"甲骨文","D":"楷书"},"answer":"B","explain":"秦统一后以小篆作为标准文字，后又推行更简便的隶书。"},{"id":57,"era":"秦汉","stem":"汉初“休养生息”政策的直接原因是","options":{"A":"百家争鸣","B":"经济凋敝、人口减少","C":"匈奴威胁","D":"诸侯割据"},"answer":"B","explain":"秦末战乱导致经济凋敝、人口锐减，汉初统治者推行休养生息政策以恢复生产。"},{"id":58,"era":"秦汉","stem":"下列不属于秦汉时期文化成就的是","options":{"A":"《伤寒杂病论》","B":"《齐民要术》","C":"《史记》","D":"《九章算术》"},"answer":"B","explain":"《齐民要术》是北朝贾思勰所著，不属于秦汉时期。"},{"id":59,"era":"秦汉","stem":"项羽以少胜多、歼灭秦军主力的战役是","options":{"A":"长平之战","B":"垓下之战","C":"官渡之战","D":"巨鹿之战"},"answer":"D","explain":"公元前207年巨鹿之战，项羽率军破釜沉舟，以少胜多，秦军主力被歼灭。"},{"id":60,"era":"秦汉","stem":"汉武帝时期，为统一铸币权而铸造的货币是","options":{"A":"半两钱","B":"开元通宝","C":"五铢钱","D":"交子"},"answer":"C","explain":"汉武帝把铸币权收归中央，统一铸造五铢钱，加强了中央对经济的控制。"},{"id":61,"era":"秦汉","stem":"向汉武帝提出“罢黜百家，独尊儒术”建议的是","options":{"A":"司马迁","B":"董仲舒","C":"主父偃","D":"晁错"},"answer":"B","explain":"董仲舒提出“罢黜百家，独尊儒术”，被汉武帝采纳，儒家思想从此成为封建社会的正统思想。"},{"id":62,"era":"秦汉","stem":"汉武帝在长安兴办、以儒家经典为教材的最高学府是","options":{"A":"国子监","B":"书院","C":"太学","D":"翰林院"},"answer":"C","explain":"汉武帝在长安兴办太学，以《诗》《书》《礼》《易》《春秋》为教材，培养儒学人才。"},{"id":63,"era":"秦汉","stem":"西域正式归属中央政权管辖的标志是","options":{"A":"张骞出使西域","B":"班超经营西域","C":"丝绸之路开通","D":"设置西域都护"},"answer":"D","explain":"公元前60年，西汉设置西域都护，总管西域事务，标志着西域正式归属中央政权管辖。"},{"id":64,"era":"秦汉","stem":"东汉时期发明地动仪的科学家是","options":{"A":"蔡伦","B":"张衡","C":"张仲景","D":"华佗"},"answer":"B","explain":"东汉张衡发明地动仪，这是世界上公认的最早的地震仪器。"},{"id":65,"era":"秦汉","stem":"东汉名医张仲景的著作是","options":{"A":"《本草纲目》","B":"《黄帝内经》","C":"《伤寒杂病论》","D":"《千金方》"},"answer":"C","explain":"张仲景著《伤寒杂病论》，发展了中医理论和治疗方法，后世尊称他为“医圣”。"},{"id":66,"era":"秦汉","stem":"东汉初期出现的治世局面是","options":{"A":"文景之治","B":"光武中兴","C":"贞观之治","D":"开元盛世"},"answer":"B","explain":"东汉光武帝刘秀多次下诏释放奴婢、减轻赋税，社会安定、经济恢复，史称“光武中兴”。"},{"id":67,"era":"魏晋南北朝","stem":"奠定三国鼎立局面的战役是","options":{"A":"巨鹿之战","B":"赤壁之战","C":"淝水之战","D":"官渡之战"},"answer":"B","explain":"208年赤壁之战，孙刘联军击败曹操，奠定三国鼎立的基础。"},{"id":68,"era":"魏晋南北朝","stem":"三国中，定都成都的是","options":{"A":"蜀汉","B":"西晋","C":"东吴","D":"曹魏"},"answer":"A","explain":"蜀汉由刘备建立，定都成都；曹魏定都洛阳，东吴定都建业。"},{"id":69,"era":"魏晋南北朝","stem":"结束三国分裂、统一全国的王朝是","options":{"A":"西晋","B":"北魏","C":"隋朝","D":"东晋"},"answer":"A","explain":"280年西晋灭吴，结束三国分裂局面，短暂统一全国。"},{"id":70,"era":"魏晋南北朝","stem":"西晋后期导致社会动荡的事件是","options":{"A":"八王之乱","B":"安史之乱","C":"黄巾起义","D":"七国之乱"},"answer":"A","explain":"西晋“八王之乱”持续16年，严重削弱国力，引发少数民族内迁和战乱。"},{"id":71,"era":"魏晋南北朝","stem":"北魏孝文帝改革中，促进民族交融的重要措施是","options":{"A":"设立行省","B":"迁都洛阳、改汉姓","C":"实行两税法","D":"推行科举"},"answer":"B","explain":"孝文帝迁都洛阳，推行说汉语、穿汉服、改汉姓、通婚姻等措施，促进民族交融。"},{"id":72,"era":"魏晋南北朝","stem":"魏晋南北朝时期，选官制度主要是","options":{"A":"察举制","B":"世卿世禄制","C":"九品中正制","D":"科举制"},"answer":"C","explain":"九品中正制由中正官评定人才等级，后期逐渐被门阀士族垄断。"},{"id":73,"era":"魏晋南北朝","stem":"魏晋南北朝时期，形成的社会阶层是","options":{"A":"士族门阀","B":"工商业者","C":"市民阶层","D":"官僚集团"},"answer":"A","explain":"士族门阀凭借政治、经济特权，成为魏晋南北朝时期的重要社会势力。"},{"id":74,"era":"魏晋南北朝","stem":"淝水之战中，以少胜多的一方是","options":{"A":"东晋","B":"北魏","C":"南朝宋","D":"前秦"},"answer":"A","explain":"383年淝水之战，东晋以少胜多击败前秦，前秦随后瓦解。"},{"id":75,"era":"魏晋南北朝","stem":"南朝四个政权依次是","options":{"A":"梁陈宋齐","B":"陈梁齐宋","C":"齐宋梁陈","D":"宋齐梁陈"},"answer":"D","explain":"南朝依次为宋、齐、梁、陈，均定都建康。"},{"id":76,"era":"魏晋南北朝","stem":"北朝中统一北方、影响最大的政权是","options":{"A":"北齐","B":"北魏","C":"西魏","D":"东魏"},"answer":"B","explain":"北魏由鲜卑拓跋部建立，439年统一北方，孝文帝改革影响深远。"},{"id":77,"era":"魏晋南北朝","stem":"北魏孝文帝改革中推行的土地制度是","options":{"A":"均田制","B":"屯田制","C":"两税法","D":"井田制"},"answer":"A","explain":"北魏推行均田制，按人口分配土地，对后世土地制度影响深远。"},{"id":78,"era":"魏晋南北朝","stem":"佛教在我国广泛传播开始于","options":{"A":"唐朝","B":"魏晋南北朝","C":"西汉","D":"东汉"},"answer":"D","explain":"佛教于西汉末年传入，东汉时期逐渐传播，魏晋南北朝时期广泛流行。"},{"id":79,"era":"魏晋南北朝","stem":"我国本土宗教道教的创立是在","options":{"A":"战国时期","B":"魏晋时期","C":"春秋时期","D":"东汉时期"},"answer":"D","explain":"东汉时期，道教在民间逐渐形成，张陵创立五斗米道。"},{"id":80,"era":"魏晋南北朝","stem":"南朝时期，把圆周率精确到小数点后第七位的科学家是","options":{"A":"祖冲之","B":"贾思勰","C":"张衡","D":"郦道元"},"answer":"A","explain":"祖冲之将圆周率精确到3.1415926和3.1415927之间，领先世界近千年。"},{"id":81,"era":"魏晋南北朝","stem":"《齐民要术》的作者是","options":{"A":"司马迁","B":"祖冲之","C":"郦道元","D":"贾思勰"},"answer":"D","explain":"北朝贾思勰著《齐民要术》，是我国现存最早最完整的农书。"},{"id":82,"era":"魏晋南北朝","stem":"“书圣”王羲之的代表作是","options":{"A":"《多宝塔碑》","B":"《九成宫醴泉铭》","C":"《兰亭序》","D":"《祭侄文稿》"},"answer":"C","explain":"东晋王羲之被誉为“书圣”，其《兰亭序》被称为“天下第一行书”。"},{"id":83,"era":"魏晋南北朝","stem":"我国四大石窟中，开凿于北魏时期的是","options":{"A":"莫高窟","B":"龙门石窟","C":"云冈石窟","D":"麦积山石窟"},"answer":"C","explain":"云冈石窟由北魏开凿于山西大同；龙门石窟也始于北魏，续凿至唐。"},{"id":84,"era":"魏晋南北朝","stem":"北魏孝文帝把都城从平城迁到","options":{"A":"建康","B":"洛阳","C":"开封","D":"长安"},"answer":"B","explain":"494年，北魏孝文帝迁都洛阳，以利于接受汉族先进文化、加强对中原的控制。"},{"id":85,"era":"魏晋南北朝","stem":"魏晋南北朝时期，江南地区得到开发的重要原因是","options":{"A":"北方人口南迁","B":"科举制推行","C":"南方人口激增","D":"海外贸易繁荣"},"answer":"A","explain":"北方战乱导致大量人口南迁，带来劳动力和先进生产技术，促进江南开发。"},{"id":86,"era":"魏晋南北朝","stem":"下列不属于魏晋南北朝时期文化成就的是","options":{"A":"《兰亭序》","B":"《齐民要术》","C":"《史记》","D":"云冈石窟"},"answer":"C","explain":"《史记》为西汉司马迁所著，不属于魏晋南北朝时期。"},{"id":87,"era":"魏晋南北朝","stem":"为曹操统一北方奠定基础的战役是","options":{"A":"官渡之战","B":"淝水之战","C":"巨鹿之战","D":"赤壁之战"},"answer":"A","explain":"200年官渡之战，曹操以少胜多打败袁绍，为统一北方奠定了基础。"},{"id":88,"era":"魏晋南北朝","stem":"220年建立魏国的是","options":{"A":"刘备","B":"司马炎","C":"曹操","D":"曹丕"},"answer":"D","explain":"曹操死后，其子曹丕于220年称帝，国号魏，定都洛阳，东汉灭亡。"},{"id":89,"era":"魏晋南北朝","stem":"东晋的建立者是","options":{"A":"司马睿","B":"刘裕","C":"司马炎","D":"苻坚"},"answer":"A","explain":"317年，司马睿在建康建立东晋，此后北方先后出现多个少数民族政权。"},{"id":90,"era":"魏晋南北朝","stem":"建立北魏的少数民族是","options":{"A":"匈奴族","B":"氐族","C":"羯族","D":"鲜卑族"},"answer":"D","explain":"鲜卑族拓跋部建立北魏，439年统一北方，结束了十六国以来的分裂局面。"},{"id":91,"era":"魏晋南北朝","stem":"《水经注》的作者是","options":{"A":"祖冲之","B":"郦道元","C":"顾恺之","D":"贾思勰"},"answer":"B","explain":"北魏地理学家郦道元著《水经注》，记述河道及沿岸地理、风俗，是一部综合性地理著作。"},{"id":92,"era":"魏晋南北朝","stem":"东晋画家顾恺之的代表作是","options":{"A":"《清明上河图》","B":"《千里江山图》","C":"《洛神赋图》","D":"《步辇图》"},"answer":"C","explain":"顾恺之擅长人物画，代表作有《女史箴图》《洛神赋图》，注重“以形写神”。"},{"id":93,"era":"魏晋南北朝","stem":"三国之中最先被灭亡的政权是","options":{"A":"西晋","B":"魏","C":"蜀汉","D":"吴"},"answer":"C","explain":"263年魏灭蜀汉；266年司马炎代魏建晋；280年西晋灭吴，三国鼎立局面结束。"},{"id":94,"era":"魏晋南北朝","stem":"三国时期，孙权建立吴国后定都于","options":{"A":"建业","B":"许昌","C":"成都","D":"洛阳"},"answer":"A","explain":"229年孙权称帝，国号吴，定都建业（今江苏南京）。"},{"id":95,"era":"隋唐","stem":"隋朝统一全国的时间是","options":{"A":"605年","B":"589年","C":"618年","D":"581年"},"answer":"B","explain":"589年，隋灭陈，结束南北朝分裂局面，重新统一全国。"},{"id":96,"era":"隋唐","stem":"隋朝开凿的大运河，以哪里为中心","options":{"A":"洛阳","B":"开封","C":"长安","D":"扬州"},"answer":"A","explain":"隋朝大运河以洛阳为中心，北达涿郡，南至余杭，是古代世界最长的人工运河。"},{"id":97,"era":"隋唐","stem":"我国科举制度正式创立于","options":{"A":"唐朝","B":"宋朝","C":"汉朝","D":"隋朝"},"answer":"D","explain":"隋炀帝时设进士科，标志科举制正式创立；唐朝进一步完善。"},{"id":98,"era":"隋唐","stem":"“贞观之治”出现在哪位皇帝统治时期","options":{"A":"武则天","B":"唐高祖","C":"唐玄宗","D":"唐太宗"},"answer":"D","explain":"唐太宗李世民时期（627-649）政治清明、经济发展，史称“贞观之治”。"},{"id":99,"era":"隋唐","stem":"唐太宗时期著名的谏臣是","options":{"A":"姚崇","B":"魏征","C":"房玄龄","D":"杜如晦"},"answer":"B","explain":"魏征以敢于直谏著称，唐太宗称其为“可以明得失”的一面镜子。"},{"id":100,"era":"隋唐","stem":"我国历史上唯一的女皇帝是","options":{"A":"慈禧","B":"孝庄","C":"武则天","D":"吕后"},"answer":"C","explain":"武则天于690年称帝，改国号为周，是我国历史上唯一的女皇帝。"},{"id":101,"era":"隋唐","stem":"“开元盛世”出现在哪位皇帝统治时期","options":{"A":"武则天","B":"唐肃宗","C":"唐玄宗","D":"唐太宗"},"answer":"C","explain":"唐玄宗前期（713-741）政治稳定、经济繁荣，史称“开元盛世”。"},{"id":102,"era":"隋唐","stem":"唐朝由盛转衰的转折点是","options":{"A":"黄巢起义","B":"藩镇割据","C":"宦官专权","D":"安史之乱"},"answer":"D","explain":"755年爆发的安史之乱持续八年，使唐朝由盛转衰。"},{"id":103,"era":"隋唐","stem":"唐朝后期形成的严重政治问题是","options":{"A":"藩镇割据","B":"朋党之争","C":"外戚专权","D":"宦官专权"},"answer":"A","explain":"安史之乱后，地方节度使拥兵自重，形成藩镇割据局面。"},{"id":104,"era":"隋唐","stem":"唐朝实行的赋税制度改革是","options":{"A":"一条鞭法","B":"均田制","C":"摊丁入亩","D":"两税法"},"answer":"D","explain":"780年，唐德宗采纳杨炎建议实行两税法，按资产和田亩征税，改变了以人丁为主的征税标准。"},{"id":105,"era":"隋唐","stem":"隋唐时期中央行政制度是","options":{"A":"行省制","B":"三公九卿制","C":"内阁制","D":"三省六部制"},"answer":"D","explain":"三省六部制中，中书省决策、门下省审议、尚书省执行，下设六部。"},{"id":106,"era":"隋唐","stem":"唐朝西行天竺求取真经的僧人是","options":{"A":"鉴真","B":"法显","C":"玄奘","D":"慧能"},"answer":"C","explain":"玄奘于贞观年间西行天竺，归国后著《大唐西域记》。"},{"id":107,"era":"隋唐","stem":"唐朝东渡日本传播佛法的高僧是","options":{"A":"玄奘","B":"一行","C":"鉴真","D":"法显"},"answer":"C","explain":"鉴真六次东渡，最终到达日本，传播佛法和唐代文化。"},{"id":108,"era":"隋唐","stem":"唐朝与吐蕃和亲，嫁给松赞干布的是","options":{"A":"金城公主","B":"解忧公主","C":"王昭君","D":"文成公主"},"answer":"D","explain":"641年，唐太宗将文成公主嫁给吐蕃赞普松赞干布，促进了汉藏交流。"},{"id":109,"era":"隋唐","stem":"下列诗人中，被称为“诗仙”的是","options":{"A":"王维","B":"白居易","C":"杜甫","D":"李白"},"answer":"D","explain":"李白诗风豪放飘逸，被誉为“诗仙”；杜甫被称为“诗圣”。"},{"id":110,"era":"隋唐","stem":"唐代著名的陶瓷工艺品是","options":{"A":"唐三彩","B":"汝窑","C":"青花瓷","D":"景德镇瓷器"},"answer":"A","explain":"唐三彩是唐代盛行的彩色釉陶，以黄、绿、白为主色。"},{"id":111,"era":"隋唐","stem":"我国雕版印刷术出现于","options":{"A":"北宋时期","B":"隋唐时期","C":"东汉时期","D":"元朝"},"answer":"B","explain":"雕版印刷术出现于隋唐时期，唐咸通九年《金刚经》是现存最早有明确日期的雕版印刷品。"},{"id":112,"era":"隋唐","stem":"唐朝的都城是","options":{"A":"长安","B":"北京","C":"开封","D":"洛阳"},"answer":"A","explain":"唐朝定都长安（今西安），是当时世界上最大的都市之一。"},{"id":113,"era":"隋唐","stem":"唐朝时期，日本派遣来华学习的使团称为","options":{"A":"留学使","B":"通商使","C":"遣唐使","D":"朝贡使"},"answer":"C","explain":"日本多次派遣唐使来华，学习唐朝的政治制度、文化艺术。"},{"id":114,"era":"隋唐","stem":"唐末爆发的农民起义是","options":{"A":"陈胜吴广起义","B":"黄巾起义","C":"绿林起义","D":"黄巢起义"},"answer":"D","explain":"875年黄巢起义爆发，沉重打击了唐朝统治。"},{"id":115,"era":"隋唐","stem":"隋朝大运河的南北两端分别是","options":{"A":"洛阳和扬州","B":"涿郡和余杭","C":"涿郡和江都","D":"长安和扬州"},"answer":"B","explain":"大运河以洛阳为中心，北达涿郡（今北京），南至余杭（今杭州），是古代世界最长的运河。"},{"id":116,"era":"隋唐","stem":"主持开凿隋朝大运河的皇帝是","options":{"A":"隋文帝","B":"唐太宗","C":"唐玄宗","D":"隋炀帝"},"answer":"D","explain":"隋炀帝时期开凿大运河，加强了南北经济文化交流，但也加重了人民负担。"},{"id":117,"era":"隋唐","stem":"科举制中的“殿试”开始于","options":{"A":"武则天","B":"隋文帝","C":"唐太宗","D":"隋炀帝"},"answer":"A","explain":"武则天时期首创殿试，由皇帝亲自在殿廷主持考试，科举制度得到进一步发展。"},{"id":118,"era":"隋唐","stem":"唐朝三省六部制中，负责执行政令的机构是","options":{"A":"中书省","B":"尚书省","C":"御史台","D":"门下省"},"answer":"B","explain":"中书省负责草拟诏令，门下省负责审核，尚书省负责执行，下设六部。"},{"id":119,"era":"隋唐","stem":"安史之乱的发动者是","options":{"A":"李林甫和杨国忠","B":"姚崇和宋璟","C":"安禄山和史思明","D":"朱温和李嗣源"},"answer":"C","explain":"755年，节度使安禄山、史思明发动叛乱，历时八年，唐朝由盛转衰。"},{"id":120,"era":"隋唐","stem":"被后人尊称为“诗圣”的唐代诗人是","options":{"A":"李白","B":"白居易","C":"王维","D":"杜甫"},"answer":"D","explain":"杜甫的诗沉郁顿挫，真实反映了安史之乱前后的社会现实，被称为“诗史”，他本人被尊为“诗圣”。"},{"id":121,"era":"隋唐","stem":"唐代书法以“颜筋柳骨”著称，其中颜真卿的书法风格是","options":{"A":"婉约秀润","B":"飘逸洒脱","C":"瘦硬挺拔","D":"端庄雄伟"},"answer":"D","explain":"颜真卿楷书端庄雄伟、气势开张；柳公权楷书骨力遒劲，后世并称“颜筋柳骨”。"},{"id":122,"era":"隋唐","stem":"唐朝改进的耕地工具是","options":{"A":"耧车","B":"曲辕犁","C":"筒车","D":"翻车"},"answer":"B","explain":"唐朝改进的曲辕犁轻便灵活，能够控制深浅，大大提高了耕作效率。"},{"id":123,"era":"隋唐","stem":"唐朝用于灌溉的工具是","options":{"A":"水排","B":"曲辕犁","C":"筒车","D":"耧车"},"answer":"C","explain":"筒车利用水力转动，把水提到高处灌溉农田，是唐朝重要的灌溉工具。"},{"id":124,"era":"隋唐","stem":"唐朝租庸调制中，“庸”指的是","options":{"A":"纳绢或布代役","B":"缴纳绢帛","C":"按田亩纳税","D":"缴纳粮食"},"answer":"A","explain":"租庸调制中，“租”是纳粮，“调”是纳绢布，“庸”是纳绢或布代役，保证了农民的生产时间。"},{"id":125,"era":"隋唐","stem":"唐高宗时期编修的《唐本草》，其历史地位是","options":{"A":"我国第一部医学著作","B":"世界上最早的历法","C":"我国第一部农书","D":"世界上最早由国家颁行的药典"},"answer":"D","explain":"《唐本草》由唐朝政府组织编修，是世界上最早由国家颁行的药典。"},{"id":126,"era":"隋唐","stem":"唐朝科举考试的科目中，最受重视的是","options":{"A":"明经科","B":"明法科","C":"进士科","D":"明算科"},"answer":"C","explain":"进士科主要考诗赋和时务策，难度大、地位高，考中进士是读书人的最高荣誉。"},{"id":127,"era":"五代与北宋","stem":"五代十国中的“五代”不包括","options":{"A":"北宋","B":"后梁","C":"后晋","D":"后唐"},"answer":"A","explain":"五代为后梁、后唐、后晋、后汉、后周，北宋不在其中。"},{"id":128,"era":"五代与北宋","stem":"北宋的建立者是","options":{"A":"郭威","B":"柴荣","C":"赵光义","D":"赵匡胤"},"answer":"D","explain":"960年，赵匡胤发动陈桥兵变，建立北宋，定都开封。"},{"id":129,"era":"五代与北宋","stem":"宋太祖为加强中央集权，解除大将兵权的事件是","options":{"A":"王安石变法","B":"陈桥兵变","C":"杯酒释兵权","D":"澶渊之盟"},"answer":"C","explain":"宋太祖“杯酒释兵权”，解除禁军将领兵权，加强中央集权。"},{"id":130,"era":"五代与北宋","stem":"北宋为分割宰相权力，设立","options":{"A":"三省六部","B":"内阁","C":"军机处","D":"枢密院、三司"},"answer":"D","explain":"北宋设枢密院掌军事、三司掌财政，分割宰相权力。"},{"id":131,"era":"五代与北宋","stem":"北宋与辽订立的和约是","options":{"A":"澶渊之盟","B":"海上之盟","C":"澶州之盟","D":"绍兴和议"},"answer":"A","explain":"1005年宋辽订立澶渊之盟，宋每年给辽岁币，双方维持长期和平。"},{"id":132,"era":"五代与北宋","stem":"北宋王安石变法的核心目的是","options":{"A":"扩大疆域","B":"富国强兵","C":"发展文化","D":"加强思想控制"},"answer":"B","explain":"王安石变法旨在改变北宋积贫积弱的局面，实现富国强兵。"},{"id":133,"era":"五代与北宋","stem":"世界上最早的纸币出现在","options":{"A":"南宋","B":"元朝","C":"北宋","D":"唐朝"},"answer":"C","explain":"北宋前期，四川地区出现“交子”，是世界上最早的纸币。"},{"id":134,"era":"五代与北宋","stem":"北宋时期发明活字印刷术的是","options":{"A":"毕昇","B":"张衡","C":"沈括","D":"蔡伦"},"answer":"A","explain":"北宋毕昇发明活字印刷术，大大提高印刷效率。"},{"id":135,"era":"五代与北宋","stem":"《资治通鉴》的作者是","options":{"A":"欧阳修","B":"司马光","C":"司马迁","D":"班固"},"answer":"B","explain":"北宋司马光主持编纂《资治通鉴》，是一部编年体通史。"},{"id":136,"era":"五代与北宋","stem":"北宋时期，城市商业繁荣的重要表现是","options":{"A":"闭关锁国","B":"实行重农抑商","C":"盐铁官营","D":"坊市界限被打破"},"answer":"D","explain":"北宋时坊市界限被打破，出现早市、夜市，商业活动不再受时间空间限制。"},{"id":137,"era":"五代与北宋","stem":"五代十国中，“五代”的第一个政权是","options":{"A":"后梁","B":"后晋","C":"后唐","D":"后周"},"answer":"A","explain":"907年朱温建立后梁，此后中原地区相继出现后唐、后晋、后汉、后周，合称“五代”。"},{"id":138,"era":"五代与北宋","stem":"北宋的都城是","options":{"A":"长安","B":"东京","C":"临安","D":"洛阳"},"answer":"B","explain":"北宋定都东京（今河南开封），又称汴京，是当时世界上著名的大都市。"},{"id":139,"era":"五代与北宋","stem":"北宋在州一级设置、用来监督知州的官员是","options":{"A":"枢密使","B":"通判","C":"转运使","D":"节度使"},"answer":"B","explain":"北宋在各州设置通判，与知州共同处理政务，并可直接向皇帝报告，以加强对地方的控制。"},{"id":140,"era":"五代与北宋","stem":"北宋为分割宰相的财政权而设置的官职是","options":{"A":"三司使","B":"参知政事","C":"枢密使","D":"御史大夫"},"answer":"A","explain":"北宋设参知政事分割宰相行政权，枢密使分割军权，三司使分割财权。"},{"id":141,"era":"五代与北宋","stem":"北宋推行“重文轻武”政策的主要目的是","options":{"A":"增加财政收入","B":"抵御辽和西夏","C":"防止武将专权","D":"发展文化教育"},"answer":"C","explain":"宋太祖吸取唐末五代武将专权的教训，重用文臣、抑制武将，但也造成军队战斗力削弱。"},{"id":142,"era":"五代与北宋","stem":"澶渊之盟的积极影响是","options":{"A":"辽朝向北宋称臣","B":"北宋收复燕云十六州","C":"北宋统一全国","D":"宋辽保持长期和平"},"answer":"D","explain":"1005年宋辽订立澶渊之盟，此后双方保持长期和平，边境贸易发展，促进了民族交融。"},{"id":143,"era":"五代与北宋","stem":"北宋与西夏订立的和约是","options":{"A":"绍兴和议","B":"宋夏和议","C":"澶渊之盟","D":"庆历新政"},"answer":"B","explain":"1044年北宋与西夏订立和议，西夏向宋称臣，宋每年送给西夏银、绢、茶，双方贸易往来频繁。"},{"id":144,"era":"五代与北宋","stem":"王安石变法开始于哪位皇帝在位时期","options":{"A":"宋徽宗","B":"宋仁宗","C":"宋太祖","D":"宋神宗"},"answer":"D","explain":"1069年，宋神宗任用王安石主持变法，目的是摆脱统治危机、实现富国强兵。"},{"id":145,"era":"五代与北宋","stem":"王安石变法中，在青黄不接时向农民提供低息贷款的措施是","options":{"A":"保甲法","B":"募役法","C":"青苗法","D":"方田均税法"},"answer":"C","explain":"青苗法在每年青黄不接时由官府贷款或贷谷给农民，秋收后加息偿还，限制了高利贷盘剥。"},{"id":146,"era":"五代与北宋","stem":"北宋时期，指南针开始应用于","options":{"A":"航海事业","B":"军事作战","C":"天文观测","D":"农业生产"},"answer":"A","explain":"北宋时制成指南针并开始用于航海，后经阿拉伯人传入欧洲，促进了世界航海事业的发展。"},{"id":147,"era":"五代与北宋","stem":"《梦溪笔谈》的作者是","options":{"A":"苏颂","B":"郭守敬","C":"宋应星","D":"沈括"},"answer":"D","explain":"北宋科学家沈括著《梦溪笔谈》，记载了活字印刷术等科技成就，被誉为“中国科学史上的坐标”。"},{"id":148,"era":"五代与北宋","stem":"描绘北宋东京城市生活的名画《清明上河图》的作者是","options":{"A":"顾闳中","B":"李公麟","C":"张择端","D":"王希孟"},"answer":"C","explain":"北宋画家张择端的《清明上河图》描绘了东京汴河沿岸的繁华景象，是研究宋代城市生活的重要资料。"},{"id":149,"era":"五代与北宋","stem":"北宋时期兴起的、后来发展为著名瓷都的市镇是","options":{"A":"朱仙镇","B":"景德镇","C":"汉口镇","D":"佛山镇"},"answer":"B","explain":"景德镇在北宋景德年间得名，瓷器精美，后来发展为我国的“瓷都”。"},{"id":150,"era":"五代与北宋","stem":"北宋时期从越南引进的优良水稻品种是","options":{"A":"占城稻","B":"籼稻","C":"粳稻","D":"双季稻"},"answer":"A","explain":"北宋从越南引进占城稻，它耐旱早熟，在南方推广后大大提高了粮食产量。"}];
+
+/* ============================ 常量 ============================ */
+const MAX = 10, TOTAL_DAYS = 30;
+const CN_NUM = ['','初一','初二','初三','初四','初五','初六','初七','初八','初九','初十',
+  '十一','十二','十三','十四','十五','十六','十七','十八','十九','二十',
+  '廿一','廿二','廿三','廿四','廿五','廿六','廿七','廿八','廿九','三十'];
+
+function dateLabel(d){
+  if (d <= 20) return '正月' + CN_NUM[d + 9];
+  return '二月' + CN_NUM[d - 20];
+}
+
+const SCENES = [
+  {id:'jiaxu', name:'临川 · 家塾', glyph:'塾', from:1, to:2, kind:'hub', tag:'第一幕 · 别家',
+   desc:'临川老宅，窗外修竹，案上一灯如豆。解状已领，行囊半备。先生说过：出门之前，先考你一考。',
+   acts:['study','rest','social','master','sleep']},
+  {id:'changting', name:'长亭 · 饯别', glyph:'亭', from:3, to:3, kind:'choice', tag:'第二幕 · 辞乡',
+   desc:'十里长亭，柳色初青。同窗设酒相送，乡邻塞来干粮。先生立在亭外，只说了一句：“此去三千里，慎勿废学。”',
+   acts:['giftMoney','giftBooks','giftWords']},
+  {id:'yizhan', name:'官道 · 驿站', glyph:'驿', from:4, to:6, kind:'hub', tag:'第三幕 · 驿路',
+   desc:'驿舍檐下悬一盏风灯，墙上留着前人题诗。南来北往的举子都在这里歇脚，也在这里交换消息。',
+   acts:['rest','study','social','poem','sell','sleep']},
+  {id:'shandao', name:'山路 · 风雨', glyph:'道', from:7, to:9, kind:'travel', tag:'第四幕 · 山行',
+   desc:'梅雨初起，山道泥泞，走了三日才见一处山寺，檐角铃铎在风里响。路要赶，书也不能断。',
+   acts:['guard','temple','study','rest','social','poem','sell','sleep']},
+  {id:'bianhe', name:'汴河 · 舟中', glyph:'舟', from:10, to:14, kind:'travel', tag:'第五幕 · 舟行',
+   desc:'舟行汴河，水阔天低。同船有位白发老者，手不释卷，听口音像是应天府人。船家说，还有五日到汴京。',
+   acts:['watch','chat','study','view','social','rest','master','sleep']},
+  {id:'chengmen', name:'汴京 · 城门', glyph:'门', from:15, to:15, kind:'gate', tag:'第六幕 · 入京',
+   desc:'新宋门外车马如流。守门吏验过解状，抬眼看了看你的行囊：“城里房钱贵，举子多住州桥以南。”',
+   acts:['enter','sell','sleep']},
+  {id:'jiulou', name:'御街 · 酒楼', glyph:'市', from:16, to:19, kind:'hub', tag:'第七幕 · 市声',
+   desc:'州桥旁的酒楼三层灯火，举子、书商、说书人挤在一处。满楼都在说同一个名字：欧阳修知贡举。邻座有人压低声音：“他这些日子在礼部，行卷还能递进去。”',
+   acts:['toujuan','social','master','study','info','rest','sell','sleep']},
+  {id:'shuku', name:'国子监 · 书库', glyph:'库', from:20, to:24, kind:'hub', tag:'第八幕 · 书库',
+   desc:'书库里尘埃在光柱中浮沉。抄书吏压低声音说，今年主司好经义，诗赋未必是重头。',
+   acts:['study','copy','social','master','rest','sleep']},
+  {id:'gongyuan', name:'贡院 · 号舍', glyph:'院', from:25, to:27, kind:'exam', tag:'第九幕 · 省试',
+   desc:'号舍狭如匣，一灯一砚一席。锁院三日，连咳嗽都要压低。三场之后，便是放榜。'},
+  {id:'fangbang', name:'琼林苑 · 放榜', glyph:'榜', from:28, to:30, kind:'ending', tag:'第十幕 · 放榜',
+   desc:'榜下人潮如墙。榜文贴出那一刻，有人抚掌大笑，有人掩面而去。'}
+];
+
+const EXAM_ROUNDS = ['第一场 · 诗赋', '第二场 · 经义', '第三场 · 策论'];
+const EXAM_POOLS = [
+  q => q.era === '先秦' || q.era === '秦汉',
+  q => q.era === '魏晋南北朝' || q.era === '隋唐',
+  q => q.era === '五代与北宋' || q.era === '隋唐'
+];
+const MASTER_LINES = [
+  '“为文先为气，气盛则言宜。”',
+  '“读书不求记，求其所以然。”',
+  '“今之科举，取通变之士，非取记诵之童。”',
+  '“你的策论锋芒太露，宜藏三分。”',
+  '“文中要有己见，不可尽抄程文。”',
+  '“此次主司好经义，你把《周礼》再读一遍。”'
+];
+
+
+/* ============================ 人物（嘉祐二年，汴京） ============================ */
+const NPCS = {
+  xiansheng:{ name:'乡先生', tag:'临川塾师', tier:'master', where:['jiaxu'], prio:1,
+    desc:'先生把一函手抄的《周礼》塞进你的书箱，道：“庆历二年，乡里王介甫一榜登第，如今已出知常州。你此去，莫堕了临川人的志气。”',
+    note:'王安石于庆历二年中进士，此时出知常州；他后来既是唐宋八大家之一，也是熙宁变法的主持者。' },
+
+  sushi:{ name:'苏轼', tag:'眉州举子 · 二十一岁', tier:'peer', where:['yizhan','jiulou','bianhe'], prio:1,
+    desc:'邻座少年自称眉山苏轼，年二十有一，与弟苏辙同舟而来。他见你案头摊着《庄子》，拊掌笑道：“足下亦好此么？仆读《逍遥游》，只觉天地都宽了。”',
+    note:'嘉祐二年，苏轼与苏辙同榜进士。欧阳修读其《刑赏忠厚之至论》，叹曰：“老夫当避路，放他出一头地。”' },
+  suzhe:{ name:'苏辙', tag:'眉州举子 · 十八岁', tier:'peer', where:['yizhan','jiulou'], prio:2,
+    desc:'苏辙寡言，忽而问你：“汴河岁漕四百万石，溯流而上，费十而致一。足下以为，可久乎？”',
+    note:'兄弟二人同年登第，时人目为“二苏”。' },
+  zenggong:{ name:'曾巩', tag:'南丰举子 · 三十八岁', tier:'peer', where:['jiulou','shuku'], prio:3,
+    desc:'南丰曾巩携弟曾布同来应举，翻过你的文章，缓缓道：“气厚而辞繁。少删三成，便是好文字。”',
+    note:'曾巩、曾布兄弟同榜；欧阳修尝称其文“昆仑倾黄河，渺漫盈百川”。' },
+  zhangzai:{ name:'张载', tag:'横渠学者 · 三十七岁', tier:'peer', where:['shuku','jiulou'], prio:4,
+    desc:'张载在京师讲《易》，听者环立。他问你：“读书何为？”你答得迟疑，他也不追问，只说：“回去再想。”',
+    note:'“为天地立心，为生民立命”，此语出于其学，后世尊为横渠先生。' },
+  chenghao:{ name:'程颢', tag:'洛阳士子 · 二十五岁', tier:'peer', where:['shuku'], prio:5,
+    desc:'程颢与你论“仁者以天地万物为一体”，语声不高，满座却静。',
+    note:'程颢于嘉祐二年登进士第，后与弟程颐同开洛学。' },
+  lvhuiqing:{ name:'吕惠卿', tag:'晋江举子 · 二十五岁', tier:'peer', where:['jiulou'], prio:6,
+    desc:'吕惠卿锐于言利，三杯之后便与你争青苗、市易之是非，末了笑一声：“足下太厚道。”',
+    note:'他后来成为熙宁变法的干将，与王安石始合终隙，王公“福建子”之叹即由此人。' },
+  zengbu:{ name:'曾布', tag:'南丰举子 · 二十一岁', tier:'peer', where:['jiulou'], prio:7,
+    desc:'曾布口舌极利，谈起科场程式如数家珍，末了劝你：“文须有官样。太奇了，主司不敢取。”',
+    note:'曾布嘉祐二年与兄曾巩同榜，后官至宰相，是新旧党争里的老面孔。' },
+
+  suXun:{ name:'苏洵', tag:'眉山布衣 · 四十八岁', tier:'master', where:['bianhe'], prio:1,
+    desc:'船头那位老者自称眉山苏洵，携二子赴京应举，自己却屡试不第。他把一叠文稿递过来：“足下看看，可还有可取之处？”',
+    note:'苏洵嘉祐元年携苏轼、苏辙入京，次年二子同榜登科；欧阳修上《荐布衣苏洵状》，一时名动京师。' },
+
+  ouyang:{ name:'欧阳修', tag:'翰林学士 · 知贡举', tier:'master', where:['jiulou'], prio:1,
+    desc:'礼部衙前，你递上旧作。欧阳修展卷细读，半晌才道：“文从字顺，可再简。少年人肯把话说尽，是长处，也是短处。”',
+    note:'嘉祐二年省试由欧阳修主考、梅尧臣点检试卷；苏轼正是此榜见知于欧公。' },
+  meiyaochen:{ name:'梅尧臣', tag:'诗人 · 点检试卷官', tier:'master', where:['shuku','jiulou'], prio:2,
+    desc:'梅尧臣论诗：“状难写之景，如在目前；含不尽之意，见于言外。”说着抬眼看了看你：“足下这一联，景是够了，意还欠些。”',
+    note:'梅尧臣诗名满天下，嘉祐二年为省试点检试卷官，与欧阳修同主文柄。' },
+  simaguang:{ name:'司马光', tag:'谏官 · 三十八岁', tier:'master', where:['jiulou'], prio:3,
+    desc:'司马光正色道：“取士当先德行，而后文艺。”说完略一颔首：“足下文章，仆读过。”',
+    note:'司马光此时已以直谏知名；三十年后，他将尽废熙宁新法。' }
+};
+
+/* ============================ 题诗（题材与韵部） ============================ */
+const POEM_THEMES = [
+  { key:'shan', name:'山川', prompt:'驿丞笑道：“壁上还空着。足下可留一首写山川的？不拘工拙，只管写来。”',
+    ex:'空山新雨后\n天气晚来秋\n明月松间照\n清泉石上流' },
+  { key:'you', name:'赠友', prompt:'同舍举子明日往西京去。他拍拍你的书箱：“留两句给我罢，写什么都可以。”',
+    ex:'渭城朝雨浥轻尘\n客舍青青柳色新\n劝君更尽一杯酒\n西出阳关无故人' },
+  { key:'xiang', name:'故乡', prompt:'夜雨敲窗。客舍主人听出你的江南口音，轻声道：“想家了吧？写出来，心里会松快些。”',
+    ex:'床前明月光\n疑是地上霜\n举头望明月\n低头思故乡' },
+  { key:'fu', name:'父母', prompt:'店家老母在灯下缝衣。你想起临川家中，母亲也是这样。写一首罢。',
+    ex:'慈母手中线\n游子身上衣\n临行密密缝\n意恐迟迟归' },
+  { key:'xiong', name:'兄弟', prompt:'家书里说，小弟已能背《论语》了。你握笔良久，想写一首寄他。',
+    ex:'独在异乡为异客\n每逢佳节倍思亲\n遥知兄弟登高处\n遍插茱萸少一人' },
+  { key:'xue', name:'勤学', prompt:'邻舍的灯还亮着。你添了灯油，想在壁上写一首自勉的诗。',
+    ex:'三更灯火五更鸡\n正是男儿读书时\n黑发不知勤学早\n白首方悔读书迟' },
+  { key:'kao', name:'场屋之忧', prompt:'明日就要入场。你把笔洗了三遍，还是不安。写一首排遣罢。',
+    ex:'洞房昨夜停红烛\n待晓堂前拜舅姑\n妆罢低声问夫婿\n画眉深浅入时无' },
+  { key:'meng', name:'前程', prompt:'你梦见自己跨马游街，杏花满头。醒来还是客舍，但心里热着。写下来。',
+    ex:'昔日龌龊不足夸\n今朝放荡思无涯\n春风得意马蹄疾\n一日看尽长安花' },
+  { key:'guo', name:'报国', prompt:'城头旌旗猎猎，远处传来戍鼓。你忽然很想写点什么。',
+    ex:'青海长云暗雪山\n孤城遥望玉门关\n黄沙百战穿金甲\n不破楼兰终不还' },
+  { key:'qiong', name:'清贫', prompt:'囊中只剩三贯钱，你却先买了半刀纸。店主看着好笑：“写一首自嘲的，我给你免半间房钱。”',
+    ex:'囊空无一钱\n砚冷余残墨\n富者笑儒冠\n儒冠不曾易' },
+  { key:'zhan', name:'边事', prompt:'听说西边又用兵了。酒客们压低声音，说起了战事。',
+    ex:'葡萄美酒夜光杯\n欲饮琵琶马上催\n醉卧沙场君莫笑\n古来征战几人回' },
+  { key:'sheng', name:'生命', prompt:'山寺老僧替你添了茶，随口问：“人这一生，图个什么？”你一时答不上来。',
+    ex:'盛年不重来\n一日难再晨\n及时当勉励\n岁月不待人' },
+  { key:'shi', name:'仕途', prompt:'有人劝你去投谒权贵，说这才是捷径。你不愿，又不免动摇。写一首表明心迹。',
+    ex:'八月湖水平\n涵虚混太清\n气蒸云梦泽\n波撼岳阳城' },
+  { key:'ji', name:'羁旅', prompt:'船泊在汴河，夜半听见钟声。你披衣坐起，想写一首旅夜。',
+    ex:'月落乌啼霜满天\n江枫渔火对愁眠\n姑苏城外寒山寺\n夜半钟声到客船' },
+  { key:'min', name:'民生', prompt:'路见农人车水，从早到晚不曾歇。你站了很久，把这一幕记在心里。',
+    ex:'锄禾日当午\n汗滴禾下土\n谁知盘中餐\n粒粒皆辛苦' },
+  { key:'mei', name:'咏物', prompt:'庭中一株老梅初开，香气淡淡。主人道：“足下若有兴致，咏一首梅如何？”',
+    ex:'墙角数枝梅\n凌寒独自开\n遥知不是雪\n为有暗香来' },
+  { key:'ya', name:'雅集', prompt:'酒楼壁上已有七八首诗，都是举子的手笔。你也想题一首，与众人凑个热闹。',
+    ex:'灯下同斟一盏春\n各将心事付微醺\n明朝别去江湖远\n莫忘今宵壁上文' },
+  { key:'chan', name:'禅意', prompt:'山寺的钟声很轻，檐下的铃也轻。你坐下来，忽然不想走了。',
+    ex:'木末芙蓉花\n山中发红萼\n涧户寂无人\n纷纷开且落' }
+];
+
+const RHYME_GROUPS = {
+  '东':'风空中同红东通逢钟松峰浓鸿',
+  '阳':'阳香长乡霜光堂塘忙肠凉方桑黄窗江邦双',
+  '支':'时诗知枝期迟思悲离词之师疑飞归衣微稀晖围',
+  '寒':'寒山间关还闲颜班难斑环天年前烟边川船眠然泉连仙缘',
+  '歌':'歌何多河波过罗和蓑',
+  '庚':'生城声情明清行亭星轻惊平听青灯',
+  '尤':'秋愁流舟楼头游州休留幽求洲忧',
+  '侵':'心深林寻今音吟阴沉琴'
+};
+const RHYME_OF = {};
+Object.keys(RHYME_GROUPS).forEach(function(g){
+  for (const ch of RHYME_GROUPS[g]) if (!RHYME_OF[ch]) RHYME_OF[ch] = g;
+});
+function rhymeOf(ch){ return RHYME_OF[ch] || null; }
+
+
+
+/* ============================ 支线事件 ============================ */
+const EVENTS = [
+  { id:'rain', w:2, where:['shandao','bianhe'], title:'骤 雨',
+    text:'山雨骤至，前不巴村后不着店。你只好把书箱裹在衣里，淋了半日。',
+    auto:{jing:-1},
+    autoMsg:'到得驿舍，浑身湿透，咳了半夜。' },
+  { id:'fellow', w:2, where:['yizhan','jiulou','shandao','bianhe'], title:'同 乡',
+    text:'驿舍里有人听出你的口音，一问竟是邻县举子。他乡遇故知，他硬塞给你一包干粮和几贯钱。',
+    auto:{yuan:1, money:1},
+    autoMsg:'你们约好到京再叙。' },
+  { id:'bookstall', w:2, where:['yizhan','jiulou','shuku'], title:'书 肆',
+    text:'书肆掌柜压低声音，说有一部时文程卷，是今年主司喜欢的路数。',
+    choice:[
+      { label:'买下（盘缠 -3，智力 +1）', cost:{money:3}, gain:{zhi:1}, msg:'你翻了两夜，果然有几句可用。' },
+      { label:'只翻不买', cost:{}, gain:{}, msg:'你站着看完半卷，掌柜的脸色不太好看。' }
+    ] },
+  { id:'monk', w:2, where:['shandao'], title:'山 寺',
+    text:'山寺老僧留你吃茶。他说：“心不定，文不工。”',
+    choice:[
+      { label:'听他说法（精力 +1）', cost:{}, gain:{jing:1}, msg:'你静坐一炷香，心里果然定了些。' },
+      { label:'捐两贯香火（盘缠 -2，人缘 +1）', cost:{money:2}, gain:{yuan:1}, msg:'老僧合掌，替你写了一纸荐书。' }
+    ] },
+  { id:'drunk', w:2, where:['jiulou'], title:'醉 客',
+    text:'酒楼里两个醉客掀了桌子，酒保急得直搓手。',
+    choice:[
+      { label:'上前劝架（精力 -1，人缘 +1）', cost:{jing:1}, gain:{yuan:1}, msg:'你被推了个趔趄，众人却都记住了你。' },
+      { label:'避到楼上', cost:{}, gain:{}, msg:'你端着碗上楼，由他们闹去。' }
+    ] },
+  { id:'patron', w:1, where:['jiulou','yizhan'], title:'贵 人',
+    text:'一位过路官员看了你随手写的字，问：“这字是谁写的？”',
+    choice:[
+      { label:'自报家门', cost:{}, gain:{yuan:1, money:2}, msg:'他留了两贯钱，说“到京可来找我”。' },
+      { label:'谦称不足道', cost:{}, gain:{zhi:1}, msg:'他笑了笑：“谦而不虚，难得。”' }
+    ] }
+];
+
+
+/* ============================ 山匪 / 水匪（固定遭遇） ============================ */
+const BANDITS = {
+  shan: {
+    title: '山 匪',
+    text: '转过山坳，林中忽然闪出四五条汉子，横着扁担拦在路心。为首的斜眼打量你的书箱：“举子？书箱里可有值钱的？”',
+    safeKey: 'shan',
+    choices: [
+      { label: '舍财免灾（盘缠 -2）', cost: { money: 2 }, msg: '你把两贯钱递过去。他们掂了掂，骂了句晦气，让开了路。' },
+      { label: '拼命护箱（精力 -2）', cost: { jing: 2 }, msg: '你抱紧书箱撞开一人，跌跌撞撞跑出半里地，膝头全是血。' },
+      { label: '与同行者并作一处（需先“结伴同行”）', needSafe: true, gain: { yuan: 1 },
+        msg: '你一声呼哨，前后赶路的举子、挑夫都围拢来。匪人见人多，骂了一声散去。' }
+    ]
+  },
+  shui: {
+    title: '水 匪',
+    text: '夜泊荒岸，一叶小舟无声无息靠上来。有人探手去够舱里的箱笼，船家压着嗓子喊你：“莫出声，把灯吹了！”',
+    safeKey: 'shui',
+    choices: [
+      { label: '花钱消灾（盘缠 -2）', cost: { money: 2 }, msg: '你隔着水递过两贯钱。黑影接了，撑篙退去。' },
+      { label: '与船家合力驱赶（精力 -1）', cost: { jing: 1 }, msg: '你抄起船桨与船家一同呵斥，小舟退开，手腕却被磕了一下。' },
+      { label: '提灯照过去（需先“系舟守夜”）', needSafe: true, gain: { zhi: 1 },
+        msg: '你守夜未睡，提灯一照，照出那张脸。他心里发虚，撑篙便走。' }
+    ]
+  }
+};
+
+
+/* ============================ 词条（释义与史料出处） ============================ */
+// quote = 原文引用；gist = 据某书所述（转述，不加引号）
+const GLOSSARY = {
+  '解状': { def:'州府发给解试合格举人的文书。入京应省试时要验看，相当于准考证。',
+    src:[{ book:'《宋史·选举志一》', gist:'州府解试中选者给解牒，许赴省试。' },
+         { book:'《宋会要辑稿·选举》', gist:'诸州解送举人，须具解状、家状投礼部，故宋人公文“解牒”“解状”并用。' }],
+    note:'本作统一用“解状”。' },
+  '解试': { def:'州府主持的选拔考试，中式者称举人，才有资格赴京应省试。',
+    src:[{ book:'《宋史·选举志一》', gist:'解试由州府长官主持，中选者贡于礼部。' }] },
+  '省试': { def:'尚书省礼部主持的全国性考试，举人赴京应之，中式者再赴殿试。',
+    src:[{ book:'《宋史·选举志一》', gist:'礼部贡院掌受诸州解送举人名籍，按期试之。' }],
+    note:'本作第 25–27 日的三场即省试。' },
+  '殿试': { def:'皇帝亲自主持的复试。宋初殿试有黜落，后渐成定例，主要定等第。',
+    src:[{ book:'《宋史·选举志一》', gist:'省试中选者，天子亲策于廷，谓之殿试。' }] },
+  '知贡举': { def:'省试的主考官，多由翰林学士、中书舍人等临时差充。',
+    src:[{ book:'《宋史·选举志一》', gist:'以他官权知贡举，掌贡举之事。' }],
+    note:'嘉祐二年知贡举为欧阳修，点检试卷官为梅尧臣。' },
+  '锁院': { def:'考官受命后即入贡院锁宿，不许外出见客，以防请托泄题。',
+    src:[{ book:'《宋史·选举志一》', gist:'试官入贡院锁宿，不得与外人通。' },
+         { book:'欧阳修《归田录》', gist:'欧阳修记嘉祐二年与韩绛同知贡举、辟梅尧臣为小试官，锁院五十日，唱和成集。' }],
+    note:'锁院期间所作唱和诗，即《礼部唱和诗》。' },
+  '行卷': { def:'举子把平日所作诗文投献给名公权要，求其延誉、向主司推荐。',
+    src:[{ book:'赵彦卫《云麓漫钞》卷八', quote:'唐之举人，先藉当世显人，以姓名达之主司，然后以所业投献；逾数日又投，谓之温卷。' }],
+    note:'此为唐制记载。宋代虽禁公荐，投卷之风仍存；本作“投行卷”即取此意。' },
+  '号舍': { def:'贡院内分隔的考生小屋，一人一间，答卷、食宿皆在其中。',
+    src:[{ book:'《宋史·选举志一》', gist:'贡院分列廊庑，设席舍以居举人。' }],
+    note:'宋人多称“席舍”“试廊”，“号舍”是后世通称。' },
+  '糊名': { def:'糊去试卷上的姓名、乡贯，使考官不知作者，以防徇私。',
+    src:[{ book:'《宋史·选举志一》', gist:'太宗淳化三年，殿试始行糊名考校。' }] },
+  '誊录': { def:'另设书吏将试卷誊抄一遍，考官只看抄本，以防辨认笔迹。',
+    src:[{ book:'《宋史·选举志一》', gist:'真宗大中祥符八年，置誊录院，募书吏誊写试卷。' }] },
+  '特奏名': { def:'屡试不第、年岁已高的举子，由礼部另列名奏上，附试后赐出身。',
+    src:[{ book:'《宋史·选举志一》', gist:'士贡于乡而屡绌于礼部者，积其举数与年岁，别籍其名以奏，许附试，谓之特奏名。' }] },
+  '同进士出身': { def:'及第等第之一，在“进士出身”之下，仍属正榜。',
+    src:[{ book:'《宋史·选举志一》', gist:'及第分等：及第、进士出身、同进士出身。' }] },
+  '琼林宴': { def:'放榜后赐新科进士的宴席，设在琼林苑，故称。',
+    src:[{ book:'《宋史·选举志一》', gist:'赐新及第进士宴于琼林苑，谓之琼林宴。' }] },
+  '程仪': { def:'赠给远行者的路费、盘缠。长亭饯别时亲友所赠即此类。',
+    src:[{ book:'宋人书札', gist:'宋人多称“资装”“程费”，欧阳修、苏轼尺牍中屡见“资装”之语。' }],
+    note:'“程仪”多见于明清小说，宋代并非常语；本作用它作通称，取其易解。' },
+  '盘缠': { def:'路费、旅费。宋元以来口语，话本、元曲中常见。',
+    src:[{ book:'宋元话本与元曲', gist:'“盘缠”指旅途用度，屡见。' }],
+    note:'本作把盘缠抽象为唯一货币；宋人实用铜钱、交子、金银，另有“驿券”可免费住驿。' },
+  '长亭': { def:'城外十里一长亭、五里一短亭，是送别饯行之处。',
+    src:[{ book:'李白《菩萨蛮》', quote:'何处是归程，长亭更短亭。' }],
+    note:'词中“长亭”已作送别地代称，宋代沿用。' },
+  '驿丞': { def:'驿站的管理者，掌过往官员、使客的食宿与车马。',
+    src:[{ book:'《宋史·职官志》', gist:'诸路设驿，掌邮传、供帐之事。' }] },
+  '主司': { def:'主持考试的官员，即考官。',
+    src:[{ book:'《宋史·选举志一》', gist:'举人去取，皆出于主司。' }] },
+  '举人': { def:'解试合格者，取得赴京应省试的资格。',
+    src:[{ book:'《宋史·选举志一》', gist:'中解试者，谓之举人。' }] }
+};
+
+/* ============================ 状态 ============================ */
+let S = null;
+let pendingSave = null;
+
+function freshState(){
+  return {
+    day:1, scene:0, ap:4,
+    zhi:5, jing:5, yuan:5, money:60,
+    flags:{gift:null, master:0, rumor:false, entered:false, juan:false, juanReply:false},
+    maintained:{zhi:false, jing:false, yuan:false},
+    log:[], phase:'play', pending:null, feedback:null, help:false,
+    exam:{total:0, palace:0, round:0, queue:[], cur:0, correct:0, pcur:0, palaceQueue:[]},
+    used:[], ending:null, met:[], poems:[], poem:null, poemUsed:[], event:null, seenEvents:[], safe:{shan:false, shui:false}, banditDone:{shan:false, shui:false}, gloss:null, glossIndex:false
+  };
+}
+
+function addStat(k, v){ S[k] = Math.max(0, Math.min(MAX, S[k] + v)); }
+function fatigue(n){ S.jing = Math.max(1, S.jing - (n || 1)); }
+function log(text){ S.log.unshift({d:S.day, t:text}); if (S.log.length > 40) S.log.pop(); }
+function money(v){ S.money += v; }
+function curScene(){ return SCENES[S.scene]; }
+function sceneForDay(d){
+  for (let i=0;i<SCENES.length;i++) if (d >= SCENES[i].from && d <= SCENES[i].to) return i;
+  return SCENES.length - 1;
+}
+
+/* ============================ 题目 ============================ */
+function pickQuestion(poolFn){
+  let pool = QUESTIONS.filter(poolFn).filter(q => S.used.indexOf(q.id) < 0);
+  if (!pool.length) pool = QUESTIONS.filter(poolFn);
+  const q = pool[Math.floor(Math.random()*pool.length)];
+  S.used.push(q.id);
+  if (S.used.length > 90) S.used.shift();
+  return q;
+}
+function startStudy(){
+  S.pending = {q: pickQuestion(() => true), kind:'study'};
+  S.feedback = null;
+}
+function startExamRound(){
+  const r = S.day - 24;
+  S.exam.round = r; S.exam.cur = 0; S.exam.correct = 0;
+  const pool = EXAM_POOLS[r-1] || (() => true);
+  const picked = [];
+  for (let i=0;i<5;i++){
+    let q = pickQuestion(pool), guard = 0;
+    while (picked.some(p => p.id === q.id) && guard++ < 30) q = pickQuestion(pool);
+    picked.push(q);
+  }
+  S.exam.queue = picked;
+  S.exam.cur = 0;
+  nextExamQuestion();
+}
+function nextExamQuestion(){
+  if (S.exam.cur >= S.exam.queue.length){ finishExamRound(); return; }
+  S.pending = {q: S.exam.queue[S.exam.cur], kind:'exam'};
+  S.feedback = null;
+}
+function finishExamRound(){
+  S.exam.total += S.exam.correct;
+  S.pending = null; S.feedback = null;
+  S.phase = 'roundEnd';
+}
+function startPalace(){
+  const picked = [];
+  for (let i=0;i<3;i++){
+    let q = pickQuestion(() => true), guard = 0;
+    while (picked.some(p => p.id === q.id) && guard++ < 30) q = pickQuestion(() => true);
+    picked.push(q);
+  }
+  S.exam.palaceQueue = picked; S.exam.pcur = 0;
+  nextPalaceQuestion();
+}
+function nextPalaceQuestion(){
+  if (S.exam.pcur >= S.exam.palaceQueue.length){ S.pending = null; S.phase = 'palaceEnd'; return; }
+  S.pending = {q: S.exam.palaceQueue[S.exam.pcur], kind:'palace'};
+  S.feedback = null;
+}
+
+/* ============================ 行动 ============================ */
+const ACT = {
+  study:{ name:'温书做题', hint:'智力+1 精力-1', ap:1, primary:true,
+    run(){ S.maintained.zhi = true; fatigue(); startStudy(); } },
+
+  rest:{ name:'歇息', hint:'精力+3（驿站+4）', ap:1,
+    run(){ S.maintained.jing = true;
+      const id = curScene().id;
+      const bonus = id === 'yizhan' ? 1 : id === 'bianhe' ? -1 : 0;
+      addStat('jing', 3 + bonus);
+      log(id === 'yizhan' ? '驿舍被褥干爽，你一觉睡到日上三竿。'
+        : id === 'bianhe' ? '舱中局促，你枕着书箱睡了半日，醒来腰背酸硬。'
+        : '你合眼睡了半日，醒来时天光柔和。');
+    } },
+
+  social:{ name:'宴饮结交', hint:'人缘+2 盘缠-2', ap:1,
+    run(){ S.maintained.yuan = true; money(-2); addStat('yuan', 2);
+      const npc = meetNpc('peer');
+      if (npc){
+        addStat('zhi', 1);
+        log('〔史料〕' + npc.note);
+        log('你结识了' + npc.name + '（' + npc.tag + '）。' + npc.desc);
+      } else {
+        log('你在席间与几位举子互道乡贯，酒过三巡，已有人称你“王兄”。');
+      }
+    } },
+
+  master:{ name:'拜访大儒', hint:'智力+1 人缘+1 盘缠-1', ap:1,
+    can(){ return S.yuan >= 3; },
+    deny:'你与这位先生素无往来，门房只说“主人不见客”。',
+    run(){ S.maintained.zhi = true; S.maintained.yuan = true; money(-1);
+      addStat('zhi', 1); addStat('yuan', 1); S.flags.master++;
+      if (S.yuan >= 8) addStat('zhi', 1);
+      const npc = meetNpc('master');
+      if (npc){
+        log('〔史料〕' + npc.note);
+        log(npc.name + '（' + npc.tag + '）见了你。' + npc.desc);
+      } else {
+        log('你呈上旧作，先生看了半晌，只说了句：' + MASTER_LINES[S.flags.master % MASTER_LINES.length]);
+      }
+    } },
+
+  info:{ name:'打听消息', hint:'人缘+1 探听主司', ap:1,
+    run(){ S.maintained.yuan = true; money(-1); addStat('yuan', 1);
+      if (!S.flags.rumor){ S.flags.rumor = true; log('酒保凑近低声道：今年知贡举换了人，好经义，厌浮词。'); }
+      else log('你又听了一耳朵传闻，多半是重复的旧话。');
+    } },
+
+  poem:{ name:'题诗换宿', hint:'字数齐 5 贯 · 不齐无酬', ap:1,
+    can(){ return S.poemUsed.indexOf(curScene().id) < 0; },
+    deny:'此地壁上已有你的诗，主人笑着摆手：“换处再写罢。”',
+    run(){ fatigue(); S.maintained.zhi = true; openPoem('poem'); } },
+
+  copy:{ name:'抄书换钱', hint:'盘缠+3 智力+1', ap:1,
+    run(){ money(3); fatigue(); S.maintained.zhi = true; addStat('zhi', 1);
+      log('你替书库抄了两卷《汉书》，腕子发酸，却也把正文默记了一遍。'); } },
+
+  sell:{ name:'街头鬻诗', hint:'字数齐 4 贯 · 不齐无酬', ap:1,
+    can(){ return S.poemUsed.indexOf(curScene().id) < 0; },
+    deny:'这条街上已有人买过你的诗，再写便不值钱了。',
+    run(){ fatigue(); openPoem('sell'); } },
+
+  view:{ name:'凭栏观景', hint:'精力+1 人缘+1', ap:1,
+    run(){ S.maintained.jing = true; S.maintained.yuan = true; addStat('jing', 1); addStat('yuan', 1);
+      log('你与老者同立船头看落日，他随口讲了半段汴河旧事。'); } },
+
+  giftMoney:{ name:'受赠程仪', hint:'盘缠 +8', ap:1, primary:true,
+    run(){ S.flags.gift = 'money'; money(8);
+      log('同窗硬塞来八贯钱：“京城米贵，莫要省这几个铜子。”'); endDay(); } },
+
+  giftBooks:{ name:'受赠旧书', hint:'智力 +2', ap:1, primary:true,
+    run(){ S.flags.gift = 'books'; addStat('zhi', 2);
+      log('先生把一函手抄的《周礼》塞进你的书箱：“路上读它。”'); endDay(); } },
+
+  giftWords:{ name:'受先生赠言', hint:'人缘 +1 · 智力 +1', ap:1, primary:true,
+    run(){ S.flags.gift = 'words'; addStat('yuan', 1); addStat('zhi', 1);
+      log('先生只说了八个字：“守拙而进，勿趋炎势。”'); endDay(); } },
+
+  toujuan:{ name:'投行卷', hint:'谒欧阳修 · 只此一次', ap:1, primary:true,
+    hideIf(){ return !!S.flags.juan || S.met.indexOf('ouyang') >= 0; },
+    run(){
+      money(-2); S.met.push('ouyang'); S.flags.juan = true;
+      addStat('yuan', 1); addStat('zhi', 1);
+      log('你携旧作十篇，到礼部衙前投了行卷，门人答应替你转呈。');
+      log('欧阳修（翰林学士 · 知贡举）展卷细读，半晌才道：“文从字顺，可再简。少年人肯把话说尽，是长处，也是短处。”');
+      log('〔史料〕嘉祐二年省试由欧阳修主考、梅尧臣点检试卷；苏轼正是此榜见知于欧公。');
+    } },
+
+  enter:{ name:'入城安顿', hint:'盘缠 -2 · 推进一日', ap:1, primary:true,
+    run(){ money(-2); S.flags.entered = true;
+      log('你穿过新宋门，车马喧嚣扑面而来，汴京到了。'); endDay(); } },
+
+  guard:{ name:'结伴同行', hint:'盘缠-1 人缘+1 · 遇匪可呼救', ap:1,
+    run(){ money(-1); addStat('yuan', 1); S.maintained.yuan = true; S.safe.shan = true;
+      log('你与一队贩布的商旅搭伴同行，约定前后照应。'); } },
+
+  temple:{ name:'夜宿山寺', hint:'精力+1 智力+1', ap:1,
+    run(){ addStat('jing', 1); addStat('zhi', 1); S.maintained.jing = true;
+      log('山寺的灯油不多了，你把书凑近些，读到三更。'); } },
+
+  watch:{ name:'系舟守夜', hint:'精力-1 · 遇水匪可喝退', ap:1,
+    run(){ fatigue(); S.safe.shui = true;
+      log('你把箱笼挪到舱口，和衣坐着，听了一夜水声。'); } },
+
+  chat:{ name:'与船家闲谈', hint:'人缘+1 智力+1', ap:1,
+    run(){ addStat('yuan', 1); addStat('zhi', 1); S.maintained.yuan = true;
+      log('船家讲了半段汴河旧事：哪段水急，哪段有贼。'); } },
+
+  sleep:{ name:'就寝 · 结束今日', hint:'夜间结算', ap:0,
+    run(){ endDay(); } }
+};
+
+
+/* ============================ 相遇与题诗 ============================ */
+function meetNpc(tier){
+  const sc = curScene();
+  const ids = Object.keys(NPCS).filter(function(k){
+    return NPCS[k].tier === tier && NPCS[k].where.indexOf(sc.id) >= 0 && S.met.indexOf(k) < 0;
+  });
+  if (!ids.length) return null;
+  ids.sort(function(a, b){ return (NPCS[a].prio || 9) - (NPCS[b].prio || 9); });
+  const id = ids[0];
+  S.met.push(id);
+  return Object.assign({id:id}, NPCS[id]);
+}
+
+function openPoem(mode){
+  const pool = POEM_THEMES.filter(function(t){ return !S.poem || t.key !== S.poem.theme; });
+  const th = pool[Math.floor(Math.random()*pool.length)];
+  S.poem = {mode:mode, theme:th.key, text:'', warn:false, result:null};
+}
+
+function stripPunct(x){ return x.replace(/[，。；、！？：,.!?;:\s]/g, ''); }
+
+const CLASS_OF = {};
+function putClass(cls, chars){ for (const ch of chars) if (!CLASS_OF[ch]) CLASS_OF[ch] = cls; }
+putClass('数', '一二三四五六七八九十百千万亿双孤几半');
+putClass('色', '青白红黄紫翠碧苍朱墨绿丹玄素');
+putClass('方', '上下东西南北前后中外里边间旁侧际');
+putClass('代', '我你他她尔汝吾君卿子谁此彼其');
+putClass('虚', '之而以其于则为所且若何不无未莫相共亦复更又已曾也矣乎焉哉与');
+putClass('名', '日月星云风雨雪霜烟霞虹雷电山水江河溪石泉川岸峰林谷洲汀湖海涛沙松柳梅竹桃李兰菊荷草花叶枝根雁鹤鸦莺燕马猿鱼龙犬鸡舟船帆灯烛剑琴书酒樽杯帘窗门楼台亭阁桥驿车家乡镇州城关塞边春秋冬夏朝暮夜晓昏年岁心魂梦泪声文章诗笔纸墨砚王臣尘路途翁叟僧客友弟兄父母妻子');
+putClass('形', '寒清孤远长空深浅幽静愁闲老衰新旧香冷暖明暗盛高荒淡薄轻重缓急妍媸贫富賢愚狂雅俗');
+putClass('动', '照流落飞过开望听思忆归来去行卧坐醉吟题送别见闻问答笑唱叹惜怜惊惧兴废存亡映遮掩登临抚弄唤迎逢遇识知觉悟读论谋战守征戍行');
+
+function isParallel(a, b){
+  const A = Array.from(a), B = Array.from(b);
+  if (A.length !== B.length || !A.length) return false;
+  if (a === b) return false;
+  let known = 0;
+  for (let i = 0; i < A.length; i++){
+    const ca = CLASS_OF[A[i]], cb = CLASS_OF[B[i]];
+    if (ca && cb){
+      known++;
+      if (ca !== cb) return false;
+    }
+  }
+  return known >= Math.ceil(A.length * 0.5);
+}
+
+function gradePoem(text, themeKey){
+  const lines = text.split(/\n+/).map(stripPunct).filter(function(l){ return l.length > 0; });
+  const lens = lines.map(function(l){ return Array.from(l).length; });
+  const n = lines.length;
+  const uniform = n >= 2 && lens.every(function(x){ return x === lens[0]; });
+  const four = (n === 4);
+  const dui = four && uniform &&
+    (isParallel(lines[0], lines[1]) || isParallel(lines[1], lines[2]) || isParallel(lines[2], lines[3]));
+
+  const notes = [];
+  if (four) notes.push('四句成篇'); else notes.push('共 ' + n + ' 句');
+  if (uniform) notes.push('字数齐整（每句 ' + lens[0] + ' 字）'); else notes.push('字数参差');
+  if (dui) notes.push('中二联相对');
+
+  const grade = (four && uniform) ? '上品' : '中品';
+  let note;
+  if (grade === '上品' && dui)
+    note = '四句齐整，中二联又对得稳当，越发见功夫。主人读了两遍，连声称善。';
+  else if (grade === '上品')
+    note = '四句齐整，字字相当，已是一首成样的诗。主人抚掌道：“好，好！”';
+  else
+    note = '肯写就好。下一回写四句、每句字数一样，便是上品——主人家也才好奉上程仪。';
+
+  return {grade:grade, notes:notes, lines:lines, note:note, dui:dui, uniform:uniform, n:n};
+}
+
+
+function submitPoem(text){
+  if (!S.poem || S.poem.result) return;
+  const clean = (text || '').trim();
+  S.poem.text = clean;
+  if (!clean){ S.poem.warn = true; return; }
+  const th = POEM_THEMES.filter(function(t){ return t.key === S.poem.theme; })[0];
+  const g = gradePoem(clean, S.poem.theme);
+  const reward = g.grade === '上品' ? (S.poem.mode === 'poem' ? 5 : 4) : 0;
+  money(reward);
+  if (g.grade === '上品') addStat('zhi', 1);
+  S.poems.push({day:S.day, mode:S.poem.mode, theme:th.name, text:clean, grade:g.grade, reward:reward});
+  if (S.poemUsed.indexOf(curScene().id) < 0) S.poemUsed.push(curScene().id);
+  if (reward > 0){
+    log('你' + (S.poem.mode === 'poem' ? '于驿壁题' : '当街鬻出一首') + th.name + '诗，上品，得 ' + reward + ' 贯。');
+  } else {
+    log('你' + (S.poem.mode === 'poem' ? '题了一首' : '当街鬻出一首') + th.name + '诗，' +
+        (S.poem.mode === 'poem' ? '主人笑着收了，却未提程仪的事。' : '围观的人渐渐散了，没做成生意。'));
+  }
+  S.poem.result = Object.assign({empty:false, theme:th.name, reward:reward}, g);
+}
+
+/* ============================ 答题 ============================ */
+const LETTERS = ['A','B','C','D'];
+
+function answer(i){
+  if (!S.pending || S.feedback) return;
+  const q = S.pending.q, my = LETTERS[i], ok = my === q.answer;
+  if (S.pending.kind === 'study'){
+    addStat('zhi', ok ? 1 : 1);
+    log(ok ? '此题你答得干脆，心中又亮了一分。' : '此题答错，你把出处又看了一遍。');
+  } else if (S.pending.kind === 'exam'){
+    if (ok) S.exam.correct++;
+    log(ok ? '笔下一气，未曾迟疑。' : '笔尖顿了顿，终究写错了出处。');
+  } else {
+    if (ok) S.exam.palace++;
+  }
+  S.pending.my = my;
+  S.feedback = {ok, answer:q.answer, explain:q.explain};
+}
+
+function continueAfterAnswer(){
+  if (!S.pending) return;
+  const kind = S.pending.kind;
+  S.pending = null; S.feedback = null;
+  if (kind === 'exam'){ S.exam.cur++; nextExamQuestion(); }
+  else if (kind === 'palace'){ S.exam.pcur++; nextPalaceQuestion(); }
+}
+
+/* ============================ 日循环 ============================ */
+function enterDay(){
+  const sc = curScene();
+  S.pending = null; S.feedback = null;
+  if (sc.kind === 'exam'){
+    S.phase = 'exam';
+    if (S.day === 25 && S.flags.juan && !S.flags.juanReply){
+      S.flags.juanReply = true;
+      const good = S.zhi >= 7;
+      addStat('yuan', 1);
+      if (good) addStat('zhi', 1);
+      S.letter = good
+        ? { text: '天将明，有人叩门，从门缝里递进一纸小笺，字是瘦硬的欧体：\n\n“文气已足，只宜敛锋。策问若及河渠，可据《禹贡》立论。”\n\n下款只是一个“修”字。',
+            effect: '知贡举记得你的卷子。人缘 +1、智力 +1，省试再得一分考运。' }
+        : { text: '天将明，有人叩门，从门缝里递进一纸小笺：\n\n“笔下太急。入场先定章法，再落字。”\n\n下款是一个“修”字。',
+            effect: '知贡举看过你的行卷。人缘 +1，省试略有考运。' };
+      return;
+    }
+    startExamRound();
+    return;
+  }
+  if (sc.kind === 'ending'){
+    if (S.day <= 28){ S.phase = 'result'; return; }
+    if (S.day === 29){ S.phase = 'palace'; startPalace(); return; }
+    S.phase = 'banquet'; return;
+  }
+  S.phase = 'play';
+}
+
+function endDay(){
+  if (S.phase === 'over') return;
+  const kindNow = curScene().kind;
+  let cost = (S.day >= 16 ? 2 : 1);
+  if (kindNow === 'exam' || kindNow === 'ending') cost = 1;
+  money(-cost);
+  if (S.money < 0){
+    S.money = 0;
+    return finish('fail', {title:'困于逆旅', text:'盘缠用尽，你连号舍外的客栈也住不起了。放榜那日，你只能站在人群之外，听别人念榜。'});
+  }
+
+  const exempt = (kindNow === 'exam' || kindNow === 'ending' || kindNow === 'choice' || kindNow === 'gate');
+  if (!exempt){
+    const names = {zhi:'智力', jing:'精力', yuan:'人缘'};
+    const lost = [];
+    ['zhi','jing','yuan'].forEach(k => { if (!S.maintained[k]){ addStat(k, -1); lost.push(k); } });
+    if (lost.length) log('夜深，' + lost.map(k => names[k]).join('、') + ' 各消减一分。');
+    if (S.jing <= 2 && Math.random() < 0.45){
+      addStat('jing', -1);
+      log('你连日奔波，夜里咳了起来，精力又失一分。');
+    }
+    const low = [];
+    if (S.zhi <= 2) low.push('智力');
+    if (S.jing <= 2) low.push('精力');
+    if (S.yuan <= 2) low.push('人缘');
+    if (low.length) log('⚠ ' + low.join('、') + '已近枯竭，明日须先补上。');
+  }
+
+  if (S.zhi <= 0) return finish('fail', {title:'胸无点墨', text:'久不温书，提笔竟不知从何说起。你在号舍里坐了一整日，只写下半行字。'});
+  if (S.jing <= 0) return finish('fail', {title:'病卧逆旅', text:'你在客栈里躺了三天，没能走进贡院的门。这一科，就此作罢。'});
+  if (S.yuan <= 0) return finish('fail', {title:'孤身无援', text:'同行者皆散去，无人为你递一句话。汴京的冬天很冷，你把行囊收了起来。'});
+
+  S.day++;
+  if (S.day > TOTAL_DAYS) return finishEnding();
+
+  S.scene = sceneForDay(S.day);
+  S.ap = 4;
+  S.maintained = {zhi:false, jing:false, yuan:false};
+
+  const ns = curScene();
+  log('—— 第 ' + S.day + ' 日 · ' + ns.name + ' ——');
+
+  if (ns.kind === 'travel'){ S.ap -= 2; travelEvent(); }
+  enterDay();
+  if (S.phase === 'play' && !maybeBandit()) maybeEvent();
+}
+
+function applyDelta(cost, gain){
+  const c = cost || {}, g = gain || {};
+  if (c.money) money(-c.money);
+  if (c.jing) fatigue(c.jing);
+  if (c.zhi) addStat('zhi', -c.zhi);
+  if (c.yuan) addStat('yuan', -c.yuan);
+  if (g.money) money(g.money);
+  if (g.jing) addStat('jing', g.jing);
+  if (g.zhi) addStat('zhi', g.zhi);
+  if (g.yuan) addStat('yuan', g.yuan);
+}
+
+function maybeEvent(){
+  if (S.phase !== 'play' || S.day < 3 || S.event) return;
+  const sc = curScene();
+  if (sc.kind === 'exam' || sc.kind === 'ending') return;
+  if (Math.random() > 0.5) return;
+  const pool = EVENTS.filter(e =>
+    (!e.where || e.where.indexOf(sc.id) >= 0) && (S.seenEvents || []).indexOf(e.id) < 0);
+  if (!pool.length) return;
+  const total = pool.reduce((a, b) => a + (b.w || 1), 0);
+  let r = Math.random() * total, pick = pool[pool.length - 1];
+  for (const e of pool){ if ((r -= (e.w || 1)) <= 0){ pick = e; break; } }
+  S.seenEvents = S.seenEvents || [];
+  S.seenEvents.push(pick.id);
+  if (pick.auto){
+    applyDelta(null, pick.auto);
+    log(pick.autoMsg || '');
+    S.event = { title: pick.title, text: pick.text, msg: pick.autoMsg || '', done: true };
+  } else {
+    S.event = { title: pick.title, text: pick.text, choice: pick.choice, done: false };
+  }
+}
+
+function chooseEvent(i){
+  const e = S.event;
+  if (!e || !e.choice) return;
+  const c = e.choice[i];
+  if (c.needSafe && !S.safe[e.safeKey]) return;
+  applyDelta(c.cost, c.gain);
+  log(c.msg);
+  e.msg = c.msg;
+  e.done = true;
+}
+
+function showBandit(key){
+  const b = BANDITS[key];
+  S.event = { title: b.title, text: b.text, choice: b.choices, done: false, safeKey: b.safeKey, bandit: true };
+}
+
+function maybeBandit(){
+  const sc = curScene();
+  if (sc.id === 'shandao' && S.day === 8 && !S.banditDone.shan){
+    S.banditDone.shan = true; showBandit('shan'); return true;
+  }
+  if (sc.id === 'bianhe' && S.day === 11 && !S.banditDone.shui){
+    S.banditDone.shui = true; showBandit('shui'); return true;
+  }
+  return false;
+}
+
+function travelEvent(){
+  const rolls = [
+    {w:3, fn(){ fatigue(); log('山雨骤至，你的鞋袜尽湿，赶路耗去不少气力。'); }},
+    {w:2, fn(){ money(-2); log('渡口船家坐地起价，你多付了两贯。'); }},
+    {w:2, fn(){ addStat('zhi', -1); log('车马颠簸，你翻开书却一个字也读不进去。'); }},
+    {w:2, fn(){ addStat('yuan', 1); log('同行的举子分了半块干粮给你，两人攀谈起来。'); }},
+    {w:1, fn(){ addStat('jing', 1); log('途中遇到一处茶亭，你歇了半个时辰，精神稍复。'); }}
+  ];
+  const total = rolls.reduce((a,b)=>a+b.w,0);
+  let r = Math.random()*total;
+  for (const it of rolls){ if ((r -= it.w) <= 0){ it.fn(); return; } }
+}
+
+/* ============================ 结局 ============================ */
+function finish(kind, opt){
+  S.phase = 'over';
+  S.ending = Object.assign({kind}, opt || {});
+}
+
+function failExam(){
+  S.phase = 'over';
+  S.ending = {kind:'ending', rank:'落第', cls:'dim',
+    text:'榜上没有你的名字。你在汴京又住了两月，把行囊里剩下的书读完，才动身回乡。三年后再来，也未必不是好事。'};
+}
+
+function finishEnding(){
+  const examPct = S.exam.total / 15;
+  const palacePct = S.exam.palace / 3;
+  const jingCoef = S.jing >= 6 ? 1 : S.jing >= 3 ? 0.88 : 0.75;
+  const rumor = S.flags.rumor ? 0.03 : 0;
+  const juanBonus = S.flags.juanReply ? 0.04 : (S.flags.juan ? 0.02 : 0);
+  const zhiCoef = 0.60 + S.zhi / 25;          // 智力决定笔墨的成色
+  const yuanNorm = S.yuan / MAX;
+  const score = (examPct*0.62*zhiCoef + palacePct*0.26 + yuanNorm*0.12 + rumor + juanBonus) * jingCoef;
+  let e;
+  if (score >= 0.88) e = {rank:'状元', cls:'red', text:'唱名之日，你的名字第一个被唤出。琼林宴上，你想起临川老宅的那盏灯，忽然觉得三千里路并不算远。'};
+  else if (score >= 0.78) e = {rank:'一甲进士', cls:'red', text:'你列名一甲，入馆阁读书。同榜的人都说，临川来的这位王举子，文章有锋芒。'};
+  else if (score >= 0.68) e = {rank:'二甲进士', cls:'red', text:'你中了二甲进士，授官外放。离京那日，你在州桥边站了很久，看汴河的水往东去。'};
+  else if (score >= 0.58) e = {rank:'同进士出身', cls:'', text:'你以同进士出身及第，虽非高第，终究脱了白身。回乡时，先生在牌位前多摆了一壶酒。'};
+  else e = {rank:'特奏名', cls:'dim', text:'你的卷子被归入特奏名，赐同进士出身，授一县主簿。仕途虽小，终究入了门。'};
+  S.phase = 'over';
+  S.ending = Object.assign({kind:'ending'}, e);
+}
+
+/* ============================ 存档 ============================ */
+const SAVE_KEY = 'song-exam-save-v1';
+function saveGame(){
+  if (!S || S.phase === 'over') return;
+  try{
+    const c = JSON.parse(JSON.stringify(S));
+    c.pending = null; c.feedback = null; c.poem = null; c.letter = null; c.event = null;
+    c.log = c.log.slice(0, 12);
+    localStorage.setItem(SAVE_KEY, JSON.stringify(c));
+  }catch(e){}
+}
+function loadGame(){
+  try{
+    const raw = localStorage.getItem(SAVE_KEY);
+    if (!raw) return null;
+    const g = JSON.parse(raw);
+    if (!g || !g.day || g.phase === 'over') return null;
+    g.pending = null; g.feedback = null; g.help = false;
+    if (typeof g.ap !== 'number' || g.ap < 0 || g.ap > 4) g.ap = 4;
+    return g;
+  }catch(e){ return null; }
+}
+function clearSave(){ try{ localStorage.removeItem(SAVE_KEY); }catch(e){} }
+
+
+/* ============================ 词条标注 ============================ */
+function splitByTerms(text, terms){
+  const out = [];
+  let i = 0, buf = '';
+  while (i < text.length){
+    let hit = null;
+    for (const t of terms){ if (text.startsWith(t, i)){ hit = t; break; } }
+    if (hit){
+      if (buf){ out.push({t:'text', v:buf}); buf = ''; }
+      out.push({t:'term', v:hit});
+      i += hit.length;
+    } else {
+      buf += text[i];
+      i++;
+    }
+  }
+  if (buf) out.push({t:'text', v:buf});
+  return out;
+}
+
+function annotateTerms(rootEl){
+  if (!rootEl || typeof rootEl.querySelectorAll !== 'function') return;
+  const TERMS = Object.keys(GLOSSARY).sort(function(a,b){ return b.length - a.length; });
+  rootEl.querySelectorAll('.scene-desc, .log div, .npc-line').forEach(function(el){
+    if (el.dataset.glossDone) return;
+    el.dataset.glossDone = '1';
+    const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+    const nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach(function(node){
+      if (!node.parentElement || node.parentElement.closest('.gloss')) return;
+      const text = node.nodeValue;
+      if (!text) return;
+      const parts = splitByTerms(text, TERMS);
+      if (!parts.some(function(p){ return p.t === 'term'; })) return;
+      const frag = document.createDocumentFragment();
+      parts.forEach(function(p){
+        if (p.t === 'term'){
+          const sp = document.createElement('span');
+          sp.className = 'gloss';
+          sp.dataset.term = p.v;
+          sp.textContent = p.v;
+          frag.appendChild(sp);
+        } else {
+          frag.appendChild(document.createTextNode(p.v));
+        }
+      });
+      node.parentNode.replaceChild(frag, node);
+    });
+  });
+}
+
+/* ============================ 渲染 ============================ */
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+function pipRow(k, label, note){
+  let pips = '';
+  for (let i=1;i<=MAX;i++) pips += '<div class="pip ' + k + (i <= S[k] ? ' on' : '') + '"></div>';
+  return '<div class="stat"><div class="top"><span>' + label + '</span><i>' + note + '</i></div><div class="pips">' + pips + '</div></div>';
+}
+
+function render(){
+  if (S.phase === 'title'){ renderTitle(); return; }
+  const app = document.getElementById('app');
+  const sc = curScene();
+  const apDots = [1,2,3,4].map(i => '<div class="dot ' + (i <= S.ap ? 'on' : '') + '"></div>').join('');
+  const logHtml = S.log.map(l => {
+    const cls = l.t.indexOf('〔史料〕') === 0 ? ' class="hist"' : '';
+    return '<div' + cls + '><span>' + (l.d ? dateLabel(l.d) : '') + '</span>' + esc(l.t) + '</div>';
+  }).join('');
+
+  app.innerHTML = `
+  <header class="head">
+    <h1>北宋赶考记<small>嘉祐二年 · 丁酉 · 临川举子赴京应省试</small></h1>
+    <div class="meta">第 ${S.day} 日 / 30 · ${dateLabel(S.day)}<br><button data-act="help">凡例</button> · <button data-act="glossIndex">词条</button> · <button data-act="restart">重开</button></div>
+    <div class="seal">赴京<br>应试</div>
+  </header>
+  <div class="main">
+    <section class="card stage">${renderBody()}</section>
+    <aside class="status">
+      <div class="card">
+        <div class="row"><span>行程</span><span>${sc.tag}</span></div>
+        <div class="row"><span>盘缠</span><b>${S.money} 贯</b></div>
+        <div class="sep"></div>
+        ${pipRow('zhi','智力','未温书则夜减一分')}
+        ${pipRow('jing','精力','未歇息则夜减一分')}
+        ${pipRow('yuan','人缘','未交游则夜减一分')}
+        ${(S.phase === 'play') ? '<div class="ap"><span>今日行动</span><div class="dots">' + apDots + '</div></div>' : ''}
+        <div class="log">${logHtml || '<div><span></span>—— 故事刚刚开始 ——</div>'}</div>
+      </div>
+    </aside>
+  </div>`;
+
+  annotateTerms(app);
+  renderOverlay();
+}
+
+function renderTitle(){
+  const app = document.getElementById('app');
+  const save = pendingSave;
+  const info = save
+    ? `上次行至第 ${save.day} 日 · ${SCENES[save.scene].name}　智力 ${save.zhi} · 精力 ${save.jing} · 人缘 ${save.yuan} · 盘缠 ${save.money} 贯`
+    : '尚无存档。启程后每到一日会自动存一次，刷新不丢。';
+  const contBtn = save
+    ? `<button class="act primary" data-act="continue"><b>继续上次</b><span>第 ${save.day} 日 · ${SCENES[save.scene].name}</span></button>`
+    : '';
+  app.innerHTML = `
+  <header class="head">
+    <h1>北宋赶考记<small>嘉祐二年 · 丁酉 · 临川举子赴京应省试</small></h1>
+    <div class="seal">赴京<br>应试</div>
+  </header>
+  <div class="main" style="grid-template-columns:1fr">
+    <section class="card stage" style="min-height:0">
+      <div class="glyph">考</div>
+      <div class="scene-tag">三十日 · 一千里</div>
+      <h2 class="scene-name">临川到汴京</h2>
+      <p class="scene-desc">正月初十启程，二月入贡院。三十天里，你要在赶路、温书、歇息、交游之间取舍：<br>
+      智力管笔墨，精力管临场，人缘管引荐。三样任缺其一，这一科便走不到榜下。</p>
+      <div class="acts">
+        ${contBtn}
+        <button class="act" data-act="newgame"><b>重新开始</b><span>清空旧档，自正月初十起</span></button>
+        <button class="act" data-act="help"><b>凡 例</b><span>怎么玩 · 规则说明</span></button>
+      </div>
+      <div class="stage-foot">
+        <span>${info}</span>
+        <span>${save ? '继续上次，或重新开一科' : '点「重新开始」启程'}</span>
+      </div>
+    </section>
+  </div>`;
+  annotateTerms(app);
+  renderOverlay();
+}
+
+function renderBody(){
+  if (S.phase === 'over') return renderEnding();
+  if (S.phase === 'result') return renderResult();
+  if (S.phase === 'palace' || S.phase === 'palaceEnd') return renderPalace();
+  if (S.phase === 'banquet') return renderBanquet();
+  if (S.phase === 'exam' || S.phase === 'roundEnd') return renderExam();
+  return renderPlay();
+}
+
+function renderPlay(){
+  const sc = curScene();
+  const btns = (sc.acts || []).filter(id => ACT[id] && (!ACT[id].hideIf || !ACT[id].hideIf())).map(id => {
+    const a = ACT[id]; if (!a) return '';
+    const off = S.ap < a.ap ? 'disabled' : '';
+    return `<button class="act ${a.primary?'primary':''}" data-act="${id}" ${off}><b>${a.name}</b><span>${a.hint}</span></button>`;
+  }).join('');
+  return `<div class="glyph">${sc.glyph}</div>
+    <div class="scene-tag">${sc.tag}</div>
+    <h2 class="scene-name">${sc.name}</h2>
+    <p class="scene-desc">${sc.desc}</p>
+    <div class="acts">${btns}</div>
+    <div class="stage-foot">
+      <span>今日余 <b>${S.ap}</b> 点行动 · 食宿约 <b>${S.day >= 16 ? 2 : 1}</b> 贯</span>
+      <span>${S.ap > 0 ? '温书养智，歇息养神，交游养人缘' : '已无余力，宜早眠'}</span>
+    </div>`;
+}
+
+function renderExam(){
+  const sc = curScene();
+  const r = EXAM_ROUNDS[S.exam.round-1] || '省试 · 入场';
+  const done = (S.phase === 'roundEnd');
+  return `<div class="glyph">${sc.glyph}</div>
+    <div class="scene-tag">${sc.tag}</div>
+    <h2 class="scene-name">${r}</h2>
+    <p class="scene-desc">${S.exam.round === 0
+      ? '天将明，贡院门外已站满了人。你把手里的短笺折好，收进衣襟。'
+      : done
+        ? '你搁下笔，掌心全是汗。这一场答对 <b>' + S.exam.correct + '</b> 题（共 5 题）。'
+        : '号舍里静得能听见蜡烛燃烧。你展开卷子，深吸一口气。'}</p>
+    <div class="acts">${S.exam.round === 0
+      ? '<button class="act primary" data-act="openQuestion"><b>入场</b><span>先看短笺</span></button>'
+      : done
+        ? '<button class="act primary" data-act="nextRound"><b>' + (S.exam.round < 3 ? '进入下一场' : '交卷出闱') + '</b><span>结束今日</span></button>'
+        : '<button class="act primary" data-act="openQuestion"><b>展卷作答</b><span>第 ' + (S.exam.cur+1) + ' / 5 题</span></button>'}</div>`;
+}
+
+function renderResult(){
+  const passed = S.exam.total >= 8;
+  return `<div class="glyph">榜</div>
+    <div class="scene-tag">第十幕 · 放榜</div>
+    <h2 class="scene-name">省试放榜</h2>
+    <p class="scene-desc">${S.flags.juanReply ? '榜下有人低声道：“欧阳公在贡院提起过你的卷子。”<br>' : ''}三场合计答对 <b>${S.exam.total}</b> 题（满分 15）。${passed
+      ? '知贡举取中了你，名字列在榜上。三日后入宫殿试——这一科，你已经脱了白身的一半。'
+      : '榜上没有你的名字。你在人群外站了很久，把带来的书又翻了一遍。'}</p>
+    <div class="acts"><button class="act primary" data-act="${passed?'goOn':'failExam'}"><b>${passed?'入宫应殿试':'收拾行囊回乡'}</b><span>${passed?'推进一日':'结局'}</span></button></div>`;
+}
+
+function renderPalace(){
+  const done = (S.phase === 'palaceEnd');
+  return `<div class="glyph">殿</div>
+    <div class="scene-tag">殿试 · 崇政殿</div>
+    <h2 class="scene-name">殿试</h2>
+    <p class="scene-desc">${done
+      ? '你答对 <b>' + S.exam.palace + '</b> 题（共 3 题）。皇帝未置一词，只在卷首点了两下。'
+      : '殿上烛火高照，策题落在你面前。两旁的官员都不出声。'}</p>
+    <div class="acts">${done
+      ? '<button class="act primary" data-act="banquet"><b>谢恩出宫</b><span>赴琼林宴</span></button>'
+      : '<button class="act primary" data-act="openQuestion"><b>跪读策题</b><span>第 ' + (S.exam.pcur+1) + ' / 3 题</span></button>'}</div>`;
+}
+
+function renderBanquet(){
+  return `<div class="glyph">宴</div>
+    <div class="scene-tag">第十幕 · 琼林宴</div>
+    <h2 class="scene-name">琼林宴</h2>
+    <p class="scene-desc">琼林苑里杏花初开，新科进士列坐。有人举杯，有人低语。你忽然想起三十日前，临川老宅的那盏灯。</p>
+    <div class="acts"><button class="act primary" data-act="finale"><b>入席</b><span>看结局</span></button></div>`;
+}
+
+function renderEnding(){
+  const e = S.ending || {title:'—', text:''};
+  const isFail = e.kind === 'fail';
+  return `<div class="final">
+    <div class="scene-tag">${isFail ? '途中止步' : '嘉祐二年 · 唱名'}</div>
+    <div class="rank ${e.cls || (isFail ? 'dim' : '')}">${e.rank || e.title}</div>
+    <p>${e.text || ''}</p>
+    <div class="tally">
+      <div><b>${S.exam.total}/15</b>省试</div>
+      <div><b>${S.exam.palace}/3</b>殿试</div>
+      <div><b>${S.zhi}</b>智力</div><div><b>${S.jing}</b>精力</div><div><b>${S.yuan}</b>人缘</div>
+      <div><b>${S.day}</b>日</div>
+      <div><b>${S.poems.length}</b>诗</div>
+    </div>
+    <div class="center" style="justify-content:center"><button class="btn" data-act="restart">再赴一科</button></div>
+  </div>`;
+}
+
+/* ---------------- 弹层 ---------------- */
+function renderOverlay(){
+  const old = document.getElementById('overlay');
+  if (old) old.remove();
+
+  let html = '';
+  if (S.pending){
+    const q = S.pending.q, fb = S.feedback;
+    const opts = LETTERS.map((L,i) => {
+      let cls = '';
+      if (fb){ if (L === q.answer) cls = 'right'; else if (fb.my === L) cls = 'wrong'; }
+      return `<button class="opt ${cls}" data-opt="${i}" ${fb?'disabled':''}><em>${L}</em><span>${esc(q.options[L])}</span></button>`;
+    }).join('');
+    const tag = S.pending.kind === 'exam'
+      ? EXAM_ROUNDS[S.exam.round-1] + ' · 第 ' + (S.exam.cur+1) + ' / 5 题'
+      : S.pending.kind === 'palace'
+        ? '殿试 · 第 ' + (S.exam.pcur+1) + ' / 3 题'
+        : '温书 · 随手一题';
+    html = `<div class="overlay" id="overlay"><div class="sheet">
+      <div class="stamp">${fb ? (fb.ok ? '是' : '否') : '题'}</div>
+      <div class="qtag">${tag} · ${q.era}</div>
+      <h3>${esc(q.stem)}</h3>
+      <div class="opts">${opts}</div>
+      ${fb ? `<div class="fb"><b>${fb.ok ? '答对了' : '答错了'}。</b>正确答案：${fb.answer}。${esc(fb.explain)}</div>
+        <div class="center"><button class="btn" data-act="cont">继续</button></div>` : ''}
+    </div></div>`;
+  } else if (S.gloss){
+    const g = GLOSSARY[S.gloss] || { def:'', src:[], note:'' };
+    let srcHtml = '';
+    (g.src || []).forEach(function(x){
+      if (x.quote){
+        srcHtml += `<div class="gloss-src"><b>${esc(x.book)}</b>原文：“${esc(x.quote)}”</div>`;
+      } else {
+        srcHtml += `<div class="gloss-src"><b>${esc(x.book)}</b>所述：${esc(x.gist || '')}</div>`;
+      }
+    });
+    html = `<div class="overlay" id="overlay"><div class="sheet">
+      <div class="stamp">词</div>
+      <div class="qtag">词条</div>
+      <h3>${esc(S.gloss)}</h3>
+      <p class="scene-desc" style="font-size:15.5px; line-height:2">${esc(g.def)}</p>
+      ${srcHtml}
+      ${g.note ? `<div class="fb">${esc(g.note)}</div>` : ''}
+      <div class="center"><button class="btn" data-act="closeGloss">知道</button></div>
+    </div></div>`;
+  } else if (S.glossIndex){
+    const names = Object.keys(GLOSSARY);
+    const chips = names.map(function(t){
+      return `<button class="opt" data-term="${t}" style="width:auto; padding:7px 12px; font-size:14px"><span>${t}</span></button>`;
+    }).join('');
+    html = `<div class="overlay" id="overlay"><div class="sheet">
+      <div class="stamp">目</div>
+      <div class="qtag">词条索引 · 共 ${names.length} 条</div>
+      <h3>这一路会遇到的词</h3>
+      <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:8px">${chips}</div>
+      <div class="center"><button class="btn" data-act="closeIndex">合上</button></div>
+    </div></div>`;
+  } else if (S.event){
+    const e = S.event;
+    let body = '';
+    if (e.done){
+      body = `<div class="fb">${esc(e.msg || '')}</div>
+        <div class="center"><button class="btn" data-act="eventOk">继 续</button></div>`;
+    } else {
+      body = `<div class="opts">` + e.choice.map((c, i) => {
+        const dis = c.needSafe && !S.safe[e.safeKey];
+        return `<button class="opt ${dis ? 'off' : ''}" data-ev="${i}" ${dis ? 'disabled' : ''}><em>${['一','二','三'][i]}</em><span>${esc(c.label)}</span></button>`;
+      }).join('') + `</div>`;
+    }
+    html = `<div class="overlay" id="overlay"><div class="sheet">
+      <div class="stamp">事</div>
+      <div class="qtag">行程小记</div>
+      <h3>${esc(e.title)}</h3>
+      <p class="scene-desc" style="white-space:pre-line; font-size:15px; line-height:2">${esc(e.text)}</p>
+      ${body}
+    </div></div>`;
+  } else if (S.letter){
+    html = `<div class="overlay" id="overlay"><div class="sheet">
+      <div class="stamp">短笺</div>
+      <div class="qtag">省试前夜 · 贡院门外</div>
+      <h3>有人从门缝里递进一纸短笺</h3>
+      <p class="scene-desc" style="white-space:pre-line; font-size:15px; line-height:2.1">${esc(S.letter.text)}</p>
+      <div class="fb">${S.letter.effect}</div>
+      <div class="center"><button class="btn" data-act="closeLetter">收好，入场</button></div>
+    </div></div>`;
+  } else if (S.poem){
+    const th = POEM_THEMES.filter(function(t){ return t.key === S.poem.theme; })[0];
+    if (!S.poem.result){
+      html = `<div class="overlay" id="overlay"><div class="sheet">
+        <div class="stamp">题诗</div>
+        <div class="qtag">${S.poem.mode === 'poem' ? '驿壁留题' : '街头鬻诗'} · ${th.name}</div>
+        <h3>${th.prompt}</h3>
+        <p class="scene-desc" style="font-size:13px; margin-bottom:0">写四句，每句字数一样，就是上品；能对上一联更妙。不必字字珠玑，肯写就值得。</p>
+        <textarea class="poem-box" id="poemBox" rows="5" placeholder="例：${(th.ex || '').split('\n').join('&#10;')}">${esc(S.poem.text || '')}</textarea>
+        ${S.poem.warn ? '<div class="fb">主人还在等，多少写两句罢。</div>' : ''}
+        <div class="center">
+          <button class="btn ghost" data-act="poemCancel">改日再写</button>
+          <button class="btn" data-act="poemSubmit">落笔</button>
+        </div>
+      </div></div>`;
+    } else {
+      const r = S.poem.result;
+      html = `<div class="overlay" id="overlay"><div class="sheet">
+        <div class="stamp">${r.grade}</div>
+        <div class="qtag">${r.theme} · ${r.notes.join(' · ')}</div>
+        <h3 style="white-space:pre-line; letter-spacing:.08em">${esc(r.lines.join('\n'))}</h3>
+        <div class="fb">评曰<b>${r.grade}</b>${r.reward ? '，得 <b>' + r.reward + '</b> 贯' : '，未得程仪'}。${r.note}</div>
+        <div class="center"><button class="btn" data-act="poemDone">收笔</button></div>
+      </div></div>`;
+    }
+  } else if (S.help){
+    html = `<div class="overlay" id="overlay"><div class="sheet">
+      <div class="stamp">凡例</div>
+      <h3>怎么玩</h3>
+      <p class="scene-desc" style="margin-top:10px">
+      每日有 <b>4 点行动</b>：温书、歇息、交游各占 1 点。<br>
+      入夜结算：凡当日没做的那一类事，对应属性（智力／精力／人缘）各减 1 分；任一项归零，旅程终止。<br>
+      赶路的日子要耗掉 2 点，只剩 2 点行动，必有一样要放下——这就是取舍。<br>
+      第 25–27 日为省试三场，每场 5 题；第 28 日放榜，第 29 日殿试，第 30 日琼林宴。<br>
+      智力决定笔墨成色，精力影响临场发挥，人缘决定能否拜访大儒、探听主司。<br>
+      驿站与山路上可「题诗换宿」、市口可「街头鬻诗」：按题目当场作诗，评上中下三品，品第越高报酬越厚。<br>
+      酒楼、书库、舟中可结识嘉祐二年的真实人物——苏轼兄弟、曾巩、程颢、张载、吕惠卿、苏洵，以及欧阳修、梅尧臣、司马光。<br>
+      想见知贡举欧阳修，用酒楼里的「投行卷」，只此一次；酒楼连访大儒三次，也能依次见到欧阳修、梅尧臣、司马光。<br>
+      正文里带虚线的小词（如“程仪”“解状”“省试”）可以点开，看释义与史料出处。</p>
+      <div class="center"><button class="btn" data-act="closeHelp">知道了</button></div>
+    </div></div>`;
+  }
+  if (html){
+    document.body.insertAdjacentHTML('beforeend', html);
+    const ov = document.getElementById('overlay');
+    if (ov && ov.querySelectorAll) annotateTerms(ov);
+  }
+}
+
+/* ============================ 事件 ============================ */
+function doAct(id){
+  if (S.phase === 'over') return;
+  const a = ACT[id]; if (!a) return;
+  if (a.can && !a.can()){ log(a.deny || '此举不成。'); render(); return; }
+  if (S.ap < a.ap){ log('今日已无余力。'); render(); return; }
+  S.ap -= a.ap;
+  a.run();
+  saveGame();
+  render();
+}
+
+function handleClick(ev){
+    const t = ev.target.closest('[data-act],[data-opt],[data-ev],[data-term]');
+    if (!t) return;
+    if (t.dataset.opt !== undefined){ answer(parseInt(t.dataset.opt,10)); render(); return; }
+    const act = t.dataset.act;
+    if (act === 'cont'){ continueAfterAnswer(); render(); return; }
+    if (act === 'openQuestion'){
+      if (!S.pending){ if (S.phase === 'palace') nextPalaceQuestion(); else nextExamQuestion(); }
+      render(); return;
+    }
+    if (act === 'nextRound'){ S.phase = 'exam'; endDay(); render(); return; }
+    if (act === 'goOn'){ endDay(); render(); return; }
+    if (act === 'failExam'){ failExam(); render(); return; }
+    if (act === 'banquet'){ S.day = 30; S.scene = 9; S.phase = 'banquet'; render(); return; }
+    if (act === 'finale'){ finishEnding(); render(); return; }
+    if (act === 'closeLetter'){
+      S.letter = null;
+      if (S.phase === 'exam' && !S.pending) startExamRound();
+      render(); return;
+    }
+    if (t.dataset.term){ S.gloss = t.dataset.term; render(); return; }
+    if (t.dataset.ev !== undefined){
+      chooseEvent(parseInt(t.dataset.ev, 10));
+      render(); return;
+    }
+    if (act === 'eventOk'){ S.event = null; render(); return; }
+    if (act === 'closeGloss'){ S.gloss = null; render(); return; }
+    if (act === 'glossIndex'){ S.glossIndex = true; render(); return; }
+    if (act === 'closeIndex'){ S.glossIndex = false; render(); return; }
+    if (act === 'poemSubmit'){
+      const box = document.getElementById('poemBox');
+      submitPoem(box ? box.value : '');
+      render(); return;
+    }
+    if (act === 'poemCancel'){ S.ap += 1; S.poem = null; log('你搁笔不题，转身走了。'); render(); return; }
+    if (act === 'poemDone'){ S.poem = null; render(); return; }
+    if (act === 'help'){ S.help = true; render(); return; }
+    if (act === 'closeHelp'){ S.help = false; render(); return; }
+    if (act === 'restart'){ clearSave(); pendingSave = null; startNew(); return; }
+    if (act === 'continue'){
+      if (pendingSave){ S = pendingSave; pendingSave = null; enterDay(); render(); }
+      return;
+    }
+    if (act === 'newgame'){ clearSave(); pendingSave = null; startNew(); return; }
+    if (ACT[act]) doAct(act);
+}
+
+function bindEvents(){
+  document.addEventListener('click', handleClick);
+}
+
+/* ============================ 启动 ============================ */
+function startNew(){
+  S = freshState();
+  S.phase = 'play';
+  log('你收拾行囊，把《周礼》放在最上层。');
+  saveGame();
+  render();
+}
+
+function boot(){
+  bindEvents();
+  pendingSave = loadGame();
+  S = freshState();
+  S.phase = 'title';
+  render();
+}
+
+if (typeof document !== 'undefined') boot();
+
+if (typeof module !== 'undefined' && module.exports){
+  module.exports = {
+    QUESTIONS, SCENES, ACT, MAX, LETTERS,
+    setS:(z)=>{ S=z; }, getS:()=>S,
+    freshState, sceneForDay, startStudy, answer, continueAfterAnswer,
+    endDay, doAct, enterDay, finishEnding, failExam,
+    nextExamQuestion, nextPalaceQuestion,
+    meetNpc, openPoem, submitPoem, gradePoem, NPCS, POEM_THEMES, EVENTS, BANDITS,
+    handleClick, chooseEvent, maybeBandit, showBandit, splitByTerms, GLOSSARY, annotateTerms,
+    render, renderOverlay
+  };
+}
+</script>
+</body>
+</html>
