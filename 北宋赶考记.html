@@ -182,8 +182,16 @@ const SCENES = [
   {id:'shandao', name:'山路 · 风雨', glyph:'道', from:7, to:9, kind:'travel', tag:'第四幕 · 山行',
    desc:'梅雨初起，山道泥泞，走了三日才见一处山寺，檐角铃铎在风里响。路要赶，书也不能断。',
    acts:['guard','temple','study','rest','social','poem','sell','sleep']},
-  {id:'bianhe', name:'汴河 · 舟中', glyph:'舟', from:10, to:14, kind:'travel', tag:'第五幕 · 舟行',
-   desc:'舟行汴河，水阔天低。同船有位白发老者，手不释卷，听口音像是应天府人。船家说，还有五日到汴京。',
+  {id:'bianhe', name:'汴河 · 舟中', glyph:'舟', from:10, to:11, kind:'travel', tag:'第五幕 · 舟行',
+   desc:'舟行汴河，水阔天低。同船有位白发老者，手不释卷，听口音像是应天府人。船家说，明日便到虹桥闸口。',
+   acts:['watch','chat','study','view','social','rest','master','sleep']},
+
+  {id:'hongqiao', name:'虹桥 · 汴河闸口', glyph:'桥', from:12, to:12, kind:'hub', tag:'第五幕 · 闸口',
+   desc:'船到虹桥，闸口水门正等潮。船家把缆绳系在柳树上：“要等半日，举子可上岸走走。”桥两岸的摊子一直摆到水边，脚店挑着灯笼，卖胡饼的吆喝声顺着河风过来。',
+   acts:['bridge_walk','bridge_supply','ask','poem','social','rest','sleep']},
+
+  {id:'bianhe', name:'汴河 · 舟中', glyph:'舟', from:13, to:14, kind:'travel', tag:'第五幕 · 舟行（续）',
+   desc:'过了虹桥，水面忽然开阔。船家说，再两日便是汴京东水门，进城要先验解状。',
    acts:['watch','chat','study','view','social','rest','master','sleep']},
   {id:'chengmen', name:'汴京 · 城门', glyph:'门', from:15, to:15, kind:'gate', tag:'第六幕 · 入京',
    desc:'新宋门外车马如流。你递上解状，守门吏抬眼看了看你的行囊：“城里房钱贵，举子多住州桥以南。先到礼部投了状，再寻住处罢。”',
@@ -585,6 +593,14 @@ const ACT = {
     run(){ S.scouted = true; addStat('zhi', 1); addStat('yuan', 1);
       S.maintained.zhi = true; S.maintained.yuan = true;
       log('你在贡院门前站了半日，看熟了场次与规矩。'); } },
+
+  bridge_walk:{ name:'桥头走走', hint:'人缘+1 精力+1 · 看市声', ap:1,
+    run(){ addStat('yuan', 1); addStat('jing', 1); S.maintained.yuan = true; S.maintained.jing = true;
+      log('你在虹桥上看了一回船，桥下桅杆如林，卖艺的、算命的、卖药的挤作一处。'); } },
+
+  bridge_supply:{ name:'上岸补给', hint:'盘缠-1 精力+2', ap:1,
+    run(){ money(-1); addStat('jing', 2); S.maintained.jing = true;
+      log('你买了两个胡饼、一包干茶，又灌满了水囊。'); } },
 
   sleep:{ name:'就寝 · 结束今日', hint:'夜间结算', ap:0,
     run(){ endDay(); } }

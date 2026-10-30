@@ -33,7 +33,7 @@ globalThis.localStorage = { getItem:function(){return null;}, setItem:function()
 code += '\n;__G = {freshState:freshState, setS:function(z){S=z;}, getS:function(){return S;},' +
         'render:render, startStudy:startStudy, enterDay:enterDay, finishEnding:finishEnding,' +
         'startExamRound:startExamRound, endDay:endDay, answer:answer, doAct:doAct,' +
-        'openPoem:openPoem, submitPoem:submitPoem, chooseEvent:chooseEvent};';
+        'openPoem:openPoem, submitPoem:submitPoem, chooseEvent:chooseEvent, sceneForDay:sceneForDay};';
 eval(code);
 var G = __G;
 
@@ -158,6 +158,12 @@ s896.event = { title: '门 税', done: false, safeKey: '',
   ] };
 G.render();
 snapshot('17-gatetax');
+
+// 8.97 虹桥闸口
+reset();
+var s897 = G.getS(); s897.day = 12; s897.scene = G.sceneForDay(12); s897.ap = 4; s897.money = 35; s897.phase = 'play';
+G.render();
+snapshot('18-hongqiao');
 
 // 9 省试前夜的短笺
 reset();
