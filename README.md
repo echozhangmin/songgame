@@ -1,5 +1,7 @@
 # 北宋赶考记 · 嘉祐二年
 
+仓库：https://github.com/echozhangmin/songgame
+
 一个**单文件 HTML** 的北宋科举模拟游戏：临川举子正月初十启程，三十日后在汴京应省试、殿试。
 双击 `北宋赶考记.html` 即可在浏览器里玩，不联网、不装依赖。
 启动先进**开始页**：可「继续上次」（显示上次行至第几日、在哪一幕、三项属性）或「重新开始」；进度每一步自动存 localStorage。
@@ -200,7 +202,7 @@ python3 build.py     # 读 game.template.html + ../history-quiz/quiz_150.json �
 
 ## 九、发布
 
-每次改完，一条命令发布到 GitHub（仓库：https://github.com/echozhangmin/- ）：
+每次改完，一条命令发布到 GitHub（仓库：https://github.com/echozhangmin/songgame ）：
 
 ```bash
 ./deploy.sh "这次改了什么"
