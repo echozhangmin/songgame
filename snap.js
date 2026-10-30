@@ -141,6 +141,24 @@ var s89 = G.getS(); s89.day = 30; s89.scene = 9; s89.phase = 'banquet';
 G.render();
 snapshot('15-banquet');
 
+// 8.95 第15日 城门
+reset();
+var s895 = G.getS(); s895.day = 15; s895.scene = 5; s895.ap = 4; s895.money = 38; s895.phase = 'play';
+G.render();
+snapshot('16-gate');
+
+// 8.96 门税
+reset();
+var s896 = G.getS(); s896.day = 15; s896.scene = 5; s896.ap = 4; s896.money = 38; s896.phase = 'play';
+s896.event = { title: '门 税', done: false, safeKey: '',
+  text: '守门吏拦住你的书箱，眯眼道：“举子行李，照例抽税。”',
+  choice: [
+    { label: '给两贯（盘缠 -2）', cost: { money: 2 }, msg: '你递过钱，他挥挥手放行。' },
+    { label: '与他理论（精力 -1，人缘 -1）', cost: { jing: 1 }, gain: { yuan: -1 }, msg: '你争了半个时辰。' }
+  ] };
+G.render();
+snapshot('17-gatetax');
+
 // 9 省试前夜的短笺
 reset();
 var s9 = G.getS();
