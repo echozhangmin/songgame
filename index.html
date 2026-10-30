@@ -39,7 +39,7 @@ body::after{
   font-size:14px;line-height:1.05;letter-spacing:0;border-radius:3px;transform:rotate(-2.5deg);
   box-shadow:0 1px 0 rgba(0,0,0,.12); text-align:center; padding:2px; margin-left:auto}
 .head .meta{margin-left:auto; text-align:right; font-size:12.5px; color:var(--ink2); line-height:1.9}
-.head .meta button{background:none;border:none;color:var(--ink3);font-size:12px;text-decoration:underline;text-underline-offset:3px;padding:0;cursor:pointer}
+.head .meta button{background:none;border:none;color:var(--ink2);font-size:13.5px;letter-spacing:.05em;text-decoration:underline;text-underline-offset:3px;padding:0;cursor:pointer}
 
 /* ---------- 主体 ---------- */
 .main{display:grid; grid-template-columns:1.55fr .95fr; gap:22px; margin-top:20px; align-items:start}
@@ -978,7 +978,7 @@ function render(){
   app.innerHTML = `
   <header class="head">
     <h1>北宋赶考记<small>嘉祐二年 · 丁酉 · 临川举子赴京应省试</small></h1>
-    ${(S.phase === 'play' || S.phase === 'exam' || S.phase === 'roundEnd') ? `<div class="meta">第 ${S.day} 日 / 30 · ${dateLabel(S.day)}<br><button data-act="help">凡例</button> · <button data-act="glossIndex">词条</button> · <button data-act="restart">重开</button></div>` : ''}
+    ${S.phase === 'over' ? '' : `<div class="meta">第 ${S.day} 日 / 30 · ${dateLabel(S.day)}<br><button data-act="help">凡例</button> · <button data-act="glossIndex">词条</button> · <button data-act="restart">重开</button></div>`}
     <div class="seal">赴京<br>应试</div>
   </header>
   <div class="main"${S.phase === 'over' ? ' style="grid-template-columns:1fr"' : ''}>
