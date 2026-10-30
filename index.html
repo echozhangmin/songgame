@@ -55,6 +55,11 @@ body::after{
 .scene-desc{font-size:15.5px; line-height:2.05; color:var(--ink2); margin:0 0 22px; position:relative; max-width:44em}
 .scene-desc b{color:var(--ink)}
 
+.rules{margin:6px 0 20px; padding:14px 18px; border:1px solid var(--line); background:rgba(255,252,243,.55); position:relative}
+.rules-h{font-size:12px; letter-spacing:.3em; color:var(--red); margin-bottom:8px}
+.rules ul{margin:0; padding-left:1.2em; font-size:13.5px; line-height:2.1; color:var(--ink2)}
+.rules li{margin:2px 0}
+.rules b{color:var(--ink); font-weight:600}
 .stage-foot{margin-top:26px; padding-top:12px; border-top:1px dashed var(--line);
   display:flex; justify-content:space-between; gap:14px; font-size:12px; color:var(--ink3); letter-spacing:.04em; position:relative}
 .stage-foot b{color:var(--ink2); font-weight:600}
@@ -973,12 +978,12 @@ function render(){
   app.innerHTML = `
   <header class="head">
     <h1>北宋赶考记<small>嘉祐二年 · 丁酉 · 临川举子赴京应省试</small></h1>
-    <div class="meta">第 ${S.day} 日 / 30 · ${dateLabel(S.day)}<br><button data-act="help">凡例</button> · <button data-act="glossIndex">词条</button> · <button data-act="restart">重开</button></div>
+    ${S.phase === 'over' ? '' : `<div class="meta">第 ${S.day} 日 / 30 · ${dateLabel(S.day)}<br><button data-act="help">凡例</button> · <button data-act="glossIndex">词条</button> · <button data-act="restart">重开</button></div>`}
     <div class="seal">赴京<br>应试</div>
   </header>
-  <div class="main">
+  <div class="main"${S.phase === 'over' ? ' style="grid-template-columns:1fr"' : ''}>
     <section class="card stage">${renderBody()}</section>
-    <aside class="status">
+    ${S.phase === 'over' ? '' : `<aside class="status">
       <div class="card">
         <div class="row"><span>行程</span><span>${sc.tag}</span></div>
         <div class="row"><span>盘缠</span><b>${S.money} 贯</b></div>
@@ -989,7 +994,7 @@ function render(){
         ${(S.phase === 'play') ? '<div class="ap"><span>今日行动</span><div class="dots">' + apDots + '</div></div>' : ''}
         <div class="log">${logHtml || '<div><span></span>—— 故事刚刚开始 ——</div>'}</div>
       </div>
-    </aside>
+    </aside>`}
   </div>`;
 
   annotateTerms(app);
@@ -1017,6 +1022,16 @@ function renderTitle(){
       <h2 class="scene-name">临川到汴京</h2>
       <p class="scene-desc">正月初十启程，二月入贡院。三十天里，你要在赶路、温书、歇息、交游之间取舍：<br>
       智力管笔墨，精力管临场，人缘管引荐。三样任缺其一，这一科便走不到榜下。</p>
+      <div class="rules">
+        <div class="rules-h">规则速览</div>
+        <ul>
+          <li><b>每天 4 点行动</b>：温书、歇息、交游各占 1 点；温书会抽一道题，答对再加智力。</li>
+          <li><b>入夜结算</b>：当天没做的那一类事，对应属性 -1。任一项归零，旅程即止（智力→胸无点墨、精力→病卧逆旅、人缘→孤身无援）。</li>
+          <li><b>赶路日</b>（山道、汴河）行动点只有 2 点，必有一样要放下。</li>
+          <li><b>到汴京后</b>入贡院：省试三场共 15 题，再殿试 3 题，按正确率与三项属性定等第。</li>
+          <li>正文里<b>带虚线的词</b>可以点开看释义与史料；动作按钮名字后的「解」也能点。</li>
+        </ul>
+      </div>
       <div class="acts">
         ${contBtn}
         <button class="act" data-act="newgame"><b>重新开始</b><span>清空旧档，自正月初十起</span></button>
