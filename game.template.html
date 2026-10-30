@@ -978,7 +978,7 @@ function render(){
   app.innerHTML = `
   <header class="head">
     <h1>北宋赶考记<small>嘉祐二年 · 丁酉 · 临川举子赴京应省试</small></h1>
-    ${S.phase === 'over' ? '' : `<div class="meta">第 ${S.day} 日 / 30 · ${dateLabel(S.day)}<br><button data-act="help">凡例</button> · <button data-act="glossIndex">词条</button> · <button data-act="restart">重开</button></div>`}
+    ${(S.phase === 'play' || S.phase === 'exam' || S.phase === 'roundEnd') ? `<div class="meta">第 ${S.day} 日 / 30 · ${dateLabel(S.day)}<br><button data-act="help">凡例</button> · <button data-act="glossIndex">词条</button> · <button data-act="restart">重开</button></div>` : ''}
     <div class="seal">赴京<br>应试</div>
   </header>
   <div class="main"${S.phase === 'over' ? ' style="grid-template-columns:1fr"' : ''}>

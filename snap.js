@@ -135,6 +135,12 @@ var s88 = G.getS(); s88.phase = 'play'; s88.glossIndex = true;
 G.render();
 snapshot('14-index');
 
+// 8.9 第三十日 琼林宴
+reset();
+var s89 = G.getS(); s89.day = 30; s89.scene = 9; s89.phase = 'banquet';
+G.render();
+snapshot('15-banquet');
+
 // 9 省试前夜的短笺
 reset();
 var s9 = G.getS();
