@@ -195,3 +195,17 @@ python3 build.py     # 读 game.template.html + ../history-quiz/quiz_150.json �
 3. **智力会顶满**：温书 +1／次、五点就到顶。想让智力全程吃紧，可把初始值降到 3。
 4. **盘缠仍偏宽**：实测平均剩 12 贯。题诗奖励 +2～5 贯之后更宽了，可以考虑把京城房钱涨到 3 贯。
 5. **场景插图空缺**：目前每个场景用一个巨型汉字（塾／亭／驿／道／舟／门／市／库／院／榜）做水印，等那 10 张水墨图做出来换成 `<img>` 背景。
+
+---
+
+## 九、发布
+
+每次改完，一条命令发布到 GitHub（仓库：https://github.com/echozhangmin/- ）：
+
+```bash
+./deploy.sh "这次改了什么"
+```
+
+它做三件事：`build.py` 重新生成 → `git add -A` 并提交 → `git push`。
+
+仓库里还装了 `.git/hooks/post-commit`：**任何一次提交都会自动推送**，所以就算你直接 `git commit`，也会同步到 GitHub。推送失败不会阻塞提交，日志在 `/tmp/git-autopush.log`。
