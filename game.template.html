@@ -1,0 +1,1407 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>北宋赶考记 · 嘉祐二年</title>
+<style>
+:root{
+  --paper:#efe4cc; --paper2:#e7d9ba; --paper3:#dccdab;
+  --ink:#2b2621; --ink2:#5a4f43; --ink3:#8a7a66;
+  --red:#a63a2c; --gold:#a8802f; --blue:#3d5a66; --green:#5c6b4a;
+  --line:rgba(43,38,33,.26);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; padding:0; color:var(--ink);
+  font-family:"Songti SC","STSong","SimSun","Noto Serif CJK SC",serif;
+  background:#efe4cc;
+  background-image:
+    radial-gradient(120% 80% at 15% 0%, rgba(255,250,235,.92), transparent 60%),
+    radial-gradient(90% 60% at 100% 100%, rgba(190,165,120,.35), transparent 65%),
+    repeating-linear-gradient(0deg, rgba(120,95,60,.05) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(90deg, rgba(120,95,60,.04) 0 1px, transparent 1px 5px);
+  min-height:100vh;
+}
+body::after{
+  content:""; position:fixed; inset:0; pointer-events:none; opacity:.32; z-index:1;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/><feColorMatrix type='saturate' values='0'/></filter><rect width='160' height='160' filter='url(%23n)' opacity='.18'/></svg>");
+  mix-blend-mode:multiply;
+}
+#app{max-width:1180px; margin:0 auto; padding:26px 22px 40px; position:relative; z-index:2}
+
+/* ---------- 页眉 ---------- */
+.head{display:flex; align-items:flex-end; gap:18px; padding-bottom:14px; border-bottom:1px solid var(--line)}
+.head h1{margin:0; font-size:34px; letter-spacing:.22em; font-weight:600}
+.head h1 small{display:block; font-size:12px; letter-spacing:.42em; color:var(--ink3); margin-top:8px; font-weight:400}
+.seal{width:44px;height:44px;background:var(--red);color:#f6ecdb;display:flex;align-items:center;justify-content:center;
+  font-size:14px;line-height:1.05;letter-spacing:0;border-radius:3px;transform:rotate(-2.5deg);
+  box-shadow:0 1px 0 rgba(0,0,0,.12); text-align:center; padding:2px; margin-left:auto}
+.head .meta{margin-left:auto; text-align:right; font-size:12.5px; color:var(--ink2); line-height:1.9}
+.head .meta button{background:none;border:none;color:var(--ink3);font-size:12px;text-decoration:underline;text-underline-offset:3px;padding:0;cursor:pointer}
+
+/* ---------- 主体 ---------- */
+.main{display:grid; grid-template-columns:1.55fr .95fr; gap:22px; margin-top:20px; align-items:start}
+.card{background:linear-gradient(180deg, rgba(255,252,242,.72), rgba(240,229,204,.5));
+  border:1px solid var(--line); box-shadow:0 1px 0 rgba(255,255,255,.5) inset, 0 6px 24px rgba(80,60,30,.06);
+  padding:24px 26px; position:relative; overflow:hidden}
+.stage{min-height:430px}
+.glyph{position:absolute; right:-2%; top:-12%; font-size:min(30vw,360px); line-height:.8; font-weight:700;
+  color:var(--ink); opacity:.045; user-select:none; pointer-events:none; letter-spacing:0}
+.scene-name{margin:0 0 4px; font-size:26px; letter-spacing:.12em; font-weight:600; position:relative}
+.scene-tag{font-size:12px; letter-spacing:.3em; color:var(--red); opacity:.8; margin-bottom:14px; position:relative}
+.scene-desc{font-size:15.5px; line-height:2.05; color:var(--ink2); margin:0 0 22px; position:relative; max-width:44em}
+.scene-desc b{color:var(--ink)}
+
+.stage-foot{margin-top:26px; padding-top:12px; border-top:1px dashed var(--line);
+  display:flex; justify-content:space-between; gap:14px; font-size:12px; color:var(--ink3); letter-spacing:.04em; position:relative}
+.stage-foot b{color:var(--ink2); font-weight:600}
+.acts{display:grid; grid-template-columns:repeat(auto-fill,minmax(168px,1fr)); gap:10px; position:relative}
+button{font-family:inherit; cursor:pointer; color:var(--ink)}
+.act{background:rgba(255,252,244,.6); border:1px solid var(--line); padding:12px 14px; text-align:left;
+  transition:.16s; position:relative; border-radius:2px}
+.act b{display:block; font-size:15px; font-weight:600; letter-spacing:.06em}
+.act span{display:block; font-size:11.5px; color:var(--ink3); margin-top:5px; letter-spacing:.04em}
+.act:hover:not(:disabled){background:rgba(43,38,33,.055); border-color:rgba(43,38,33,.45); transform:translateY(-1px)}
+.act:disabled{opacity:.38; cursor:not-allowed}
+.act.primary{background:rgba(166,58,44,.08); border-color:rgba(166,58,44,.32)}
+.act.primary b{color:var(--red)}
+
+/* ---------- 状态栏 ---------- */
+.status .card{padding:20px 22px}
+.row{display:flex; justify-content:space-between; align-items:baseline; padding:7px 0; font-size:13.5px; color:var(--ink2)}
+.row b{font-size:15px; color:var(--ink); font-weight:600}
+.sep{height:1px; background:var(--line); margin:12px 0}
+.stat{margin:13px 0}
+.stat .top{display:flex; justify-content:space-between; font-size:13px; margin-bottom:6px; letter-spacing:.08em}
+.stat .top i{font-style:normal; color:var(--ink3); font-size:11.5px; letter-spacing:.02em}
+.pips{display:flex; gap:4px}
+.pip{flex:1; height:7px; background:rgba(43,38,33,.09); border-radius:1px}
+.pip.on{opacity:.85}
+.pip.on.zhi{background:var(--blue)} .pip.on.jing{background:var(--gold)} .pip.on.yuan{background:var(--red)}
+.ap{display:flex; align-items:center; gap:8px; font-size:13px; margin-top:14px}
+.ap .dots{display:flex; gap:6px}
+.ap .dot{width:11px;height:11px;border-radius:50%;border:1px solid var(--ink3)}
+.ap .dot.on{background:var(--ink); border-color:var(--ink)}
+
+.log{margin-top:16px; max-height:200px; overflow:auto; font-size:12.5px; line-height:1.85; color:var(--ink2);
+  border-top:1px dashed var(--line); padding-top:10px}
+.log div{padding:2px 0}
+.log span{color:var(--ink3); margin-right:6px; font-size:11px}
+.gloss{border-bottom:1px dotted rgba(166,58,44,.55); cursor:help}
+.gloss:hover{background:rgba(166,58,44,.08)}
+.gloss-src{font-size:13.5px; line-height:1.95; color:var(--ink2); margin-top:10px; padding-left:12px; border-left:2px solid rgba(168,128,47,.45)}
+.gloss-src b{color:var(--ink)}
+.log .hist{color:var(--ink3); font-size:11.5px; padding-left:8px; border-left:2px solid rgba(168,128,47,.35)}
+
+/* ---------- 弹层 ---------- */
+.overlay{position:fixed; inset:0; background:rgba(38,31,24,.42); display:flex; align-items:center; justify-content:center;
+  padding:20px; z-index:50}
+.sheet{background:linear-gradient(180deg,#f7efdc,#eadfc6); border:1px solid rgba(43,38,33,.4);
+  width:min(680px,100%); max-height:88vh; overflow:auto; padding:30px 34px 26px; position:relative;
+  box-shadow:0 22px 60px rgba(40,28,12,.28)}
+.sheet .stamp{position:absolute; top:18px; right:20px; width:40px; height:40px; background:var(--red); color:#f6ecdb;
+  display:flex; align-items:center; justify-content:center; font-size:13px; border-radius:2px; transform:rotate(3deg); opacity:.92}
+.sheet h3{margin:0 0 6px; font-size:19px; letter-spacing:.06em; font-weight:600; line-height:1.75; padding-right:52px}
+.sheet .qtag{font-size:11.5px; letter-spacing:.2em; color:var(--red); opacity:.85; margin-bottom:14px}
+.opts{display:grid; gap:9px; margin-top:6px}
+.opt{display:flex; gap:12px; align-items:flex-start; background:rgba(255,252,244,.65); border:1px solid var(--line);
+  padding:11px 14px; text-align:left; font-size:14.5px; line-height:1.7; transition:.15s; width:100%}
+.opt:hover:not(:disabled){background:rgba(43,38,33,.06); border-color:rgba(43,38,33,.4)}
+.opt em{font-style:normal; color:var(--ink3); font-size:12px; padding-top:3px; min-width:12px}
+.opt.right{background:rgba(92,107,74,.14); border-color:rgba(92,107,74,.5)}
+.opt.wrong{background:rgba(166,58,44,.1); border-color:rgba(166,58,44,.4)}
+.opt:disabled{cursor:default}
+.opt.off{opacity:.42}
+.fb{margin-top:16px; font-size:13.5px; line-height:1.95; color:var(--ink2); border-left:3px solid var(--gold);
+  padding:8px 0 8px 14px; background:rgba(168,128,47,.07)}
+.fb b{color:var(--ink)}
+.poem-box{width:100%; margin-top:14px; padding:14px 16px; font-family:inherit; font-size:15px;
+  line-height:2.1; color:var(--ink); background:rgba(255,252,244,.62); border:1px solid var(--line);
+  resize:vertical; outline:none; min-height:132px}
+.poem-box::placeholder{color:var(--ink3); opacity:.6}
+.poem-box:focus{border-color:rgba(43,38,33,.45); background:rgba(255,252,244,.9)}
+.center{display:flex; gap:10px; justify-content:flex-end; margin-top:18px}
+.btn{background:var(--ink); color:#f4ead6; border:1px solid var(--ink); padding:9px 22px; font-size:14px; letter-spacing:.12em}
+.btn.ghost{background:transparent; color:var(--ink)}
+
+/* ---------- 结局 ---------- */
+.final{text-align:center; padding:30px 10px 10px; position:relative}
+.final .rank{font-size:clamp(34px,7vw,52px); letter-spacing:.22em; margin:12px 0 8px; font-weight:600}
+.final .rank.red{color:var(--red)} .final .rank.dim{color:var(--ink3)}
+.final p{color:var(--ink2); line-height:2.1; font-size:14.5px; max-width:34em; margin:10px auto}
+.tally{display:flex; gap:26px; justify-content:center; margin:22px 0; font-size:13px; color:var(--ink2); flex-wrap:wrap}
+.tally b{display:block; font-size:20px; color:var(--ink); letter-spacing:.06em}
+
+@media (max-width:860px){
+  .main{grid-template-columns:1fr}
+  .head h1{font-size:26px} .stage{min-height:0}
+  .glyph{font-size:60vw; opacity:.04}
+  .sheet{padding:24px 20px}
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+"use strict";
+const QUESTIONS = __QUESTIONS__;
+
+/* ============================ 常量 ============================ */
+const MAX = 10, TOTAL_DAYS = 30;
+const CN_NUM = ['','初一','初二','初三','初四','初五','初六','初七','初八','初九','初十',
+  '十一','十二','十三','十四','十五','十六','十七','十八','十九','二十',
+  '廿一','廿二','廿三','廿四','廿五','廿六','廿七','廿八','廿九','三十'];
+
+function dateLabel(d){
+  if (d <= 20) return '正月' + CN_NUM[d + 9];
+  return '二月' + CN_NUM[d - 20];
+}
+
+const SCENES = [
+  {id:'jiaxu', name:'临川 · 家塾', glyph:'塾', from:1, to:2, kind:'hub', tag:'第一幕 · 别家',
+   desc:'临川老宅，窗外修竹，案上一灯如豆。解状已领，行囊半备。先生说过：出门之前，先考你一考。',
+   acts:['study','rest','social','master','sleep']},
+  {id:'changting', name:'长亭 · 饯别', glyph:'亭', from:3, to:3, kind:'choice', tag:'第二幕 · 辞乡',
+   desc:'十里长亭，柳色初青。同窗设酒相送，乡邻塞来干粮。先生立在亭外，只说了一句：“此去三千里，慎勿废学。”',
+   acts:['giftMoney','giftBooks','giftWords']},
+  {id:'yizhan', name:'官道 · 驿站', glyph:'驿', from:4, to:6, kind:'hub', tag:'第三幕 · 驿路',
+   desc:'驿舍檐下悬一盏风灯，墙上留着前人题诗。南来北往的举子都在这里歇脚，也在这里交换消息。',
+   acts:['rest','study','social','poem','sell','sleep']},
+  {id:'shandao', name:'山路 · 风雨', glyph:'道', from:7, to:9, kind:'travel', tag:'第四幕 · 山行',
+   desc:'梅雨初起，山道泥泞，走了三日才见一处山寺，檐角铃铎在风里响。路要赶，书也不能断。',
+   acts:['guard','temple','study','rest','social','poem','sell','sleep']},
+  {id:'bianhe', name:'汴河 · 舟中', glyph:'舟', from:10, to:14, kind:'travel', tag:'第五幕 · 舟行',
+   desc:'舟行汴河，水阔天低。同船有位白发老者，手不释卷，听口音像是应天府人。船家说，还有五日到汴京。',
+   acts:['watch','chat','study','view','social','rest','master','sleep']},
+  {id:'chengmen', name:'汴京 · 城门', glyph:'门', from:15, to:15, kind:'gate', tag:'第六幕 · 入京',
+   desc:'新宋门外车马如流。守门吏验过解状，抬眼看了看你的行囊：“城里房钱贵，举子多住州桥以南。”',
+   acts:['enter','sell','sleep']},
+  {id:'jiulou', name:'御街 · 酒楼', glyph:'市', from:16, to:19, kind:'hub', tag:'第七幕 · 市声',
+   desc:'州桥旁的酒楼三层灯火，举子、书商、说书人挤在一处。满楼都在说同一个名字：欧阳修知贡举。邻座有人压低声音：“他这些日子在礼部，行卷还能递进去。”',
+   acts:['toujuan','social','master','study','info','rest','sell','sleep']},
+  {id:'shuku', name:'国子监 · 书库', glyph:'库', from:20, to:24, kind:'hub', tag:'第八幕 · 书库',
+   desc:'书库里尘埃在光柱中浮沉。抄书吏压低声音说，今年主司好经义，诗赋未必是重头。',
+   acts:['study','copy','social','master','rest','sleep']},
+  {id:'gongyuan', name:'贡院 · 号舍', glyph:'院', from:25, to:27, kind:'exam', tag:'第九幕 · 省试',
+   desc:'号舍狭如匣，一灯一砚一席。锁院三日，连咳嗽都要压低。三场之后，便是放榜。'},
+  {id:'fangbang', name:'琼林苑 · 放榜', glyph:'榜', from:28, to:30, kind:'ending', tag:'第十幕 · 放榜',
+   desc:'榜下人潮如墙。榜文贴出那一刻，有人抚掌大笑，有人掩面而去。'}
+];
+
+const EXAM_ROUNDS = ['第一场 · 诗赋', '第二场 · 经义', '第三场 · 策论'];
+const EXAM_POOLS = [
+  q => q.era === '先秦' || q.era === '秦汉',
+  q => q.era === '魏晋南北朝' || q.era === '隋唐',
+  q => q.era === '五代与北宋' || q.era === '隋唐'
+];
+const MASTER_LINES = [
+  '“为文先为气，气盛则言宜。”',
+  '“读书不求记，求其所以然。”',
+  '“今之科举，取通变之士，非取记诵之童。”',
+  '“你的策论锋芒太露，宜藏三分。”',
+  '“文中要有己见，不可尽抄程文。”',
+  '“此次主司好经义，你把《周礼》再读一遍。”'
+];
+
+
+/* ============================ 人物（嘉祐二年，汴京） ============================ */
+const NPCS = {
+  xiansheng:{ name:'乡先生', tag:'临川塾师', tier:'master', where:['jiaxu'], prio:1,
+    desc:'先生把一函手抄的《周礼》塞进你的书箱，道：“庆历二年，乡里王介甫一榜登第，如今已出知常州。你此去，莫堕了临川人的志气。”',
+    note:'王安石于庆历二年中进士，此时出知常州；他后来既是唐宋八大家之一，也是熙宁变法的主持者。' },
+
+  sushi:{ name:'苏轼', tag:'眉州举子 · 二十一岁', tier:'peer', where:['yizhan','jiulou','bianhe'], prio:1,
+    desc:'邻座少年自称眉山苏轼，年二十有一，与弟苏辙同舟而来。他见你案头摊着《庄子》，拊掌笑道：“足下亦好此么？仆读《逍遥游》，只觉天地都宽了。”',
+    note:'嘉祐二年，苏轼与苏辙同榜进士。欧阳修读其《刑赏忠厚之至论》，叹曰：“老夫当避路，放他出一头地。”' },
+  suzhe:{ name:'苏辙', tag:'眉州举子 · 十八岁', tier:'peer', where:['yizhan','jiulou'], prio:2,
+    desc:'苏辙寡言，忽而问你：“汴河岁漕四百万石，溯流而上，费十而致一。足下以为，可久乎？”',
+    note:'兄弟二人同年登第，时人目为“二苏”。' },
+  zenggong:{ name:'曾巩', tag:'南丰举子 · 三十八岁', tier:'peer', where:['jiulou','shuku'], prio:3,
+    desc:'南丰曾巩携弟曾布同来应举，翻过你的文章，缓缓道：“气厚而辞繁。少删三成，便是好文字。”',
+    note:'曾巩、曾布兄弟同榜；欧阳修尝称其文“昆仑倾黄河，渺漫盈百川”。' },
+  zhangzai:{ name:'张载', tag:'横渠学者 · 三十七岁', tier:'peer', where:['shuku','jiulou'], prio:4,
+    desc:'张载在京师讲《易》，听者环立。他问你：“读书何为？”你答得迟疑，他也不追问，只说：“回去再想。”',
+    note:'“为天地立心，为生民立命”，此语出于其学，后世尊为横渠先生。' },
+  chenghao:{ name:'程颢', tag:'洛阳士子 · 二十五岁', tier:'peer', where:['shuku'], prio:5,
+    desc:'程颢与你论“仁者以天地万物为一体”，语声不高，满座却静。',
+    note:'程颢于嘉祐二年登进士第，后与弟程颐同开洛学。' },
+  lvhuiqing:{ name:'吕惠卿', tag:'晋江举子 · 二十五岁', tier:'peer', where:['jiulou'], prio:6,
+    desc:'吕惠卿锐于言利，三杯之后便与你争青苗、市易之是非，末了笑一声：“足下太厚道。”',
+    note:'他后来成为熙宁变法的干将，与王安石始合终隙，王公“福建子”之叹即由此人。' },
+  zengbu:{ name:'曾布', tag:'南丰举子 · 二十一岁', tier:'peer', where:['jiulou'], prio:7,
+    desc:'曾布口舌极利，谈起科场程式如数家珍，末了劝你：“文须有官样。太奇了，主司不敢取。”',
+    note:'曾布嘉祐二年与兄曾巩同榜，后官至宰相，是新旧党争里的老面孔。' },
+
+  suXun:{ name:'苏洵', tag:'眉山布衣 · 四十八岁', tier:'master', where:['bianhe'], prio:1,
+    desc:'船头那位老者自称眉山苏洵，携二子赴京应举，自己却屡试不第。他把一叠文稿递过来：“足下看看，可还有可取之处？”',
+    note:'苏洵嘉祐元年携苏轼、苏辙入京，次年二子同榜登科；欧阳修上《荐布衣苏洵状》，一时名动京师。' },
+
+  ouyang:{ name:'欧阳修', tag:'翰林学士 · 知贡举', tier:'master', where:['jiulou'], prio:1,
+    desc:'礼部衙前，你递上旧作。欧阳修展卷细读，半晌才道：“文从字顺，可再简。少年人肯把话说尽，是长处，也是短处。”',
+    note:'嘉祐二年省试由欧阳修主考、梅尧臣点检试卷；苏轼正是此榜见知于欧公。' },
+  meiyaochen:{ name:'梅尧臣', tag:'诗人 · 点检试卷官', tier:'master', where:['shuku','jiulou'], prio:2,
+    desc:'梅尧臣论诗：“状难写之景，如在目前；含不尽之意，见于言外。”说着抬眼看了看你：“足下这一联，景是够了，意还欠些。”',
+    note:'梅尧臣诗名满天下，嘉祐二年为省试点检试卷官，与欧阳修同主文柄。' },
+  simaguang:{ name:'司马光', tag:'谏官 · 三十八岁', tier:'master', where:['jiulou'], prio:3,
+    desc:'司马光正色道：“取士当先德行，而后文艺。”说完略一颔首：“足下文章，仆读过。”',
+    note:'司马光此时已以直谏知名；三十年后，他将尽废熙宁新法。' }
+};
+
+/* ============================ 题诗（题材与韵部） ============================ */
+const POEM_THEMES = [
+  { key:'shan', name:'山川', prompt:'驿丞笑道：“壁上还空着。足下可留一首写山川的？不拘工拙，只管写来。”',
+    ex:'空山新雨后\n天气晚来秋\n明月松间照\n清泉石上流' },
+  { key:'you', name:'赠友', prompt:'同舍举子明日往西京去。他拍拍你的书箱：“留两句给我罢，写什么都可以。”',
+    ex:'渭城朝雨浥轻尘\n客舍青青柳色新\n劝君更尽一杯酒\n西出阳关无故人' },
+  { key:'xiang', name:'故乡', prompt:'夜雨敲窗。客舍主人听出你的江南口音，轻声道：“想家了吧？写出来，心里会松快些。”',
+    ex:'床前明月光\n疑是地上霜\n举头望明月\n低头思故乡' },
+  { key:'fu', name:'父母', prompt:'店家老母在灯下缝衣。你想起临川家中，母亲也是这样。写一首罢。',
+    ex:'慈母手中线\n游子身上衣\n临行密密缝\n意恐迟迟归' },
+  { key:'xiong', name:'兄弟', prompt:'家书里说，小弟已能背《论语》了。你握笔良久，想写一首寄他。',
+    ex:'独在异乡为异客\n每逢佳节倍思亲\n遥知兄弟登高处\n遍插茱萸少一人' },
+  { key:'xue', name:'勤学', prompt:'邻舍的灯还亮着。你添了灯油，想在壁上写一首自勉的诗。',
+    ex:'三更灯火五更鸡\n正是男儿读书时\n黑发不知勤学早\n白首方悔读书迟' },
+  { key:'kao', name:'场屋之忧', prompt:'明日就要入场。你把笔洗了三遍，还是不安。写一首排遣罢。',
+    ex:'洞房昨夜停红烛\n待晓堂前拜舅姑\n妆罢低声问夫婿\n画眉深浅入时无' },
+  { key:'meng', name:'前程', prompt:'你梦见自己跨马游街，杏花满头。醒来还是客舍，但心里热着。写下来。',
+    ex:'昔日龌龊不足夸\n今朝放荡思无涯\n春风得意马蹄疾\n一日看尽长安花' },
+  { key:'guo', name:'报国', prompt:'城头旌旗猎猎，远处传来戍鼓。你忽然很想写点什么。',
+    ex:'青海长云暗雪山\n孤城遥望玉门关\n黄沙百战穿金甲\n不破楼兰终不还' },
+  { key:'qiong', name:'清贫', prompt:'囊中只剩三贯钱，你却先买了半刀纸。店主看着好笑：“写一首自嘲的，我给你免半间房钱。”',
+    ex:'囊空无一钱\n砚冷余残墨\n富者笑儒冠\n儒冠不曾易' },
+  { key:'zhan', name:'边事', prompt:'听说西边又用兵了。酒客们压低声音，说起了战事。',
+    ex:'葡萄美酒夜光杯\n欲饮琵琶马上催\n醉卧沙场君莫笑\n古来征战几人回' },
+  { key:'sheng', name:'生命', prompt:'山寺老僧替你添了茶，随口问：“人这一生，图个什么？”你一时答不上来。',
+    ex:'盛年不重来\n一日难再晨\n及时当勉励\n岁月不待人' },
+  { key:'shi', name:'仕途', prompt:'有人劝你去投谒权贵，说这才是捷径。你不愿，又不免动摇。写一首表明心迹。',
+    ex:'八月湖水平\n涵虚混太清\n气蒸云梦泽\n波撼岳阳城' },
+  { key:'ji', name:'羁旅', prompt:'船泊在汴河，夜半听见钟声。你披衣坐起，想写一首旅夜。',
+    ex:'月落乌啼霜满天\n江枫渔火对愁眠\n姑苏城外寒山寺\n夜半钟声到客船' },
+  { key:'min', name:'民生', prompt:'路见农人车水，从早到晚不曾歇。你站了很久，把这一幕记在心里。',
+    ex:'锄禾日当午\n汗滴禾下土\n谁知盘中餐\n粒粒皆辛苦' },
+  { key:'mei', name:'咏物', prompt:'庭中一株老梅初开，香气淡淡。主人道：“足下若有兴致，咏一首梅如何？”',
+    ex:'墙角数枝梅\n凌寒独自开\n遥知不是雪\n为有暗香来' },
+  { key:'ya', name:'雅集', prompt:'酒楼壁上已有七八首诗，都是举子的手笔。你也想题一首，与众人凑个热闹。',
+    ex:'灯下同斟一盏春\n各将心事付微醺\n明朝别去江湖远\n莫忘今宵壁上文' },
+  { key:'chan', name:'禅意', prompt:'山寺的钟声很轻，檐下的铃也轻。你坐下来，忽然不想走了。',
+    ex:'木末芙蓉花\n山中发红萼\n涧户寂无人\n纷纷开且落' }
+];
+
+const RHYME_GROUPS = {
+  '东':'风空中同红东通逢钟松峰浓鸿',
+  '阳':'阳香长乡霜光堂塘忙肠凉方桑黄窗江邦双',
+  '支':'时诗知枝期迟思悲离词之师疑飞归衣微稀晖围',
+  '寒':'寒山间关还闲颜班难斑环天年前烟边川船眠然泉连仙缘',
+  '歌':'歌何多河波过罗和蓑',
+  '庚':'生城声情明清行亭星轻惊平听青灯',
+  '尤':'秋愁流舟楼头游州休留幽求洲忧',
+  '侵':'心深林寻今音吟阴沉琴'
+};
+const RHYME_OF = {};
+Object.keys(RHYME_GROUPS).forEach(function(g){
+  for (const ch of RHYME_GROUPS[g]) if (!RHYME_OF[ch]) RHYME_OF[ch] = g;
+});
+function rhymeOf(ch){ return RHYME_OF[ch] || null; }
+
+
+
+/* ============================ 支线事件 ============================ */
+const EVENTS = [
+  { id:'rain', w:2, where:['shandao','bianhe'], title:'骤 雨',
+    text:'山雨骤至，前不巴村后不着店。你只好把书箱裹在衣里，淋了半日。',
+    auto:{jing:-1},
+    autoMsg:'到得驿舍，浑身湿透，咳了半夜。' },
+  { id:'fellow', w:2, where:['yizhan','jiulou','shandao','bianhe'], title:'同 乡',
+    text:'驿舍里有人听出你的口音，一问竟是邻县举子。他乡遇故知，他硬塞给你一包干粮和几贯钱。',
+    auto:{yuan:1, money:1},
+    autoMsg:'你们约好到京再叙。' },
+  { id:'bookstall', w:2, where:['yizhan','jiulou','shuku'], title:'书 肆',
+    text:'书肆掌柜压低声音，说有一部时文程卷，是今年主司喜欢的路数。',
+    choice:[
+      { label:'买下（盘缠 -3，智力 +1）', cost:{money:3}, gain:{zhi:1}, msg:'你翻了两夜，果然有几句可用。' },
+      { label:'只翻不买', cost:{}, gain:{}, msg:'你站着看完半卷，掌柜的脸色不太好看。' }
+    ] },
+  { id:'monk', w:2, where:['shandao'], title:'山 寺',
+    text:'山寺老僧留你吃茶。他说：“心不定，文不工。”',
+    choice:[
+      { label:'听他说法（精力 +1）', cost:{}, gain:{jing:1}, msg:'你静坐一炷香，心里果然定了些。' },
+      { label:'捐两贯香火（盘缠 -2，人缘 +1）', cost:{money:2}, gain:{yuan:1}, msg:'老僧合掌，替你写了一纸荐书。' }
+    ] },
+  { id:'drunk', w:2, where:['jiulou'], title:'醉 客',
+    text:'酒楼里两个醉客掀了桌子，酒保急得直搓手。',
+    choice:[
+      { label:'上前劝架（精力 -1，人缘 +1）', cost:{jing:1}, gain:{yuan:1}, msg:'你被推了个趔趄，众人却都记住了你。' },
+      { label:'避到楼上', cost:{}, gain:{}, msg:'你端着碗上楼，由他们闹去。' }
+    ] },
+  { id:'patron', w:1, where:['jiulou','yizhan'], title:'贵 人',
+    text:'一位过路官员看了你随手写的字，问：“这字是谁写的？”',
+    choice:[
+      { label:'自报家门', cost:{}, gain:{yuan:1, money:2}, msg:'他留了两贯钱，说“到京可来找我”。' },
+      { label:'谦称不足道', cost:{}, gain:{zhi:1}, msg:'他笑了笑：“谦而不虚，难得。”' }
+    ] }
+];
+
+
+/* ============================ 山匪 / 水匪（固定遭遇） ============================ */
+const BANDITS = {
+  shan: {
+    title: '山 匪',
+    text: '转过山坳，林中忽然闪出四五条汉子，横着扁担拦在路心。为首的斜眼打量你的书箱：“举子？书箱里可有值钱的？”',
+    safeKey: 'shan',
+    choices: [
+      { label: '舍财免灾（盘缠 -2）', cost: { money: 2 }, msg: '你把两贯钱递过去。他们掂了掂，骂了句晦气，让开了路。' },
+      { label: '拼命护箱（精力 -2）', cost: { jing: 2 }, msg: '你抱紧书箱撞开一人，跌跌撞撞跑出半里地，膝头全是血。' },
+      { label: '与同行者并作一处（需先“结伴同行”）', needSafe: true, gain: { yuan: 1 },
+        msg: '你一声呼哨，前后赶路的举子、挑夫都围拢来。匪人见人多，骂了一声散去。' }
+    ]
+  },
+  shui: {
+    title: '水 匪',
+    text: '夜泊荒岸，一叶小舟无声无息靠上来。有人探手去够舱里的箱笼，船家压着嗓子喊你：“莫出声，把灯吹了！”',
+    safeKey: 'shui',
+    choices: [
+      { label: '花钱消灾（盘缠 -2）', cost: { money: 2 }, msg: '你隔着水递过两贯钱。黑影接了，撑篙退去。' },
+      { label: '与船家合力驱赶（精力 -1）', cost: { jing: 1 }, msg: '你抄起船桨与船家一同呵斥，小舟退开，手腕却被磕了一下。' },
+      { label: '提灯照过去（需先“系舟守夜”）', needSafe: true, gain: { zhi: 1 },
+        msg: '你守夜未睡，提灯一照，照出那张脸。他心里发虚，撑篙便走。' }
+    ]
+  }
+};
+
+
+/* ============================ 词条（释义与史料出处） ============================ */
+// quote = 原文引用；gist = 据某书所述（转述，不加引号）
+const GLOSSARY = {
+  '解状': { def:'州府发给解试合格举人的文书。入京应省试时要验看，相当于准考证。',
+    src:[{ book:'《宋史·选举志一》', gist:'州府解试中选者给解牒，许赴省试。' },
+         { book:'《宋会要辑稿·选举》', gist:'诸州解送举人，须具解状、家状投礼部，故宋人公文“解牒”“解状”并用。' }],
+    note:'本作统一用“解状”。' },
+  '解试': { def:'州府主持的选拔考试，中式者称举人，才有资格赴京应省试。',
+    src:[{ book:'《宋史·选举志一》', gist:'解试由州府长官主持，中选者贡于礼部。' }] },
+  '省试': { def:'尚书省礼部主持的全国性考试，举人赴京应之，中式者再赴殿试。',
+    src:[{ book:'《宋史·选举志一》', gist:'礼部贡院掌受诸州解送举人名籍，按期试之。' }],
+    note:'本作第 25–27 日的三场即省试。' },
+  '殿试': { def:'皇帝亲自主持的复试。宋初殿试有黜落，后渐成定例，主要定等第。',
+    src:[{ book:'《宋史·选举志一》', gist:'省试中选者，天子亲策于廷，谓之殿试。' }] },
+  '知贡举': { def:'省试的主考官，多由翰林学士、中书舍人等临时差充。',
+    src:[{ book:'《宋史·选举志一》', gist:'以他官权知贡举，掌贡举之事。' }],
+    note:'嘉祐二年知贡举为欧阳修，点检试卷官为梅尧臣。' },
+  '锁院': { def:'考官受命后即入贡院锁宿，不许外出见客，以防请托泄题。',
+    src:[{ book:'《宋史·选举志一》', gist:'试官入贡院锁宿，不得与外人通。' },
+         { book:'欧阳修《归田录》', gist:'欧阳修记嘉祐二年与韩绛同知贡举、辟梅尧臣为小试官，锁院五十日，唱和成集。' }],
+    note:'锁院期间所作唱和诗，即《礼部唱和诗》。' },
+  '行卷': { def:'举子把平日所作诗文投献给名公权要，求其延誉、向主司推荐。',
+    src:[{ book:'赵彦卫《云麓漫钞》卷八', quote:'唐之举人，先藉当世显人，以姓名达之主司，然后以所业投献；逾数日又投，谓之温卷。' }],
+    note:'此为唐制记载。宋代虽禁公荐，投卷之风仍存；本作“投行卷”即取此意。' },
+  '号舍': { def:'贡院内分隔的考生小屋，一人一间，答卷、食宿皆在其中。',
+    src:[{ book:'《宋史·选举志一》', gist:'贡院分列廊庑，设席舍以居举人。' }],
+    note:'宋人多称“席舍”“试廊”，“号舍”是后世通称。' },
+  '糊名': { def:'糊去试卷上的姓名、乡贯，使考官不知作者，以防徇私。',
+    src:[{ book:'《宋史·选举志一》', gist:'太宗淳化三年，殿试始行糊名考校。' }] },
+  '誊录': { def:'另设书吏将试卷誊抄一遍，考官只看抄本，以防辨认笔迹。',
+    src:[{ book:'《宋史·选举志一》', gist:'真宗大中祥符八年，置誊录院，募书吏誊写试卷。' }] },
+  '特奏名': { def:'屡试不第、年岁已高的举子，由礼部另列名奏上，附试后赐出身。',
+    src:[{ book:'《宋史·选举志一》', gist:'士贡于乡而屡绌于礼部者，积其举数与年岁，别籍其名以奏，许附试，谓之特奏名。' }] },
+  '同进士出身': { def:'及第等第之一，在“进士出身”之下，仍属正榜。',
+    src:[{ book:'《宋史·选举志一》', gist:'及第分等：及第、进士出身、同进士出身。' }] },
+  '琼林宴': { def:'放榜后赐新科进士的宴席，设在琼林苑，故称。',
+    src:[{ book:'《宋史·选举志一》', gist:'赐新及第进士宴于琼林苑，谓之琼林宴。' }] },
+  '程仪': { def:'赠给远行者的路费、盘缠。长亭饯别时亲友所赠即此类。',
+    src:[{ book:'宋人书札', gist:'宋人多称“资装”“程费”，欧阳修、苏轼尺牍中屡见“资装”之语。' }],
+    note:'“程仪”多见于明清小说，宋代并非常语；本作用它作通称，取其易解。' },
+  '盘缠': { def:'路费、旅费。宋元以来口语，话本、元曲中常见。',
+    src:[{ book:'宋元话本与元曲', gist:'“盘缠”指旅途用度，屡见。' }],
+    note:'本作把盘缠抽象为唯一货币；宋人实用铜钱、交子、金银，另有“驿券”可免费住驿。' },
+  '长亭': { def:'城外十里一长亭、五里一短亭，是送别饯行之处。',
+    src:[{ book:'李白《菩萨蛮》', quote:'何处是归程，长亭更短亭。' }],
+    note:'词中“长亭”已作送别地代称，宋代沿用。' },
+  '驿丞': { def:'驿站的管理者，掌过往官员、使客的食宿与车马。',
+    src:[{ book:'《宋史·职官志》', gist:'诸路设驿，掌邮传、供帐之事。' }] },
+  '主司': { def:'主持考试的官员，即考官。',
+    src:[{ book:'《宋史·选举志一》', gist:'举人去取，皆出于主司。' }] },
+  '举人': { def:'解试合格者，取得赴京应省试的资格。',
+    src:[{ book:'《宋史·选举志一》', gist:'中解试者，谓之举人。' }] }
+};
+
+/* ============================ 状态 ============================ */
+let S = null;
+let pendingSave = null;
+
+function freshState(){
+  return {
+    day:1, scene:0, ap:4,
+    zhi:5, jing:5, yuan:5, money:60,
+    flags:{gift:null, master:0, rumor:false, entered:false, juan:false, juanReply:false},
+    maintained:{zhi:false, jing:false, yuan:false},
+    log:[], phase:'play', pending:null, feedback:null, help:false,
+    exam:{total:0, palace:0, round:0, queue:[], cur:0, correct:0, pcur:0, palaceQueue:[]},
+    used:[], ending:null, met:[], poems:[], poem:null, poemUsed:[], event:null, seenEvents:[], safe:{shan:false, shui:false}, banditDone:{shan:false, shui:false}, gloss:null, glossIndex:false
+  };
+}
+
+function addStat(k, v){ S[k] = Math.max(0, Math.min(MAX, S[k] + v)); }
+function fatigue(n){ S.jing = Math.max(1, S.jing - (n || 1)); }
+function log(text){ S.log.unshift({d:S.day, t:text}); if (S.log.length > 40) S.log.pop(); }
+function money(v){ S.money += v; }
+function curScene(){ return SCENES[S.scene]; }
+function sceneForDay(d){
+  for (let i=0;i<SCENES.length;i++) if (d >= SCENES[i].from && d <= SCENES[i].to) return i;
+  return SCENES.length - 1;
+}
+
+/* ============================ 题目 ============================ */
+function pickQuestion(poolFn){
+  let pool = QUESTIONS.filter(poolFn).filter(q => S.used.indexOf(q.id) < 0);
+  if (!pool.length) pool = QUESTIONS.filter(poolFn);
+  const q = pool[Math.floor(Math.random()*pool.length)];
+  S.used.push(q.id);
+  if (S.used.length > 90) S.used.shift();
+  return q;
+}
+function startStudy(){
+  S.pending = {q: pickQuestion(() => true), kind:'study'};
+  S.feedback = null;
+}
+function startExamRound(){
+  const r = S.day - 24;
+  S.exam.round = r; S.exam.cur = 0; S.exam.correct = 0;
+  const pool = EXAM_POOLS[r-1] || (() => true);
+  const picked = [];
+  for (let i=0;i<5;i++){
+    let q = pickQuestion(pool), guard = 0;
+    while (picked.some(p => p.id === q.id) && guard++ < 30) q = pickQuestion(pool);
+    picked.push(q);
+  }
+  S.exam.queue = picked;
+  S.exam.cur = 0;
+  nextExamQuestion();
+}
+function nextExamQuestion(){
+  if (S.exam.cur >= S.exam.queue.length){ finishExamRound(); return; }
+  S.pending = {q: S.exam.queue[S.exam.cur], kind:'exam'};
+  S.feedback = null;
+}
+function finishExamRound(){
+  S.exam.total += S.exam.correct;
+  S.pending = null; S.feedback = null;
+  S.phase = 'roundEnd';
+}
+function startPalace(){
+  const picked = [];
+  for (let i=0;i<3;i++){
+    let q = pickQuestion(() => true), guard = 0;
+    while (picked.some(p => p.id === q.id) && guard++ < 30) q = pickQuestion(() => true);
+    picked.push(q);
+  }
+  S.exam.palaceQueue = picked; S.exam.pcur = 0;
+  nextPalaceQuestion();
+}
+function nextPalaceQuestion(){
+  if (S.exam.pcur >= S.exam.palaceQueue.length){ S.pending = null; S.phase = 'palaceEnd'; return; }
+  S.pending = {q: S.exam.palaceQueue[S.exam.pcur], kind:'palace'};
+  S.feedback = null;
+}
+
+/* ============================ 行动 ============================ */
+const ACT = {
+  study:{ name:'温书做题', hint:'智力+1 精力-1', ap:1, primary:true,
+    run(){ S.maintained.zhi = true; fatigue(); startStudy(); } },
+
+  rest:{ name:'歇息', hint:'精力+3（驿站+4）', ap:1,
+    run(){ S.maintained.jing = true;
+      const id = curScene().id;
+      const bonus = id === 'yizhan' ? 1 : id === 'bianhe' ? -1 : 0;
+      addStat('jing', 3 + bonus);
+      log(id === 'yizhan' ? '驿舍被褥干爽，你一觉睡到日上三竿。'
+        : id === 'bianhe' ? '舱中局促，你枕着书箱睡了半日，醒来腰背酸硬。'
+        : '你合眼睡了半日，醒来时天光柔和。');
+    } },
+
+  social:{ name:'宴饮结交', hint:'人缘+2 盘缠-2', ap:1,
+    run(){ S.maintained.yuan = true; money(-2); addStat('yuan', 2);
+      const npc = meetNpc('peer');
+      if (npc){
+        addStat('zhi', 1);
+        log('〔史料〕' + npc.note);
+        log('你结识了' + npc.name + '（' + npc.tag + '）。' + npc.desc);
+      } else {
+        log('你在席间与几位举子互道乡贯，酒过三巡，已有人称你“王兄”。');
+      }
+    } },
+
+  master:{ name:'拜访大儒', hint:'智力+1 人缘+1 盘缠-1', ap:1,
+    can(){ return S.yuan >= 3; },
+    deny:'你与这位先生素无往来，门房只说“主人不见客”。',
+    run(){ S.maintained.zhi = true; S.maintained.yuan = true; money(-1);
+      addStat('zhi', 1); addStat('yuan', 1); S.flags.master++;
+      if (S.yuan >= 8) addStat('zhi', 1);
+      const npc = meetNpc('master');
+      if (npc){
+        log('〔史料〕' + npc.note);
+        log(npc.name + '（' + npc.tag + '）见了你。' + npc.desc);
+      } else {
+        log('你呈上旧作，先生看了半晌，只说了句：' + MASTER_LINES[S.flags.master % MASTER_LINES.length]);
+      }
+    } },
+
+  info:{ name:'打听消息', hint:'人缘+1 探听主司', ap:1,
+    run(){ S.maintained.yuan = true; money(-1); addStat('yuan', 1);
+      if (!S.flags.rumor){ S.flags.rumor = true; log('酒保凑近低声道：今年知贡举换了人，好经义，厌浮词。'); }
+      else log('你又听了一耳朵传闻，多半是重复的旧话。');
+    } },
+
+  poem:{ name:'题诗换宿', hint:'字数齐 5 贯 · 不齐无酬', ap:1,
+    can(){ return S.poemUsed.indexOf(curScene().id) < 0; },
+    deny:'此地壁上已有你的诗，主人笑着摆手：“换处再写罢。”',
+    run(){ fatigue(); S.maintained.zhi = true; openPoem('poem'); } },
+
+  copy:{ name:'抄书换钱', hint:'盘缠+3 智力+1', ap:1,
+    run(){ money(3); fatigue(); S.maintained.zhi = true; addStat('zhi', 1);
+      log('你替书库抄了两卷《汉书》，腕子发酸，却也把正文默记了一遍。'); } },
+
+  sell:{ name:'街头鬻诗', hint:'字数齐 4 贯 · 不齐无酬', ap:1,
+    can(){ return S.poemUsed.indexOf(curScene().id) < 0; },
+    deny:'这条街上已有人买过你的诗，再写便不值钱了。',
+    run(){ fatigue(); openPoem('sell'); } },
+
+  view:{ name:'凭栏观景', hint:'精力+1 人缘+1', ap:1,
+    run(){ S.maintained.jing = true; S.maintained.yuan = true; addStat('jing', 1); addStat('yuan', 1);
+      log('你与老者同立船头看落日，他随口讲了半段汴河旧事。'); } },
+
+  giftMoney:{ name:'受赠程仪', hint:'盘缠 +8', ap:1, primary:true,
+    run(){ S.flags.gift = 'money'; money(8);
+      log('同窗硬塞来八贯钱：“京城米贵，莫要省这几个铜子。”'); endDay(); } },
+
+  giftBooks:{ name:'受赠旧书', hint:'智力 +2', ap:1, primary:true,
+    run(){ S.flags.gift = 'books'; addStat('zhi', 2);
+      log('先生把一函手抄的《周礼》塞进你的书箱：“路上读它。”'); endDay(); } },
+
+  giftWords:{ name:'受先生赠言', hint:'人缘 +1 · 智力 +1', ap:1, primary:true,
+    run(){ S.flags.gift = 'words'; addStat('yuan', 1); addStat('zhi', 1);
+      log('先生只说了八个字：“守拙而进，勿趋炎势。”'); endDay(); } },
+
+  toujuan:{ name:'投行卷', hint:'谒欧阳修 · 只此一次', ap:1, primary:true,
+    hideIf(){ return !!S.flags.juan || S.met.indexOf('ouyang') >= 0; },
+    run(){
+      money(-2); S.met.push('ouyang'); S.flags.juan = true;
+      addStat('yuan', 1); addStat('zhi', 1);
+      log('你携旧作十篇，到礼部衙前投了行卷，门人答应替你转呈。');
+      log('欧阳修（翰林学士 · 知贡举）展卷细读，半晌才道：“文从字顺，可再简。少年人肯把话说尽，是长处，也是短处。”');
+      log('〔史料〕嘉祐二年省试由欧阳修主考、梅尧臣点检试卷；苏轼正是此榜见知于欧公。');
+    } },
+
+  enter:{ name:'入城安顿', hint:'盘缠 -2 · 推进一日', ap:1, primary:true,
+    run(){ money(-2); S.flags.entered = true;
+      log('你穿过新宋门，车马喧嚣扑面而来，汴京到了。'); endDay(); } },
+
+  guard:{ name:'结伴同行', hint:'盘缠-1 人缘+1 · 遇匪可呼救', ap:1,
+    run(){ money(-1); addStat('yuan', 1); S.maintained.yuan = true; S.safe.shan = true;
+      log('你与一队贩布的商旅搭伴同行，约定前后照应。'); } },
+
+  temple:{ name:'夜宿山寺', hint:'精力+1 智力+1', ap:1,
+    run(){ addStat('jing', 1); addStat('zhi', 1); S.maintained.jing = true;
+      log('山寺的灯油不多了，你把书凑近些，读到三更。'); } },
+
+  watch:{ name:'系舟守夜', hint:'精力-1 · 遇水匪可喝退', ap:1,
+    run(){ fatigue(); S.safe.shui = true;
+      log('你把箱笼挪到舱口，和衣坐着，听了一夜水声。'); } },
+
+  chat:{ name:'与船家闲谈', hint:'人缘+1 智力+1', ap:1,
+    run(){ addStat('yuan', 1); addStat('zhi', 1); S.maintained.yuan = true;
+      log('船家讲了半段汴河旧事：哪段水急，哪段有贼。'); } },
+
+  sleep:{ name:'就寝 · 结束今日', hint:'夜间结算', ap:0,
+    run(){ endDay(); } }
+};
+
+
+/* ============================ 相遇与题诗 ============================ */
+function meetNpc(tier){
+  const sc = curScene();
+  const ids = Object.keys(NPCS).filter(function(k){
+    return NPCS[k].tier === tier && NPCS[k].where.indexOf(sc.id) >= 0 && S.met.indexOf(k) < 0;
+  });
+  if (!ids.length) return null;
+  ids.sort(function(a, b){ return (NPCS[a].prio || 9) - (NPCS[b].prio || 9); });
+  const id = ids[0];
+  S.met.push(id);
+  return Object.assign({id:id}, NPCS[id]);
+}
+
+function openPoem(mode){
+  const pool = POEM_THEMES.filter(function(t){ return !S.poem || t.key !== S.poem.theme; });
+  const th = pool[Math.floor(Math.random()*pool.length)];
+  S.poem = {mode:mode, theme:th.key, text:'', warn:false, result:null};
+}
+
+function stripPunct(x){ return x.replace(/[，。；、！？：,.!?;:\s]/g, ''); }
+
+const CLASS_OF = {};
+function putClass(cls, chars){ for (const ch of chars) if (!CLASS_OF[ch]) CLASS_OF[ch] = cls; }
+putClass('数', '一二三四五六七八九十百千万亿双孤几半');
+putClass('色', '青白红黄紫翠碧苍朱墨绿丹玄素');
+putClass('方', '上下东西南北前后中外里边间旁侧际');
+putClass('代', '我你他她尔汝吾君卿子谁此彼其');
+putClass('虚', '之而以其于则为所且若何不无未莫相共亦复更又已曾也矣乎焉哉与');
+putClass('名', '日月星云风雨雪霜烟霞虹雷电山水江河溪石泉川岸峰林谷洲汀湖海涛沙松柳梅竹桃李兰菊荷草花叶枝根雁鹤鸦莺燕马猿鱼龙犬鸡舟船帆灯烛剑琴书酒樽杯帘窗门楼台亭阁桥驿车家乡镇州城关塞边春秋冬夏朝暮夜晓昏年岁心魂梦泪声文章诗笔纸墨砚王臣尘路途翁叟僧客友弟兄父母妻子');
+putClass('形', '寒清孤远长空深浅幽静愁闲老衰新旧香冷暖明暗盛高荒淡薄轻重缓急妍媸贫富賢愚狂雅俗');
+putClass('动', '照流落飞过开望听思忆归来去行卧坐醉吟题送别见闻问答笑唱叹惜怜惊惧兴废存亡映遮掩登临抚弄唤迎逢遇识知觉悟读论谋战守征戍行');
+
+function isParallel(a, b){
+  const A = Array.from(a), B = Array.from(b);
+  if (A.length !== B.length || !A.length) return false;
+  if (a === b) return false;
+  let known = 0;
+  for (let i = 0; i < A.length; i++){
+    const ca = CLASS_OF[A[i]], cb = CLASS_OF[B[i]];
+    if (ca && cb){
+      known++;
+      if (ca !== cb) return false;
+    }
+  }
+  return known >= Math.ceil(A.length * 0.5);
+}
+
+function gradePoem(text, themeKey){
+  const lines = text.split(/\n+/).map(stripPunct).filter(function(l){ return l.length > 0; });
+  const lens = lines.map(function(l){ return Array.from(l).length; });
+  const n = lines.length;
+  const uniform = n >= 2 && lens.every(function(x){ return x === lens[0]; });
+  const four = (n === 4);
+  const dui = four && uniform &&
+    (isParallel(lines[0], lines[1]) || isParallel(lines[1], lines[2]) || isParallel(lines[2], lines[3]));
+
+  const notes = [];
+  if (four) notes.push('四句成篇'); else notes.push('共 ' + n + ' 句');
+  if (uniform) notes.push('字数齐整（每句 ' + lens[0] + ' 字）'); else notes.push('字数参差');
+  if (dui) notes.push('中二联相对');
+
+  const grade = (four && uniform) ? '上品' : '中品';
+  let note;
+  if (grade === '上品' && dui)
+    note = '四句齐整，中二联又对得稳当，越发见功夫。主人读了两遍，连声称善。';
+  else if (grade === '上品')
+    note = '四句齐整，字字相当，已是一首成样的诗。主人抚掌道：“好，好！”';
+  else
+    note = '肯写就好。下一回写四句、每句字数一样，便是上品——主人家也才好奉上程仪。';
+
+  return {grade:grade, notes:notes, lines:lines, note:note, dui:dui, uniform:uniform, n:n};
+}
+
+
+function submitPoem(text){
+  if (!S.poem || S.poem.result) return;
+  const clean = (text || '').trim();
+  S.poem.text = clean;
+  if (!clean){ S.poem.warn = true; return; }
+  const th = POEM_THEMES.filter(function(t){ return t.key === S.poem.theme; })[0];
+  const g = gradePoem(clean, S.poem.theme);
+  const reward = g.grade === '上品' ? (S.poem.mode === 'poem' ? 5 : 4) : 0;
+  money(reward);
+  if (g.grade === '上品') addStat('zhi', 1);
+  S.poems.push({day:S.day, mode:S.poem.mode, theme:th.name, text:clean, grade:g.grade, reward:reward});
+  if (S.poemUsed.indexOf(curScene().id) < 0) S.poemUsed.push(curScene().id);
+  if (reward > 0){
+    log('你' + (S.poem.mode === 'poem' ? '于驿壁题' : '当街鬻出一首') + th.name + '诗，上品，得 ' + reward + ' 贯。');
+  } else {
+    log('你' + (S.poem.mode === 'poem' ? '题了一首' : '当街鬻出一首') + th.name + '诗，' +
+        (S.poem.mode === 'poem' ? '主人笑着收了，却未提程仪的事。' : '围观的人渐渐散了，没做成生意。'));
+  }
+  S.poem.result = Object.assign({empty:false, theme:th.name, reward:reward}, g);
+}
+
+/* ============================ 答题 ============================ */
+const LETTERS = ['A','B','C','D'];
+
+function answer(i){
+  if (!S.pending || S.feedback) return;
+  const q = S.pending.q, my = LETTERS[i], ok = my === q.answer;
+  if (S.pending.kind === 'study'){
+    addStat('zhi', ok ? 1 : 1);
+    log(ok ? '此题你答得干脆，心中又亮了一分。' : '此题答错，你把出处又看了一遍。');
+  } else if (S.pending.kind === 'exam'){
+    if (ok) S.exam.correct++;
+    log(ok ? '笔下一气，未曾迟疑。' : '笔尖顿了顿，终究写错了出处。');
+  } else {
+    if (ok) S.exam.palace++;
+  }
+  S.pending.my = my;
+  S.feedback = {ok, answer:q.answer, explain:q.explain};
+}
+
+function continueAfterAnswer(){
+  if (!S.pending) return;
+  const kind = S.pending.kind;
+  S.pending = null; S.feedback = null;
+  if (kind === 'exam'){ S.exam.cur++; nextExamQuestion(); }
+  else if (kind === 'palace'){ S.exam.pcur++; nextPalaceQuestion(); }
+}
+
+/* ============================ 日循环 ============================ */
+function enterDay(){
+  const sc = curScene();
+  S.pending = null; S.feedback = null;
+  if (sc.kind === 'exam'){
+    S.phase = 'exam';
+    if (S.day === 25 && S.flags.juan && !S.flags.juanReply){
+      S.flags.juanReply = true;
+      const good = S.zhi >= 7;
+      addStat('yuan', 1);
+      if (good) addStat('zhi', 1);
+      S.letter = good
+        ? { text: '天将明，有人叩门，从门缝里递进一纸小笺，字是瘦硬的欧体：\n\n“文气已足，只宜敛锋。策问若及河渠，可据《禹贡》立论。”\n\n下款只是一个“修”字。',
+            effect: '知贡举记得你的卷子。人缘 +1、智力 +1，省试再得一分考运。' }
+        : { text: '天将明，有人叩门，从门缝里递进一纸小笺：\n\n“笔下太急。入场先定章法，再落字。”\n\n下款是一个“修”字。',
+            effect: '知贡举看过你的行卷。人缘 +1，省试略有考运。' };
+      return;
+    }
+    startExamRound();
+    return;
+  }
+  if (sc.kind === 'ending'){
+    if (S.day <= 28){ S.phase = 'result'; return; }
+    if (S.day === 29){ S.phase = 'palace'; startPalace(); return; }
+    S.phase = 'banquet'; return;
+  }
+  S.phase = 'play';
+}
+
+function endDay(){
+  if (S.phase === 'over') return;
+  const kindNow = curScene().kind;
+  let cost = (S.day >= 16 ? 2 : 1);
+  if (kindNow === 'exam' || kindNow === 'ending') cost = 1;
+  money(-cost);
+  if (S.money < 0){
+    S.money = 0;
+    return finish('fail', {title:'困于逆旅', text:'盘缠用尽，你连号舍外的客栈也住不起了。放榜那日，你只能站在人群之外，听别人念榜。'});
+  }
+
+  const exempt = (kindNow === 'exam' || kindNow === 'ending' || kindNow === 'choice' || kindNow === 'gate');
+  if (!exempt){
+    const names = {zhi:'智力', jing:'精力', yuan:'人缘'};
+    const lost = [];
+    ['zhi','jing','yuan'].forEach(k => { if (!S.maintained[k]){ addStat(k, -1); lost.push(k); } });
+    if (lost.length) log('夜深，' + lost.map(k => names[k]).join('、') + ' 各消减一分。');
+    if (S.jing <= 2 && Math.random() < 0.45){
+      addStat('jing', -1);
+      log('你连日奔波，夜里咳了起来，精力又失一分。');
+    }
+    const low = [];
+    if (S.zhi <= 2) low.push('智力');
+    if (S.jing <= 2) low.push('精力');
+    if (S.yuan <= 2) low.push('人缘');
+    if (low.length) log('⚠ ' + low.join('、') + '已近枯竭，明日须先补上。');
+  }
+
+  if (S.zhi <= 0) return finish('fail', {title:'胸无点墨', text:'久不温书，提笔竟不知从何说起。你在号舍里坐了一整日，只写下半行字。'});
+  if (S.jing <= 0) return finish('fail', {title:'病卧逆旅', text:'你在客栈里躺了三天，没能走进贡院的门。这一科，就此作罢。'});
+  if (S.yuan <= 0) return finish('fail', {title:'孤身无援', text:'同行者皆散去，无人为你递一句话。汴京的冬天很冷，你把行囊收了起来。'});
+
+  S.day++;
+  if (S.day > TOTAL_DAYS) return finishEnding();
+
+  S.scene = sceneForDay(S.day);
+  S.ap = 4;
+  S.maintained = {zhi:false, jing:false, yuan:false};
+
+  const ns = curScene();
+  log('—— 第 ' + S.day + ' 日 · ' + ns.name + ' ——');
+
+  if (ns.kind === 'travel'){ S.ap -= 2; travelEvent(); }
+  enterDay();
+  if (S.phase === 'play' && !maybeBandit()) maybeEvent();
+}
+
+function applyDelta(cost, gain){
+  const c = cost || {}, g = gain || {};
+  if (c.money) money(-c.money);
+  if (c.jing) fatigue(c.jing);
+  if (c.zhi) addStat('zhi', -c.zhi);
+  if (c.yuan) addStat('yuan', -c.yuan);
+  if (g.money) money(g.money);
+  if (g.jing) addStat('jing', g.jing);
+  if (g.zhi) addStat('zhi', g.zhi);
+  if (g.yuan) addStat('yuan', g.yuan);
+}
+
+function maybeEvent(){
+  if (S.phase !== 'play' || S.day < 3 || S.event) return;
+  const sc = curScene();
+  if (sc.kind === 'exam' || sc.kind === 'ending') return;
+  if (Math.random() > 0.5) return;
+  const pool = EVENTS.filter(e =>
+    (!e.where || e.where.indexOf(sc.id) >= 0) && (S.seenEvents || []).indexOf(e.id) < 0);
+  if (!pool.length) return;
+  const total = pool.reduce((a, b) => a + (b.w || 1), 0);
+  let r = Math.random() * total, pick = pool[pool.length - 1];
+  for (const e of pool){ if ((r -= (e.w || 1)) <= 0){ pick = e; break; } }
+  S.seenEvents = S.seenEvents || [];
+  S.seenEvents.push(pick.id);
+  if (pick.auto){
+    applyDelta(null, pick.auto);
+    log(pick.autoMsg || '');
+    S.event = { title: pick.title, text: pick.text, msg: pick.autoMsg || '', done: true };
+  } else {
+    S.event = { title: pick.title, text: pick.text, choice: pick.choice, done: false };
+  }
+}
+
+function chooseEvent(i){
+  const e = S.event;
+  if (!e || !e.choice) return;
+  const c = e.choice[i];
+  if (c.needSafe && !S.safe[e.safeKey]) return;
+  applyDelta(c.cost, c.gain);
+  log(c.msg);
+  e.msg = c.msg;
+  e.done = true;
+}
+
+function showBandit(key){
+  const b = BANDITS[key];
+  S.event = { title: b.title, text: b.text, choice: b.choices, done: false, safeKey: b.safeKey, bandit: true };
+}
+
+function maybeBandit(){
+  const sc = curScene();
+  if (sc.id === 'shandao' && S.day === 8 && !S.banditDone.shan){
+    S.banditDone.shan = true; showBandit('shan'); return true;
+  }
+  if (sc.id === 'bianhe' && S.day === 11 && !S.banditDone.shui){
+    S.banditDone.shui = true; showBandit('shui'); return true;
+  }
+  return false;
+}
+
+function travelEvent(){
+  const rolls = [
+    {w:3, fn(){ fatigue(); log('山雨骤至，你的鞋袜尽湿，赶路耗去不少气力。'); }},
+    {w:2, fn(){ money(-2); log('渡口船家坐地起价，你多付了两贯。'); }},
+    {w:2, fn(){ addStat('zhi', -1); log('车马颠簸，你翻开书却一个字也读不进去。'); }},
+    {w:2, fn(){ addStat('yuan', 1); log('同行的举子分了半块干粮给你，两人攀谈起来。'); }},
+    {w:1, fn(){ addStat('jing', 1); log('途中遇到一处茶亭，你歇了半个时辰，精神稍复。'); }}
+  ];
+  const total = rolls.reduce((a,b)=>a+b.w,0);
+  let r = Math.random()*total;
+  for (const it of rolls){ if ((r -= it.w) <= 0){ it.fn(); return; } }
+}
+
+/* ============================ 结局 ============================ */
+function finish(kind, opt){
+  S.phase = 'over';
+  S.ending = Object.assign({kind}, opt || {});
+}
+
+function failExam(){
+  S.phase = 'over';
+  S.ending = {kind:'ending', rank:'落第', cls:'dim',
+    text:'榜上没有你的名字。你在汴京又住了两月，把行囊里剩下的书读完，才动身回乡。三年后再来，也未必不是好事。'};
+}
+
+function finishEnding(){
+  const examPct = S.exam.total / 15;
+  const palacePct = S.exam.palace / 3;
+  const jingCoef = S.jing >= 6 ? 1 : S.jing >= 3 ? 0.88 : 0.75;
+  const rumor = S.flags.rumor ? 0.03 : 0;
+  const juanBonus = S.flags.juanReply ? 0.04 : (S.flags.juan ? 0.02 : 0);
+  const zhiCoef = 0.60 + S.zhi / 25;          // 智力决定笔墨的成色
+  const yuanNorm = S.yuan / MAX;
+  const score = (examPct*0.62*zhiCoef + palacePct*0.26 + yuanNorm*0.12 + rumor + juanBonus) * jingCoef;
+  let e;
+  if (score >= 0.88) e = {rank:'状元', cls:'red', text:'唱名之日，你的名字第一个被唤出。琼林宴上，你想起临川老宅的那盏灯，忽然觉得三千里路并不算远。'};
+  else if (score >= 0.78) e = {rank:'一甲进士', cls:'red', text:'你列名一甲，入馆阁读书。同榜的人都说，临川来的这位王举子，文章有锋芒。'};
+  else if (score >= 0.68) e = {rank:'二甲进士', cls:'red', text:'你中了二甲进士，授官外放。离京那日，你在州桥边站了很久，看汴河的水往东去。'};
+  else if (score >= 0.58) e = {rank:'同进士出身', cls:'', text:'你以同进士出身及第，虽非高第，终究脱了白身。回乡时，先生在牌位前多摆了一壶酒。'};
+  else e = {rank:'特奏名', cls:'dim', text:'你的卷子被归入特奏名，赐同进士出身，授一县主簿。仕途虽小，终究入了门。'};
+  S.phase = 'over';
+  S.ending = Object.assign({kind:'ending'}, e);
+}
+
+/* ============================ 存档 ============================ */
+const SAVE_KEY = 'song-exam-save-v1';
+function saveGame(){
+  if (!S || S.phase === 'over') return;
+  try{
+    const c = JSON.parse(JSON.stringify(S));
+    c.pending = null; c.feedback = null; c.poem = null; c.letter = null; c.event = null;
+    c.log = c.log.slice(0, 12);
+    localStorage.setItem(SAVE_KEY, JSON.stringify(c));
+  }catch(e){}
+}
+function loadGame(){
+  try{
+    const raw = localStorage.getItem(SAVE_KEY);
+    if (!raw) return null;
+    const g = JSON.parse(raw);
+    if (!g || !g.day || g.phase === 'over') return null;
+    g.pending = null; g.feedback = null; g.help = false;
+    if (typeof g.ap !== 'number' || g.ap < 0 || g.ap > 4) g.ap = 4;
+    return g;
+  }catch(e){ return null; }
+}
+function clearSave(){ try{ localStorage.removeItem(SAVE_KEY); }catch(e){} }
+
+
+/* ============================ 词条标注 ============================ */
+function splitByTerms(text, terms){
+  const out = [];
+  let i = 0, buf = '';
+  while (i < text.length){
+    let hit = null;
+    for (const t of terms){ if (text.startsWith(t, i)){ hit = t; break; } }
+    if (hit){
+      if (buf){ out.push({t:'text', v:buf}); buf = ''; }
+      out.push({t:'term', v:hit});
+      i += hit.length;
+    } else {
+      buf += text[i];
+      i++;
+    }
+  }
+  if (buf) out.push({t:'text', v:buf});
+  return out;
+}
+
+function annotateTerms(rootEl){
+  if (!rootEl || typeof rootEl.querySelectorAll !== 'function') return;
+  const TERMS = Object.keys(GLOSSARY).sort(function(a,b){ return b.length - a.length; });
+  rootEl.querySelectorAll('.scene-desc, .log div, .npc-line').forEach(function(el){
+    if (el.dataset.glossDone) return;
+    el.dataset.glossDone = '1';
+    const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+    const nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach(function(node){
+      if (!node.parentElement || node.parentElement.closest('.gloss')) return;
+      const text = node.nodeValue;
+      if (!text) return;
+      const parts = splitByTerms(text, TERMS);
+      if (!parts.some(function(p){ return p.t === 'term'; })) return;
+      const frag = document.createDocumentFragment();
+      parts.forEach(function(p){
+        if (p.t === 'term'){
+          const sp = document.createElement('span');
+          sp.className = 'gloss';
+          sp.dataset.term = p.v;
+          sp.textContent = p.v;
+          frag.appendChild(sp);
+        } else {
+          frag.appendChild(document.createTextNode(p.v));
+        }
+      });
+      node.parentNode.replaceChild(frag, node);
+    });
+  });
+}
+
+/* ============================ 渲染 ============================ */
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+function pipRow(k, label, note){
+  let pips = '';
+  for (let i=1;i<=MAX;i++) pips += '<div class="pip ' + k + (i <= S[k] ? ' on' : '') + '"></div>';
+  return '<div class="stat"><div class="top"><span>' + label + '</span><i>' + note + '</i></div><div class="pips">' + pips + '</div></div>';
+}
+
+function render(){
+  if (S.phase === 'title'){ renderTitle(); return; }
+  const app = document.getElementById('app');
+  const sc = curScene();
+  const apDots = [1,2,3,4].map(i => '<div class="dot ' + (i <= S.ap ? 'on' : '') + '"></div>').join('');
+  const logHtml = S.log.map(l => {
+    const cls = l.t.indexOf('〔史料〕') === 0 ? ' class="hist"' : '';
+    return '<div' + cls + '><span>' + (l.d ? dateLabel(l.d) : '') + '</span>' + esc(l.t) + '</div>';
+  }).join('');
+
+  app.innerHTML = `
+  <header class="head">
+    <h1>北宋赶考记<small>嘉祐二年 · 丁酉 · 临川举子赴京应省试</small></h1>
+    <div class="meta">第 ${S.day} 日 / 30 · ${dateLabel(S.day)}<br><button data-act="help">凡例</button> · <button data-act="glossIndex">词条</button> · <button data-act="restart">重开</button></div>
+    <div class="seal">赴京<br>应试</div>
+  </header>
+  <div class="main">
+    <section class="card stage">${renderBody()}</section>
+    <aside class="status">
+      <div class="card">
+        <div class="row"><span>行程</span><span>${sc.tag}</span></div>
+        <div class="row"><span>盘缠</span><b>${S.money} 贯</b></div>
+        <div class="sep"></div>
+        ${pipRow('zhi','智力','未温书则夜减一分')}
+        ${pipRow('jing','精力','未歇息则夜减一分')}
+        ${pipRow('yuan','人缘','未交游则夜减一分')}
+        ${(S.phase === 'play') ? '<div class="ap"><span>今日行动</span><div class="dots">' + apDots + '</div></div>' : ''}
+        <div class="log">${logHtml || '<div><span></span>—— 故事刚刚开始 ——</div>'}</div>
+      </div>
+    </aside>
+  </div>`;
+
+  annotateTerms(app);
+  renderOverlay();
+}
+
+function renderTitle(){
+  const app = document.getElementById('app');
+  const save = pendingSave;
+  const info = save
+    ? `上次行至第 ${save.day} 日 · ${SCENES[save.scene].name}　智力 ${save.zhi} · 精力 ${save.jing} · 人缘 ${save.yuan} · 盘缠 ${save.money} 贯`
+    : '尚无存档。启程后每到一日会自动存一次，刷新不丢。';
+  const contBtn = save
+    ? `<button class="act primary" data-act="continue"><b>继续上次</b><span>第 ${save.day} 日 · ${SCENES[save.scene].name}</span></button>`
+    : '';
+  app.innerHTML = `
+  <header class="head">
+    <h1>北宋赶考记<small>嘉祐二年 · 丁酉 · 临川举子赴京应省试</small></h1>
+    <div class="seal">赴京<br>应试</div>
+  </header>
+  <div class="main" style="grid-template-columns:1fr">
+    <section class="card stage" style="min-height:0">
+      <div class="glyph">考</div>
+      <div class="scene-tag">三十日 · 一千里</div>
+      <h2 class="scene-name">临川到汴京</h2>
+      <p class="scene-desc">正月初十启程，二月入贡院。三十天里，你要在赶路、温书、歇息、交游之间取舍：<br>
+      智力管笔墨，精力管临场，人缘管引荐。三样任缺其一，这一科便走不到榜下。</p>
+      <div class="acts">
+        ${contBtn}
+        <button class="act" data-act="newgame"><b>重新开始</b><span>清空旧档，自正月初十起</span></button>
+        <button class="act" data-act="help"><b>凡 例</b><span>怎么玩 · 规则说明</span></button>
+      </div>
+      <div class="stage-foot">
+        <span>${info}</span>
+        <span>${save ? '继续上次，或重新开一科' : '点「重新开始」启程'}</span>
+      </div>
+    </section>
+  </div>`;
+  annotateTerms(app);
+  renderOverlay();
+}
+
+function renderBody(){
+  if (S.phase === 'over') return renderEnding();
+  if (S.phase === 'result') return renderResult();
+  if (S.phase === 'palace' || S.phase === 'palaceEnd') return renderPalace();
+  if (S.phase === 'banquet') return renderBanquet();
+  if (S.phase === 'exam' || S.phase === 'roundEnd') return renderExam();
+  return renderPlay();
+}
+
+function renderPlay(){
+  const sc = curScene();
+  const btns = (sc.acts || []).filter(id => ACT[id] && (!ACT[id].hideIf || !ACT[id].hideIf())).map(id => {
+    const a = ACT[id]; if (!a) return '';
+    const off = S.ap < a.ap ? 'disabled' : '';
+    return `<button class="act ${a.primary?'primary':''}" data-act="${id}" ${off}><b>${a.name}</b><span>${a.hint}</span></button>`;
+  }).join('');
+  return `<div class="glyph">${sc.glyph}</div>
+    <div class="scene-tag">${sc.tag}</div>
+    <h2 class="scene-name">${sc.name}</h2>
+    <p class="scene-desc">${sc.desc}</p>
+    <div class="acts">${btns}</div>
+    <div class="stage-foot">
+      <span>今日余 <b>${S.ap}</b> 点行动 · 食宿约 <b>${S.day >= 16 ? 2 : 1}</b> 贯</span>
+      <span>${S.ap > 0 ? '温书养智，歇息养神，交游养人缘' : '已无余力，宜早眠'}</span>
+    </div>`;
+}
+
+function renderExam(){
+  const sc = curScene();
+  const r = EXAM_ROUNDS[S.exam.round-1] || '省试 · 入场';
+  const done = (S.phase === 'roundEnd');
+  return `<div class="glyph">${sc.glyph}</div>
+    <div class="scene-tag">${sc.tag}</div>
+    <h2 class="scene-name">${r}</h2>
+    <p class="scene-desc">${S.exam.round === 0
+      ? '天将明，贡院门外已站满了人。你把手里的短笺折好，收进衣襟。'
+      : done
+        ? '你搁下笔，掌心全是汗。这一场答对 <b>' + S.exam.correct + '</b> 题（共 5 题）。'
+        : '号舍里静得能听见蜡烛燃烧。你展开卷子，深吸一口气。'}</p>
+    <div class="acts">${S.exam.round === 0
+      ? '<button class="act primary" data-act="openQuestion"><b>入场</b><span>先看短笺</span></button>'
+      : done
+        ? '<button class="act primary" data-act="nextRound"><b>' + (S.exam.round < 3 ? '进入下一场' : '交卷出闱') + '</b><span>结束今日</span></button>'
+        : '<button class="act primary" data-act="openQuestion"><b>展卷作答</b><span>第 ' + (S.exam.cur+1) + ' / 5 题</span></button>'}</div>`;
+}
+
+function renderResult(){
+  const passed = S.exam.total >= 8;
+  return `<div class="glyph">榜</div>
+    <div class="scene-tag">第十幕 · 放榜</div>
+    <h2 class="scene-name">省试放榜</h2>
+    <p class="scene-desc">${S.flags.juanReply ? '榜下有人低声道：“欧阳公在贡院提起过你的卷子。”<br>' : ''}三场合计答对 <b>${S.exam.total}</b> 题（满分 15）。${passed
+      ? '知贡举取中了你，名字列在榜上。三日后入宫殿试——这一科，你已经脱了白身的一半。'
+      : '榜上没有你的名字。你在人群外站了很久，把带来的书又翻了一遍。'}</p>
+    <div class="acts"><button class="act primary" data-act="${passed?'goOn':'failExam'}"><b>${passed?'入宫应殿试':'收拾行囊回乡'}</b><span>${passed?'推进一日':'结局'}</span></button></div>`;
+}
+
+function renderPalace(){
+  const done = (S.phase === 'palaceEnd');
+  return `<div class="glyph">殿</div>
+    <div class="scene-tag">殿试 · 崇政殿</div>
+    <h2 class="scene-name">殿试</h2>
+    <p class="scene-desc">${done
+      ? '你答对 <b>' + S.exam.palace + '</b> 题（共 3 题）。皇帝未置一词，只在卷首点了两下。'
+      : '殿上烛火高照，策题落在你面前。两旁的官员都不出声。'}</p>
+    <div class="acts">${done
+      ? '<button class="act primary" data-act="banquet"><b>谢恩出宫</b><span>赴琼林宴</span></button>'
+      : '<button class="act primary" data-act="openQuestion"><b>跪读策题</b><span>第 ' + (S.exam.pcur+1) + ' / 3 题</span></button>'}</div>`;
+}
+
+function renderBanquet(){
+  return `<div class="glyph">宴</div>
+    <div class="scene-tag">第十幕 · 琼林宴</div>
+    <h2 class="scene-name">琼林宴</h2>
+    <p class="scene-desc">琼林苑里杏花初开，新科进士列坐。有人举杯，有人低语。你忽然想起三十日前，临川老宅的那盏灯。</p>
+    <div class="acts"><button class="act primary" data-act="finale"><b>入席</b><span>看结局</span></button></div>`;
+}
+
+function renderEnding(){
+  const e = S.ending || {title:'—', text:''};
+  const isFail = e.kind === 'fail';
+  return `<div class="final">
+    <div class="scene-tag">${isFail ? '途中止步' : '嘉祐二年 · 唱名'}</div>
+    <div class="rank ${e.cls || (isFail ? 'dim' : '')}">${e.rank || e.title}</div>
+    <p>${e.text || ''}</p>
+    <div class="tally">
+      <div><b>${S.exam.total}/15</b>省试</div>
+      <div><b>${S.exam.palace}/3</b>殿试</div>
+      <div><b>${S.zhi}</b>智力</div><div><b>${S.jing}</b>精力</div><div><b>${S.yuan}</b>人缘</div>
+      <div><b>${S.day}</b>日</div>
+      <div><b>${S.poems.length}</b>诗</div>
+    </div>
+    <div class="center" style="justify-content:center"><button class="btn" data-act="restart">再赴一科</button></div>
+  </div>`;
+}
+
+/* ---------------- 弹层 ---------------- */
+function renderOverlay(){
+  const old = document.getElementById('overlay');
+  if (old) old.remove();
+
+  let html = '';
+  if (S.pending){
+    const q = S.pending.q, fb = S.feedback;
+    const opts = LETTERS.map((L,i) => {
+      let cls = '';
+      if (fb){ if (L === q.answer) cls = 'right'; else if (fb.my === L) cls = 'wrong'; }
+      return `<button class="opt ${cls}" data-opt="${i}" ${fb?'disabled':''}><em>${L}</em><span>${esc(q.options[L])}</span></button>`;
+    }).join('');
+    const tag = S.pending.kind === 'exam'
+      ? EXAM_ROUNDS[S.exam.round-1] + ' · 第 ' + (S.exam.cur+1) + ' / 5 题'
+      : S.pending.kind === 'palace'
+        ? '殿试 · 第 ' + (S.exam.pcur+1) + ' / 3 题'
+        : '温书 · 随手一题';
+    html = `<div class="overlay" id="overlay"><div class="sheet">
+      <div class="stamp">${fb ? (fb.ok ? '是' : '否') : '题'}</div>
+      <div class="qtag">${tag} · ${q.era}</div>
+      <h3>${esc(q.stem)}</h3>
+      <div class="opts">${opts}</div>
+      ${fb ? `<div class="fb"><b>${fb.ok ? '答对了' : '答错了'}。</b>正确答案：${fb.answer}。${esc(fb.explain)}</div>
+        <div class="center"><button class="btn" data-act="cont">继续</button></div>` : ''}
+    </div></div>`;
+  } else if (S.gloss){
+    const g = GLOSSARY[S.gloss] || { def:'', src:[], note:'' };
+    let srcHtml = '';
+    (g.src || []).forEach(function(x){
+      if (x.quote){
+        srcHtml += `<div class="gloss-src"><b>${esc(x.book)}</b>原文：“${esc(x.quote)}”</div>`;
+      } else {
+        srcHtml += `<div class="gloss-src"><b>${esc(x.book)}</b>所述：${esc(x.gist || '')}</div>`;
+      }
+    });
+    html = `<div class="overlay" id="overlay"><div class="sheet">
+      <div class="stamp">词</div>
+      <div class="qtag">词条</div>
+      <h3>${esc(S.gloss)}</h3>
+      <p class="scene-desc" style="font-size:15.5px; line-height:2">${esc(g.def)}</p>
+      ${srcHtml}
+      ${g.note ? `<div class="fb">${esc(g.note)}</div>` : ''}
+      <div class="center"><button class="btn" data-act="closeGloss">知道</button></div>
+    </div></div>`;
+  } else if (S.glossIndex){
+    const names = Object.keys(GLOSSARY);
+    const chips = names.map(function(t){
+      return `<button class="opt" data-term="${t}" style="width:auto; padding:7px 12px; font-size:14px"><span>${t}</span></button>`;
+    }).join('');
+    html = `<div class="overlay" id="overlay"><div class="sheet">
+      <div class="stamp">目</div>
+      <div class="qtag">词条索引 · 共 ${names.length} 条</div>
+      <h3>这一路会遇到的词</h3>
+      <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:8px">${chips}</div>
+      <div class="center"><button class="btn" data-act="closeIndex">合上</button></div>
+    </div></div>`;
+  } else if (S.event){
+    const e = S.event;
+    let body = '';
+    if (e.done){
+      body = `<div class="fb">${esc(e.msg || '')}</div>
+        <div class="center"><button class="btn" data-act="eventOk">继 续</button></div>`;
+    } else {
+      body = `<div class="opts">` + e.choice.map((c, i) => {
+        const dis = c.needSafe && !S.safe[e.safeKey];
+        return `<button class="opt ${dis ? 'off' : ''}" data-ev="${i}" ${dis ? 'disabled' : ''}><em>${['一','二','三'][i]}</em><span>${esc(c.label)}</span></button>`;
+      }).join('') + `</div>`;
+    }
+    html = `<div class="overlay" id="overlay"><div class="sheet">
+      <div class="stamp">事</div>
+      <div class="qtag">行程小记</div>
+      <h3>${esc(e.title)}</h3>
+      <p class="scene-desc" style="white-space:pre-line; font-size:15px; line-height:2">${esc(e.text)}</p>
+      ${body}
+    </div></div>`;
+  } else if (S.letter){
+    html = `<div class="overlay" id="overlay"><div class="sheet">
+      <div class="stamp">短笺</div>
+      <div class="qtag">省试前夜 · 贡院门外</div>
+      <h3>有人从门缝里递进一纸短笺</h3>
+      <p class="scene-desc" style="white-space:pre-line; font-size:15px; line-height:2.1">${esc(S.letter.text)}</p>
+      <div class="fb">${S.letter.effect}</div>
+      <div class="center"><button class="btn" data-act="closeLetter">收好，入场</button></div>
+    </div></div>`;
+  } else if (S.poem){
+    const th = POEM_THEMES.filter(function(t){ return t.key === S.poem.theme; })[0];
+    if (!S.poem.result){
+      html = `<div class="overlay" id="overlay"><div class="sheet">
+        <div class="stamp">题诗</div>
+        <div class="qtag">${S.poem.mode === 'poem' ? '驿壁留题' : '街头鬻诗'} · ${th.name}</div>
+        <h3>${th.prompt}</h3>
+        <p class="scene-desc" style="font-size:13px; margin-bottom:0">写四句，每句字数一样，就是上品；能对上一联更妙。不必字字珠玑，肯写就值得。</p>
+        <textarea class="poem-box" id="poemBox" rows="5" placeholder="例：${(th.ex || '').split('\n').join('&#10;')}">${esc(S.poem.text || '')}</textarea>
+        ${S.poem.warn ? '<div class="fb">主人还在等，多少写两句罢。</div>' : ''}
+        <div class="center">
+          <button class="btn ghost" data-act="poemCancel">改日再写</button>
+          <button class="btn" data-act="poemSubmit">落笔</button>
+        </div>
+      </div></div>`;
+    } else {
+      const r = S.poem.result;
+      html = `<div class="overlay" id="overlay"><div class="sheet">
+        <div class="stamp">${r.grade}</div>
+        <div class="qtag">${r.theme} · ${r.notes.join(' · ')}</div>
+        <h3 style="white-space:pre-line; letter-spacing:.08em">${esc(r.lines.join('\n'))}</h3>
+        <div class="fb">评曰<b>${r.grade}</b>${r.reward ? '，得 <b>' + r.reward + '</b> 贯' : '，未得程仪'}。${r.note}</div>
+        <div class="center"><button class="btn" data-act="poemDone">收笔</button></div>
+      </div></div>`;
+    }
+  } else if (S.help){
+    html = `<div class="overlay" id="overlay"><div class="sheet">
+      <div class="stamp">凡例</div>
+      <h3>怎么玩</h3>
+      <p class="scene-desc" style="margin-top:10px">
+      每日有 <b>4 点行动</b>：温书、歇息、交游各占 1 点。<br>
+      入夜结算：凡当日没做的那一类事，对应属性（智力／精力／人缘）各减 1 分；任一项归零，旅程终止。<br>
+      赶路的日子要耗掉 2 点，只剩 2 点行动，必有一样要放下——这就是取舍。<br>
+      第 25–27 日为省试三场，每场 5 题；第 28 日放榜，第 29 日殿试，第 30 日琼林宴。<br>
+      智力决定笔墨成色，精力影响临场发挥，人缘决定能否拜访大儒、探听主司。<br>
+      驿站与山路上可「题诗换宿」、市口可「街头鬻诗」：按题目当场作诗，评上中下三品，品第越高报酬越厚。<br>
+      酒楼、书库、舟中可结识嘉祐二年的真实人物——苏轼兄弟、曾巩、程颢、张载、吕惠卿、苏洵，以及欧阳修、梅尧臣、司马光。<br>
+      想见知贡举欧阳修，用酒楼里的「投行卷」，只此一次；酒楼连访大儒三次，也能依次见到欧阳修、梅尧臣、司马光。<br>
+      正文里带虚线的小词（如“程仪”“解状”“省试”）可以点开，看释义与史料出处。</p>
+      <div class="center"><button class="btn" data-act="closeHelp">知道了</button></div>
+    </div></div>`;
+  }
+  if (html){
+    document.body.insertAdjacentHTML('beforeend', html);
+    const ov = document.getElementById('overlay');
+    if (ov && ov.querySelectorAll) annotateTerms(ov);
+  }
+}
+
+/* ============================ 事件 ============================ */
+function doAct(id){
+  if (S.phase === 'over') return;
+  const a = ACT[id]; if (!a) return;
+  if (a.can && !a.can()){ log(a.deny || '此举不成。'); render(); return; }
+  if (S.ap < a.ap){ log('今日已无余力。'); render(); return; }
+  S.ap -= a.ap;
+  a.run();
+  saveGame();
+  render();
+}
+
+function handleClick(ev){
+    const t = ev.target.closest('[data-act],[data-opt],[data-ev],[data-term]');
+    if (!t) return;
+    if (t.dataset.opt !== undefined){ answer(parseInt(t.dataset.opt,10)); render(); return; }
+    const act = t.dataset.act;
+    if (act === 'cont'){ continueAfterAnswer(); render(); return; }
+    if (act === 'openQuestion'){
+      if (!S.pending){ if (S.phase === 'palace') nextPalaceQuestion(); else nextExamQuestion(); }
+      render(); return;
+    }
+    if (act === 'nextRound'){ S.phase = 'exam'; endDay(); render(); return; }
+    if (act === 'goOn'){ endDay(); render(); return; }
+    if (act === 'failExam'){ failExam(); render(); return; }
+    if (act === 'banquet'){ S.day = 30; S.scene = 9; S.phase = 'banquet'; render(); return; }
+    if (act === 'finale'){ finishEnding(); render(); return; }
+    if (act === 'closeLetter'){
+      S.letter = null;
+      if (S.phase === 'exam' && !S.pending) startExamRound();
+      render(); return;
+    }
+    if (t.dataset.term){ S.gloss = t.dataset.term; render(); return; }
+    if (t.dataset.ev !== undefined){
+      chooseEvent(parseInt(t.dataset.ev, 10));
+      render(); return;
+    }
+    if (act === 'eventOk'){ S.event = null; render(); return; }
+    if (act === 'closeGloss'){ S.gloss = null; render(); return; }
+    if (act === 'glossIndex'){ S.glossIndex = true; render(); return; }
+    if (act === 'closeIndex'){ S.glossIndex = false; render(); return; }
+    if (act === 'poemSubmit'){
+      const box = document.getElementById('poemBox');
+      submitPoem(box ? box.value : '');
+      render(); return;
+    }
+    if (act === 'poemCancel'){ S.ap += 1; S.poem = null; log('你搁笔不题，转身走了。'); render(); return; }
+    if (act === 'poemDone'){ S.poem = null; render(); return; }
+    if (act === 'help'){ S.help = true; render(); return; }
+    if (act === 'closeHelp'){ S.help = false; render(); return; }
+    if (act === 'restart'){ clearSave(); pendingSave = null; startNew(); return; }
+    if (act === 'continue'){
+      if (pendingSave){ S = pendingSave; pendingSave = null; enterDay(); render(); }
+      return;
+    }
+    if (act === 'newgame'){ clearSave(); pendingSave = null; startNew(); return; }
+    if (ACT[act]) doAct(act);
+}
+
+function bindEvents(){
+  document.addEventListener('click', handleClick);
+}
+
+/* ============================ 启动 ============================ */
+function startNew(){
+  S = freshState();
+  S.phase = 'play';
+  log('你收拾行囊，把《周礼》放在最上层。');
+  saveGame();
+  render();
+}
+
+function boot(){
+  bindEvents();
+  pendingSave = loadGame();
+  S = freshState();
+  S.phase = 'title';
+  render();
+}
+
+if (typeof document !== 'undefined') boot();
+
+if (typeof module !== 'undefined' && module.exports){
+  module.exports = {
+    QUESTIONS, SCENES, ACT, MAX, LETTERS,
+    setS:(z)=>{ S=z; }, getS:()=>S,
+    freshState, sceneForDay, startStudy, answer, continueAfterAnswer,
+    endDay, doAct, enterDay, finishEnding, failExam,
+    nextExamQuestion, nextPalaceQuestion,
+    meetNpc, openPoem, submitPoem, gradePoem, NPCS, POEM_THEMES, EVENTS, BANDITS,
+    handleClick, chooseEvent, maybeBandit, showBandit, splitByTerms, GLOSSARY, annotateTerms,
+    render, renderOverlay
+  };
+}
+</script>
+</body>
+</html>

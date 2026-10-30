@@ -1,0 +1,4 @@
+# 构建与测试产物
+snap-*.html
+_site/
+.DS_Store
