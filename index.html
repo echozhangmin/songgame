@@ -90,6 +90,10 @@ button{font-family:inherit; cursor:pointer; color:var(--ink)}
 .log div{padding:2px 0}
 .log span{color:var(--ink3); margin-right:6px; font-size:11px}
 .gloss{border-bottom:1px dotted rgba(166,58,44,.55); cursor:help}
+.gq{display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;margin-left:6px;
+  border-radius:50%;background:rgba(166,58,44,.10);color:var(--red);font-style:normal;font-size:10px;line-height:1;
+  border:1px solid rgba(166,58,44,.42);vertical-align:2px;cursor:help}
+.gq:hover{background:rgba(166,58,44,.20)}
 .gloss:hover{background:rgba(166,58,44,.08)}
 .gloss-src{font-size:13.5px; line-height:1.95; color:var(--ink2); margin-top:10px; padding-left:12px; border-left:2px solid rgba(168,128,47,.45)}
 .gloss-src b{color:var(--ink)}
@@ -392,6 +396,17 @@ const GLOSSARY = {
     src:[{ book:'《宋史·选举志一》', gist:'试官入贡院锁宿，不得与外人通。' },
          { book:'欧阳修《归田录》', gist:'欧阳修记嘉祐二年与韩绛同知贡举、辟梅尧臣为小试官，锁院五十日，唱和成集。' }],
     note:'锁院期间所作唱和诗，即《礼部唱和诗》。' },
+  '投行卷': { def:'把平日所作诗文投献给名公权要，求其延誉、向主司推荐。唐以来举子多行此风，宋初虽禁公荐，投卷仍不绝。',
+    src:[{ book:'赵彦卫《云麓漫钞》卷八', quote:'唐之举人，先藉当世显人，以姓名达之主司，然后以所业投献；逾数日又投，谓之温卷。' }],
+    note:'本作把它做成一个动作：花 2 贯、耗 1 点行动，谒见知贡举欧阳修，智力与人缘各 +1，并留下“行卷”的考运；到京后会收到短笺。' },
+  '温卷': { def:'投卷之后再投一次，以加深印象。',
+    src:[{ book:'赵彦卫《云麓漫钞》卷八', quote:'逾数日又投，谓之温卷。' }],
+    note:'本作未单独做“温卷”动作，投行卷一次即算完成。' },
+  '座主': { def:'科举中录取自己的考官。唐代门生称考官为“座主”、自称“门生”，宋初严禁此称，以防结党。',
+    src:[{ book:'《宋史·选举志一》', gist:'宋初禁举子称考官为座主、自称门生，犯者抵罪。' }],
+    note:'所以本作里举子只称“主司”，不称座主。' },
+  '唱名': { def:'放榜后皇帝临轩，按名次逐一唱名，谓之唱名。',
+    src:[{ book:'《宋史·选举志一》', gist:'赐第之日，天子临轩唱名，卫士传呼。' }] },
   '行卷': { def:'举子把平日所作诗文投献给名公权要，求其延誉、向主司推荐。',
     src:[{ book:'赵彦卫《云麓漫钞》卷八', quote:'唐之举人，先藉当世显人，以姓名达之主司，然后以所业投献；逾数日又投，谓之温卷。' }],
     note:'此为唐制记载。宋代虽禁公荐，投卷之风仍存；本作“投行卷”即取此意。' },
@@ -1087,12 +1102,20 @@ function renderBody(){
   return renderPlay();
 }
 
+function termBadge(text){
+  const TERMS = Object.keys(GLOSSARY).sort(function(a,b){ return b.length - a.length; });
+  for (const t of TERMS){
+    if (text.indexOf(t) >= 0) return `<i class="gq" data-term="${t}" title="词条：${t}">解</i>`;
+  }
+  return '';
+}
+
 function renderPlay(){
   const sc = curScene();
   const btns = (sc.acts || []).filter(id => ACT[id] && (!ACT[id].hideIf || !ACT[id].hideIf())).map(id => {
     const a = ACT[id]; if (!a) return '';
     const off = S.ap < a.ap ? 'disabled' : '';
-    return `<button class="act ${a.primary?'primary':''}" data-act="${id}" ${off}><b>${a.name}</b><span>${a.hint}</span></button>`;
+    return `<button class="act ${a.primary?'primary':''}" data-act="${id}" ${off}><b>${a.name}${termBadge(a.name + a.hint)}</b><span>${a.hint}</span></button>`;
   }).join('');
   return `<div class="glyph">${sc.glyph}</div>
     <div class="scene-tag">${sc.tag}</div>
