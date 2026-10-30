@@ -178,6 +178,12 @@ s898.event = { title: '桥 头', done: false, safeKey: '',
 G.render();
 snapshot('19-bridge');
 
+// 8.99 开局规则弹层
+reset();
+var s899 = G.getS(); s899.help = true; s899.day = 1;
+G.render();
+snapshot('20-help-open');
+
 // 9 省试前夜的短笺
 reset();
 var s9 = G.getS();
