@@ -42,11 +42,11 @@ body::after{
 .head .meta button{background:none;border:none;color:var(--ink2);font-size:13.5px;letter-spacing:.05em;text-decoration:underline;text-underline-offset:3px;padding:0;cursor:pointer}
 
 /* ---------- 主体 ---------- */
-.main{display:grid; grid-template-columns:1.55fr .95fr; gap:22px; margin-top:20px; align-items:start}
+.main{display:grid; grid-template-columns:1.55fr .95fr; gap:22px; margin-top:20px; align-items:stretch}
 .card{background:linear-gradient(180deg, rgba(250,251,247,.72), rgba(228,231,218,.5));
   border:1px solid var(--line); box-shadow:0 1px 0 rgba(255,255,255,.5) inset, 0 6px 24px rgba(78,82,66,.06);
   padding:24px 26px; position:relative; overflow:hidden}
-.stage{min-height:430px; padding-top:218px}
+.stage{min-height:430px; padding-top:218px; display:flex; flex-direction:column}
 .card.stage::before{content:""; position:absolute; left:0; right:0; top:0; height:202px; pointer-events:none;
   background-image:
     linear-gradient(180deg, rgba(238,240,230,.05) 0%, rgba(238,240,230,.28) 65%, rgba(238,240,230,.60) 100%),
@@ -65,7 +65,7 @@ body::after{
 .rules ul{margin:0; padding-left:1.2em; font-size:13.5px; line-height:2.1; color:var(--ink2)}
 .rules li{margin:2px 0}
 .rules b{color:var(--ink); font-weight:600}
-.stage-foot{margin-top:26px; padding-top:12px; border-top:1px dashed var(--line);
+.stage-foot{margin-top:auto; padding-top:12px; border-top:1px dashed var(--line);
   display:flex; justify-content:space-between; gap:14px; font-size:12px; color:var(--ink3); letter-spacing:.04em; position:relative}
 .stage-foot b{color:var(--ink2); font-weight:600}
 .acts{display:grid; grid-template-columns:repeat(auto-fill,minmax(168px,1fr)); gap:10px; position:relative}
@@ -80,7 +80,8 @@ button{font-family:inherit; cursor:pointer; color:var(--ink)}
 .act.primary b{color:var(--red)}
 
 /* ---------- 状态栏 ---------- */
-.status .card{padding:20px 22px}
+.status{display:flex; flex-direction:column}
+.status .card{padding:20px 22px; flex:1; display:flex; flex-direction:column}
 .row{display:flex; justify-content:space-between; align-items:baseline; padding:7px 0; font-size:13.5px; color:var(--ink2)}
 .row b{font-size:15px; color:var(--ink); font-weight:600}
 .sep{height:1px; background:var(--line); margin:12px 0}
@@ -96,7 +97,7 @@ button{font-family:inherit; cursor:pointer; color:var(--ink)}
 .ap .dot{width:11px;height:11px;border-radius:50%;border:1px solid var(--ink3)}
 .ap .dot.on{background:var(--ink); border-color:var(--ink)}
 
-.log{margin-top:16px; max-height:200px; overflow:auto; font-size:12.5px; line-height:1.85; color:var(--ink2);
+.log{margin-top:auto; flex:1 1 auto; min-height:0; max-height:320px; overflow:auto; font-size:12.5px; line-height:1.85; color:var(--ink2);
   border-top:1px dashed var(--line); padding-top:10px}
 .log div{padding:2px 0}
 .log span{color:var(--ink3); margin-right:6px; font-size:11px}
