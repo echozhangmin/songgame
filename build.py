@@ -4,7 +4,10 @@
     python3 build.py            # 读 game.template.html + ../history-quiz/quiz_150.json
 输出：
     北宋赶考记.html
-模板里的 __SCENE_BG__ 占位符会被 assets/scene_bg.jpg（场景背景图，base64 内嵌）替换。
+模板里的占位符在生成时替换：
+    __QUESTIONS__ / __GLOSSARY__   ← 题库与词条
+    __SCENE_BG__                   ← assets/scene_bg.jpg（场景背景图，base64 内嵌）
+    __SCROLL_IMG__                 ← assets/scroll.jpg（页眉画轴图，base64 内嵌）
 """
 import base64
 import json
@@ -18,6 +21,7 @@ BANK = os.path.join(HERE, "data", "quiz_150.json")
 if not os.path.exists(BANK):
     BANK = os.path.join(HERE, "..", "history-quiz", "quiz_150.json")
 SCENE_BG = os.path.join(HERE, "assets", "scene_bg.jpg")
+SCROLL = os.path.join(HERE, "assets", "scroll.jpg")
 OUT = os.path.join(HERE, "北宋赶考记.html")
 INDEX = os.path.join(HERE, "index.html")   # GitHub Pages 入口
 
@@ -71,6 +75,17 @@ def write_glossary_md(glossary):
     print(f"输出：{path}")
 
 
+def embed_image(html, token, path, label):
+    """把图片文件以 base64 塞进模板占位符，保持单文件 HTML。"""
+    if token not in html:
+        return html
+    if not os.path.exists(path):
+        raise SystemExit(f"模板里有 {token} 占位符，但找不到{label}：" + path)
+    b64 = base64.b64encode(open(path, "rb").read()).decode("ascii")
+    print(f"{label}内嵌：{os.path.relpath(path, HERE)}（{os.path.getsize(path)/1024:.0f} KB）")
+    return html.replace(token, b64, 1)
+
+
 def main():
     qs = load_questions()
     if len(qs) != 150:
@@ -82,12 +97,8 @@ def main():
         raise SystemExit("模板缺少 __QUESTIONS__ 占位符")
     html = html.replace("__QUESTIONS__", payload, 1)
     html = html.replace("__GLOSSARY__", json.dumps(glossary, ensure_ascii=False, separators=(",", ":")), 1)
-    if "__SCENE_BG__" in html:
-        if not os.path.exists(SCENE_BG):
-            raise SystemExit("模板里有 __SCENE_BG__ 占位符，但找不到背景图：" + SCENE_BG)
-        b64 = base64.b64encode(open(SCENE_BG, "rb").read()).decode("ascii")
-        html = html.replace("__SCENE_BG__", b64, 1)
-        print(f"背景图内嵌：assets/scene_bg.jpg（{os.path.getsize(SCENE_BG)/1024:.0f} KB）")
+    html = embed_image(html, "__SCENE_BG__", SCENE_BG, "背景图")
+    html = embed_image(html, "__SCROLL_IMG__", SCROLL, "画轴图")
     open(OUT, "w", encoding="utf-8").write(html)
     open(INDEX, "w", encoding="utf-8").write(html)
     print(f"题库注入：{len(qs)} 题")

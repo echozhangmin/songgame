@@ -197,7 +197,7 @@ python3 build.py     # 读 game.template.html + ../history-quiz/quiz_150.json �
 
 题库（150 道）来自 `../history-quiz/quiz_150.json`，生成时会把 ASCII 单引号规范成中文引号。
 改题目只改题库；改规则、文案、数值、人物只改 `game.template.html`。
-场景背景图是 `assets/scene_bg.jpg`（进京赶考场景，1920 宽 JPEG）；生成时会以 base64 内嵌进 HTML，仍是单文件。要换图，覆盖该文件再跑 `build.py` 即可。
+内嵌图片有两张：场景背景图 `assets/scene_bg.jpg`（进京赶考场景）与页眉画轴图 `assets/scroll.jpg`，生成时均以 base64 内嵌进 HTML，仍是单文件。要换图，覆盖对应文件再跑 `build.py` 即可。
 
 ## 八、已知取舍（等你拍板）
 

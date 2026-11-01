@@ -35,27 +35,9 @@ body::after{
 .head{display:flex; align-items:flex-end; gap:18px; padding-bottom:14px; border-bottom:1px solid var(--line)}
 .head h1{margin:0; font-size:36px; letter-spacing:.22em; font-weight:600}
 .head h1 small{display:block; font-size:14px; letter-spacing:.42em; color:var(--ink3); margin-top:8px; font-weight:400}
-/* ---------- 横卷 · 赴京应试 ---------- */
-.scroll{margin-left:auto; flex:none; width:178px; height:62px; position:relative; transform:rotate(-.8deg)}
-.scroll::before{content:""; position:absolute; inset:4px 13px;
-  background-color:#ece9d8;
-  background-image:
-    linear-gradient(180deg, rgba(248,246,236,.75), rgba(224,220,199,.75)),
-    repeating-linear-gradient(0deg, rgba(120,110,80,.05) 0 1px, transparent 1px 3px);
-  border:1px solid rgba(74,58,40,.34);
-  box-shadow:inset 0 0 0 3px rgba(216,211,188,.95), inset 0 0 0 4px rgba(74,58,40,.22), 0 2px 8px rgba(60,60,45,.16)}
-.scroll .rod{position:absolute; top:-3px; bottom:-3px; width:9px; border-radius:5px;
-  background:linear-gradient(90deg,#6d5438,#4a3624 72%,#38281a);
-  box-shadow:0 1px 2px rgba(35,25,12,.4)}
-.scroll .rod.l{left:0}
-.scroll .rod.r{right:0}
-.scroll .rod::before,.scroll .rod::after{content:""; position:absolute; left:50%; transform:translateX(-50%);
-  width:10px; height:10px; border-radius:50%;
-  background:radial-gradient(circle at 35% 32%, #eadfc2, #b9a678 55%, #82703f)}
-.scroll .rod::before{top:-5px} .scroll .rod::after{bottom:-5px}
-.scroll .txt{position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
-  font-size:21px; font-weight:600; letter-spacing:.3em; margin-right:-.3em; color:var(--ink);
-  text-shadow:0 0 1px rgba(51,54,46,.28); white-space:nowrap}
+/* ---------- 横卷 · 赴京应试（画轴图） ---------- */
+.scroll{margin-left:auto; flex:none; height:88px; width:auto; display:block; transform:rotate(-.8deg);
+  filter:drop-shadow(0 2px 7px rgba(60,60,45,.25)); border-radius:2px}
 .head .meta{margin-left:auto; text-align:right; font-size:14.5px; color:var(--ink2); line-height:1.9}
 .head .meta button{background:none;border:none;color:var(--ink2);font-size:15.5px;letter-spacing:.05em;text-decoration:underline;text-underline-offset:3px;padding:0;cursor:pointer}
 
@@ -171,8 +153,7 @@ button{font-family:inherit; cursor:pointer; color:var(--ink)}
 @media (max-width:860px){
   .main{grid-template-columns:1fr}
   .head h1{font-size:28px} .stage{min-height:0; padding-top:150px}
-  .scroll{width:132px; height:48px}
-  .scroll .txt{font-size:15px; letter-spacing:.22em; margin-right:-.22em}
+  .scroll{height:62px}
   .card.stage::before{height:136px}
   .sheet{padding:24px 20px}
 }
@@ -1091,7 +1072,7 @@ function render(){
   <header class="head">
     <h1>北宋赶考记<small>嘉祐二年 · 丁酉 · 临川举子赴京应省试</small></h1>
     ${S.phase === 'over' ? '' : `<div class="meta">第 ${S.day} 日 / 30 · ${dateLabel(S.day)}<br><button data-act="help">凡例</button> · <button data-act="glossIndex">词条</button> · <button data-act="restart">重开</button></div>`}
-    <div class="scroll" title="赴京应试"><span class="rod l"></span><span class="rod r"></span><span class="txt">赴京应试</span></div>
+    <img class="scroll" src="data:image/jpeg;base64,__SCROLL_IMG__" alt="赴京应试 · 画轴" title="赴京应试">
   </header>
   <div class="main"${S.phase === 'over' ? ' style="grid-template-columns:1fr"' : ''}>
     <section class="card stage">${renderBody()}</section>
@@ -1125,7 +1106,7 @@ function renderTitle(){
   app.innerHTML = `
   <header class="head">
     <h1>北宋赶考记<small>嘉祐二年 · 丁酉 · 临川举子赴京应省试</small></h1>
-    <div class="scroll" title="赴京应试"><span class="rod l"></span><span class="rod r"></span><span class="txt">赴京应试</span></div>
+    <img class="scroll" src="data:image/jpeg;base64,__SCROLL_IMG__" alt="赴京应试 · 画轴" title="赴京应试">
   </header>
   <div class="main" style="grid-template-columns:1fr">
     <section class="card stage" style="min-height:0">
