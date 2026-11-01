@@ -35,9 +35,30 @@ body::after{
 .head{display:flex; align-items:flex-end; gap:18px; padding-bottom:14px; border-bottom:1px solid var(--line)}
 .head h1{margin:0; font-size:36px; letter-spacing:.22em; font-weight:600}
 .head h1 small{display:block; font-size:14px; letter-spacing:.42em; color:var(--ink3); margin-top:8px; font-weight:400}
-.seal{width:44px;height:44px;background:var(--red);color:#eff0e6;display:flex;align-items:center;justify-content:center;
-  font-size:14px;line-height:1.05;letter-spacing:0;border-radius:3px;transform:rotate(-2.5deg);
-  box-shadow:0 1px 0 rgba(0,0,0,.12); text-align:center; padding:2px; margin-left:auto}
+/* ---------- 立轴 · 赴京应试 ---------- */
+.scroll{margin-left:auto; flex:none; width:48px; height:108px; position:relative; transform:rotate(-1.2deg)}
+.scroll::before{content:""; position:absolute; inset:12px 2px 14px;
+  background-color:#ece9d8;
+  background-image:
+    linear-gradient(180deg, rgba(248,246,236,.75), rgba(224,220,199,.75)),
+    repeating-linear-gradient(90deg, rgba(120,110,80,.06) 0 1px, transparent 1px 3px);
+  border:1px solid rgba(74,58,40,.34);
+  box-shadow:inset 0 0 0 3px rgba(216,211,188,.95), inset 0 0 0 4px rgba(74,58,40,.22), 0 2px 8px rgba(60,60,45,.16)}
+.scroll .rod{position:absolute; left:-6px; right:-6px; height:8px; border-radius:5px;
+  background:linear-gradient(180deg,#6d5438,#4a3624 72%,#38281a);
+  box-shadow:0 1px 2px rgba(35,25,12,.4)}
+.scroll .rod.top{top:0}
+.scroll .rod.bot{bottom:0; height:10px}
+.scroll .rod::before,.scroll .rod::after{content:""; position:absolute; top:50%; transform:translateY(-50%);
+  width:8px; height:8px; border-radius:50%;
+  background:radial-gradient(circle at 35% 32%, #eadfc2, #b9a678 55%, #82703f)}
+.scroll .rod.top::before{left:-8px} .scroll .rod.top::after{right:-8px}
+.scroll .rod.bot::before{left:-9px; width:10px; height:10px} .scroll .rod.bot::after{right:-9px; width:10px; height:10px}
+.scroll .txt{position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  writing-mode:vertical-rl; font-size:13px; font-weight:600; letter-spacing:.16em; color:var(--ink);
+  text-shadow:0 0 1px rgba(51,54,46,.28); white-space:nowrap}
+.scroll .txt i{display:inline-block; width:10px; height:10px; margin-top:6px; background:var(--red);
+  border-radius:1.5px; opacity:.85; box-shadow:inset 0 0 0 1px rgba(255,255,255,.22)}
 .head .meta{margin-left:auto; text-align:right; font-size:14.5px; color:var(--ink2); line-height:1.9}
 .head .meta button{background:none;border:none;color:var(--ink2);font-size:15.5px;letter-spacing:.05em;text-decoration:underline;text-underline-offset:3px;padding:0;cursor:pointer}
 
@@ -153,6 +174,9 @@ button{font-family:inherit; cursor:pointer; color:var(--ink)}
 @media (max-width:860px){
   .main{grid-template-columns:1fr}
   .head h1{font-size:28px} .stage{min-height:0; padding-top:150px}
+  .scroll{width:40px; height:88px}
+  .scroll .txt{font-size:11px; letter-spacing:.12em}
+  .scroll .txt i{width:8px; height:8px; margin-top:4px}
   .card.stage::before{height:136px}
   .sheet{padding:24px 20px}
 }
@@ -1071,7 +1095,7 @@ function render(){
   <header class="head">
     <h1>北宋赶考记<small>嘉祐二年 · 丁酉 · 临川举子赴京应省试</small></h1>
     ${S.phase === 'over' ? '' : `<div class="meta">第 ${S.day} 日 / 30 · ${dateLabel(S.day)}<br><button data-act="help">凡例</button> · <button data-act="glossIndex">词条</button> · <button data-act="restart">重开</button></div>`}
-    <div class="seal">赴京<br>应试</div>
+    <div class="scroll" title="赴京应试"><span class="rod top"></span><span class="rod bot"></span><span class="txt">赴京应试<i></i></span></div>
   </header>
   <div class="main"${S.phase === 'over' ? ' style="grid-template-columns:1fr"' : ''}>
     <section class="card stage">${renderBody()}</section>
@@ -1105,7 +1129,7 @@ function renderTitle(){
   app.innerHTML = `
   <header class="head">
     <h1>北宋赶考记<small>嘉祐二年 · 丁酉 · 临川举子赴京应省试</small></h1>
-    <div class="seal">赴京<br>应试</div>
+    <div class="scroll" title="赴京应试"><span class="rod top"></span><span class="rod bot"></span><span class="txt">赴京应试<i></i></span></div>
   </header>
   <div class="main" style="grid-template-columns:1fr">
     <section class="card stage" style="min-height:0">
