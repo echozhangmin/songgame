@@ -6,22 +6,22 @@
 <title>北宋赶考记 · 嘉祐二年</title>
 <style>
 :root{
-  --paper:#e8e9dc; --paper2:#dfe1d2; --paper3:#d3d6c4;
+  --paper:#eef0e6; --paper2:#e6e8db; --paper3:#dcdfd0;
   --ink:#33362e; --ink2:#585c50; --ink3:#84877a;
-  --red:#a63a2c; --gold:#8f8960; --blue:#45584f; --green:#5c6b4a;
-  --line:rgba(51,54,46,.24);
+  --red:#a63a2c; --gold:#948e6a; --blue:#4a5c53; --green:#5c6b4a;
+  --line:rgba(51,54,46,.22);
 }
 *{box-sizing:border-box}
 html,body{height:100%}
 body{
   margin:0; padding:0; color:var(--ink);
   font-family:"Songti SC","STSong","SimSun","Noto Serif CJK SC",serif;
-  background:#e8e9dc;
+  background:#eef0e6;
   background-image:
-    radial-gradient(120% 80% at 15% 0%, rgba(247,249,242,.9), transparent 60%),
-    radial-gradient(90% 60% at 100% 100%, rgba(172,176,158,.28), transparent 65%),
-    repeating-linear-gradient(0deg, rgba(122,128,108,.05) 0 1px, transparent 1px 3px),
-    repeating-linear-gradient(90deg, rgba(122,128,108,.04) 0 1px, transparent 1px 5px);
+    radial-gradient(120% 80% at 15% 0%, rgba(249,250,244,.9), transparent 60%),
+    radial-gradient(90% 60% at 100% 100%, rgba(178,182,166,.26), transparent 65%),
+    repeating-linear-gradient(0deg, rgba(122,128,108,.04) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(90deg, rgba(122,128,108,.03) 0 1px, transparent 1px 5px);
   min-height:100vh;
 }
 body::after{
@@ -43,13 +43,13 @@ body::after{
 
 /* ---------- 主体 ---------- */
 .main{display:grid; grid-template-columns:1.55fr .95fr; gap:22px; margin-top:20px; align-items:start}
-.card{background:linear-gradient(180deg, rgba(248,250,245,.72), rgba(223,226,211,.5));
+.card{background:linear-gradient(180deg, rgba(250,251,247,.72), rgba(228,231,218,.5));
   border:1px solid var(--line); box-shadow:0 1px 0 rgba(255,255,255,.5) inset, 0 6px 24px rgba(78,82,66,.06);
   padding:24px 26px; position:relative; overflow:hidden}
 .stage{min-height:430px; padding-top:218px}
 .card.stage::before{content:""; position:absolute; left:0; right:0; top:0; height:202px; pointer-events:none;
   background-image:
-    linear-gradient(180deg, rgba(232,233,220,.10) 0%, rgba(232,233,220,.42) 76%, rgba(232,233,220,.94) 100%),
+    linear-gradient(180deg, rgba(238,240,230,.10) 0%, rgba(238,240,230,.42) 76%, rgba(238,240,230,.94) 100%),
     url(data:image/jpeg;base64,__SCENE_BG__);
   background-size:auto, cover; background-position:center, center 34%; background-repeat:no-repeat;
   -webkit-mask-image:linear-gradient(to bottom,#000 74%,transparent);
@@ -60,7 +60,7 @@ body::after{
 .scene-desc{font-size:15.5px; line-height:2.05; color:var(--ink2); margin:0 0 22px; position:relative; max-width:44em}
 .scene-desc b{color:var(--ink)}
 
-.rules{margin:6px 0 20px; padding:14px 18px; border:1px solid var(--line); background:rgba(248,250,245,.55); position:relative}
+.rules{margin:6px 0 20px; padding:14px 18px; border:1px solid var(--line); background:rgba(250,251,247,.55); position:relative}
 .rules-h{font-size:12px; letter-spacing:.3em; color:var(--red); margin-bottom:8px}
 .rules ul{margin:0; padding-left:1.2em; font-size:13.5px; line-height:2.1; color:var(--ink2)}
 .rules li{margin:2px 0}
@@ -70,7 +70,7 @@ body::after{
 .stage-foot b{color:var(--ink2); font-weight:600}
 .acts{display:grid; grid-template-columns:repeat(auto-fill,minmax(168px,1fr)); gap:10px; position:relative}
 button{font-family:inherit; cursor:pointer; color:var(--ink)}
-.act{background:rgba(248,250,245,.6); border:1px solid var(--line); padding:12px 14px; text-align:left;
+.act{background:rgba(250,251,247,.6); border:1px solid var(--line); padding:12px 14px; text-align:left;
   transition:.16s; position:relative; border-radius:2px}
 .act b{display:block; font-size:15px; font-weight:600; letter-spacing:.06em}
 .act span{display:block; font-size:11.5px; color:var(--ink3); margin-top:5px; letter-spacing:.04em}
@@ -111,17 +111,17 @@ button{font-family:inherit; cursor:pointer; color:var(--ink)}
 .log .hist{color:var(--ink3); font-size:11.5px; padding-left:8px; border-left:2px solid rgba(128,132,112,.35)}
 
 /* ---------- 弹层 ---------- */
-.overlay{position:fixed; inset:0; background:rgba(26,30,24,.42); display:flex; align-items:center; justify-content:center;
+.overlay{position:fixed; inset:0; background:rgba(26,30,24,.38); display:flex; align-items:center; justify-content:center;
   padding:20px; z-index:50}
-.sheet{background:linear-gradient(180deg,#f0f1e8,#e3e5d7); border:1px solid rgba(51,54,46,.4);
+.sheet{background:linear-gradient(180deg,#f3f4ec,#e9ebdf); border:1px solid rgba(51,54,46,.4);
   width:min(680px,100%); max-height:88vh; overflow:auto; padding:30px 34px 26px; position:relative;
-  box-shadow:0 22px 60px rgba(38,42,34,.26)}
+  box-shadow:0 22px 60px rgba(38,42,34,.22)}
 .sheet .stamp{position:absolute; top:18px; right:20px; width:40px; height:40px; background:var(--red); color:#eff0e6;
   display:flex; align-items:center; justify-content:center; font-size:13px; border-radius:2px; transform:rotate(3deg); opacity:.92}
 .sheet h3{margin:0 0 6px; font-size:19px; letter-spacing:.06em; font-weight:600; line-height:1.75; padding-right:52px}
 .sheet .qtag{font-size:11.5px; letter-spacing:.2em; color:var(--red); opacity:.85; margin-bottom:14px}
 .opts{display:grid; gap:9px; margin-top:6px}
-.opt{display:flex; gap:12px; align-items:flex-start; background:rgba(248,250,245,.65); border:1px solid var(--line);
+.opt{display:flex; gap:12px; align-items:flex-start; background:rgba(250,251,247,.65); border:1px solid var(--line);
   padding:11px 14px; text-align:left; font-size:14.5px; line-height:1.7; transition:.15s; width:100%}
 .opt:hover:not(:disabled){background:rgba(51,54,46,.06); border-color:rgba(51,54,46,.4)}
 .opt em{font-style:normal; color:var(--ink3); font-size:12px; padding-top:3px; min-width:12px}
@@ -133,12 +133,12 @@ button{font-family:inherit; cursor:pointer; color:var(--ink)}
   padding:8px 0 8px 14px; background:rgba(128,132,112,.08)}
 .fb b{color:var(--ink)}
 .poem-box{width:100%; margin-top:14px; padding:14px 16px; font-family:inherit; font-size:15px;
-  line-height:2.1; color:var(--ink); background:rgba(248,250,245,.62); border:1px solid var(--line);
+  line-height:2.1; color:var(--ink); background:rgba(250,251,247,.62); border:1px solid var(--line);
   resize:vertical; outline:none; min-height:132px}
 .poem-box::placeholder{color:var(--ink3); opacity:.6}
-.poem-box:focus{border-color:rgba(51,54,46,.45); background:rgba(248,250,245,.9)}
+.poem-box:focus{border-color:rgba(51,54,46,.45); background:rgba(250,251,247,.9)}
 .center{display:flex; gap:10px; justify-content:flex-end; margin-top:18px}
-.btn{background:var(--ink);   color:#eef0e5; border:1px solid var(--ink); padding:9px 22px; font-size:14px; letter-spacing:.12em}
+.btn{background:var(--ink);   color:#f1f2e9; border:1px solid var(--ink); padding:9px 22px; font-size:14px; letter-spacing:.12em}
 .btn.ghost{background:transparent; color:var(--ink)}
 
 /* ---------- 结局 ---------- */
@@ -155,6 +155,21 @@ button{font-family:inherit; cursor:pointer; color:var(--ink)}
   .card.stage::before{height:136px}
   .sheet{padding:24px 20px}
 }
+
+/* ---------- 桂花与叶 · 徐徐飘落 ---------- */
+#petals{position:fixed; inset:0; overflow:hidden; pointer-events:none; z-index:6}
+#petals i{position:absolute; top:-6vh; display:block; animation:petalFall var(--d) linear var(--delay) infinite}
+#petals i svg{display:block; opacity:.78; animation:petalSway var(--s) ease-in-out var(--delay) infinite alternate}
+@keyframes petalFall{
+  0%{transform:translateY(0)}
+  42%{transform:translateY(116vh)}
+  100%{transform:translateY(116vh)}
+}
+@keyframes petalSway{
+  from{transform:translateX(calc(0px - var(--amp))) rotate(calc(-1 * var(--tilt)))}
+  to{transform:translateX(var(--amp)) rotate(var(--tilt))}
+}
+@media (prefers-reduced-motion:reduce){#petals{display:none}}
 </style>
 </head>
 <body>
@@ -1444,6 +1459,29 @@ function boot(){
   S.phase = 'title';
   render();
 }
+
+/* ============================ 桂花与叶 · 飘落 ============================ */
+function startPetals(){
+  var FLOWER = '<svg viewBox="0 0 20 20" width="%%W%%" height="%%W%%"><g fill="#c9a23f" fill-opacity=".85"><ellipse cx="10" cy="5.6" rx="2.7" ry="4.6"/><ellipse cx="10" cy="14.4" rx="2.7" ry="4.6"/><ellipse cx="5.6" cy="10" rx="4.6" ry="2.7"/><ellipse cx="14.4" cy="10" rx="4.6" ry="2.7"/></g><circle cx="10" cy="10" r="1.5" fill="#a67c1e" fill-opacity=".9"/></svg>';
+  var LEAF = '<svg viewBox="0 0 24 24" width="%%W%%" height="%%W%%"><path d="M2 12 C6.5 4.5, 17.5 4.5, 22 12 C17.5 19.5, 6.5 19.5, 2 12 Z" fill="#75825a" fill-opacity=".72"/><path d="M3.5 12 H20.5" stroke="#5f6d49" stroke-width="1" stroke-opacity=".55"/></svg>';
+  var box = document.createElement('div'); box.id = 'petals';
+  var html = '';
+  for (var i = 0; i < 13; i++){
+    var leaf = i % 3 === 2;                     // 约三分之一为叶，其余桂花
+    var w = leaf ? 13 + Math.random() * 6 : 8 + Math.random() * 5;
+    var svg = (leaf ? LEAF : FLOWER).replace(/%%W%%/g, w.toFixed(0));
+    html += '<i style="left:' + (Math.random() * 100).toFixed(1) + '%;'
+      + '--d:' + (22 + Math.random() * 14).toFixed(1) + 's;'
+      + '--delay:' + (-Math.random() * 34).toFixed(1) + 's;'
+      + '--s:' + (2.8 + Math.random() * 2.6).toFixed(1) + 's;'
+      + '--amp:' + (12 + Math.random() * 26).toFixed(0) + 'px;'
+      + '--tilt:' + (26 + Math.random() * 22).toFixed(0) + 'deg">' + svg + '</i>';
+  }
+  box.innerHTML = html;
+  document.body.appendChild(box);
+}
+
+if (typeof document !== 'undefined') startPetals();
 
 if (typeof document !== 'undefined') boot();
 
