@@ -4,7 +4,9 @@
     python3 build.py            # 读 game.template.html + ../history-quiz/quiz_150.json
 输出：
     北宋赶考记.html
+模板里的 __SCENE_BG__ 占位符会被 assets/scene_bg.jpg（场景背景图，base64 内嵌）替换。
 """
+import base64
 import json
 import os
 import re
@@ -15,6 +17,7 @@ GLOSS = os.path.join(HERE, "data", "glossary.json")
 BANK = os.path.join(HERE, "data", "quiz_150.json")
 if not os.path.exists(BANK):
     BANK = os.path.join(HERE, "..", "history-quiz", "quiz_150.json")
+SCENE_BG = os.path.join(HERE, "assets", "scene_bg.jpg")
 OUT = os.path.join(HERE, "北宋赶考记.html")
 INDEX = os.path.join(HERE, "index.html")   # GitHub Pages 入口
 
@@ -79,6 +82,12 @@ def main():
         raise SystemExit("模板缺少 __QUESTIONS__ 占位符")
     html = html.replace("__QUESTIONS__", payload, 1)
     html = html.replace("__GLOSSARY__", json.dumps(glossary, ensure_ascii=False, separators=(",", ":")), 1)
+    if "__SCENE_BG__" in html:
+        if not os.path.exists(SCENE_BG):
+            raise SystemExit("模板里有 __SCENE_BG__ 占位符，但找不到背景图：" + SCENE_BG)
+        b64 = base64.b64encode(open(SCENE_BG, "rb").read()).decode("ascii")
+        html = html.replace("__SCENE_BG__", b64, 1)
+        print(f"背景图内嵌：assets/scene_bg.jpg（{os.path.getsize(SCENE_BG)/1024:.0f} KB）")
     open(OUT, "w", encoding="utf-8").write(html)
     open(INDEX, "w", encoding="utf-8").write(html)
     print(f"题库注入：{len(qs)} 题")

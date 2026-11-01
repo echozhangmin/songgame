@@ -46,9 +46,14 @@ body::after{
 .card{background:linear-gradient(180deg, rgba(255,252,242,.72), rgba(240,229,204,.5));
   border:1px solid var(--line); box-shadow:0 1px 0 rgba(255,255,255,.5) inset, 0 6px 24px rgba(80,60,30,.06);
   padding:24px 26px; position:relative; overflow:hidden}
-.stage{min-height:430px}
-.glyph{position:absolute; right:-2%; top:-12%; font-size:min(30vw,360px); line-height:.8; font-weight:700;
-  color:var(--ink); opacity:.045; user-select:none; pointer-events:none; letter-spacing:0}
+.stage{min-height:430px; padding-top:218px}
+.card.stage::before{content:""; position:absolute; left:0; right:0; top:0; height:202px; pointer-events:none;
+  background-image:
+    linear-gradient(180deg, rgba(239,228,204,.08) 0%, rgba(239,228,204,.38) 76%, rgba(239,228,204,.92) 100%),
+    url(data:image/jpeg;base64,__SCENE_BG__);
+  background-size:auto, cover; background-position:center, center 34%; background-repeat:no-repeat;
+  -webkit-mask-image:linear-gradient(to bottom,#000 74%,transparent);
+  mask-image:linear-gradient(to bottom,#000 74%,transparent)}
 .scene-name{margin:0 0 4px; font-size:26px; letter-spacing:.12em; font-weight:600; position:relative}
 .scene-name .gloss{border-bottom-style:dotted; border-bottom-width:2px}
 .scene-tag{font-size:12px; letter-spacing:.3em; color:var(--red); opacity:.8; margin-bottom:14px; position:relative}
@@ -146,8 +151,8 @@ button{font-family:inherit; cursor:pointer; color:var(--ink)}
 
 @media (max-width:860px){
   .main{grid-template-columns:1fr}
-  .head h1{font-size:26px} .stage{min-height:0}
-  .glyph{font-size:60vw; opacity:.04}
+  .head h1{font-size:26px} .stage{min-height:0; padding-top:150px}
+  .card.stage::before{height:136px}
   .sheet{padding:24px 20px}
 }
 </style>
@@ -1088,7 +1093,6 @@ function renderTitle(){
   </header>
   <div class="main" style="grid-template-columns:1fr">
     <section class="card stage" style="min-height:0">
-      <div class="glyph">考</div>
       <div class="scene-tag">三十日 · 一千里</div>
       <h2 class="scene-name">临川到汴京</h2>
       <p class="scene-desc">正月初十启程，二月入贡院。三十天里，你要在赶路、温书、歇息、交游之间取舍：<br>
@@ -1142,8 +1146,7 @@ function renderPlay(){
     const off = S.ap < a.ap ? 'disabled' : '';
     return `<button class="act ${a.primary?'primary':''}" data-act="${id}" ${off}><b>${a.name}${termBadge(a.name + a.hint)}</b><span>${a.hint}</span></button>`;
   }).join('');
-  return `<div class="glyph">${sc.glyph}</div>
-    <div class="scene-tag">${sc.tag}</div>
+  return `<div class="scene-tag">${sc.tag}</div>
     <h2 class="scene-name">${sc.name}</h2>
     <p class="scene-desc">${sc.desc}</p>
     <div class="acts">${btns}</div>
@@ -1157,8 +1160,7 @@ function renderExam(){
   const sc = curScene();
   const r = EXAM_ROUNDS[S.exam.round-1] || '省试 · 入场';
   const done = (S.phase === 'roundEnd');
-  return `<div class="glyph">${sc.glyph}</div>
-    <div class="scene-tag">${sc.tag}</div>
+  return `<div class="scene-tag">${sc.tag}</div>
     <h2 class="scene-name">${r}</h2>
     <p class="scene-desc">${S.exam.round === 0
       ? '天将明，贡院门外已站满了人。你把手里的短笺折好，收进衣襟。'
@@ -1174,8 +1176,7 @@ function renderExam(){
 
 function renderResult(){
   const passed = S.exam.total >= 8;
-  return `<div class="glyph">榜</div>
-    <div class="scene-tag">第十幕 · 放榜</div>
+  return `<div class="scene-tag">第十幕 · 放榜</div>
     <h2 class="scene-name">省试放榜</h2>
     <p class="scene-desc">${S.flags.juanReply ? '榜下有人低声道：“欧阳公在贡院提起过你的卷子。”<br>' : ''}三场合计答对 <b>${S.exam.total}</b> 题（满分 15）。${passed
       ? '知贡举取中了你，名字列在榜上。三日后入宫殿试——这一科，你已经脱了白身的一半。'
@@ -1185,8 +1186,7 @@ function renderResult(){
 
 function renderPalace(){
   const done = (S.phase === 'palaceEnd');
-  return `<div class="glyph">殿</div>
-    <div class="scene-tag">殿试 · 崇政殿</div>
+  return `<div class="scene-tag">殿试 · 崇政殿</div>
     <h2 class="scene-name">殿试</h2>
     <p class="scene-desc">${done
       ? '你答对 <b>' + S.exam.palace + '</b> 题（共 3 题）。皇帝未置一词，只在卷首点了两下。'
@@ -1197,8 +1197,7 @@ function renderPalace(){
 }
 
 function renderBanquet(){
-  return `<div class="glyph">宴</div>
-    <div class="scene-tag">第十幕 · 琼林宴</div>
+  return `<div class="scene-tag">第十幕 · 琼林宴</div>
     <h2 class="scene-name">琼林宴</h2>
     <p class="scene-desc">琼林苑里杏花初开，新科进士列坐。有人举杯，有人低语。你忽然想起三十日前，临川老宅的那盏灯。</p>
     <div class="acts"><button class="act primary" data-act="finale"><b>入席</b><span>看结局</span></button></div>`;
