@@ -33,13 +33,13 @@ body::after{
 
 /* ---------- 页眉 ---------- */
 .head{display:flex; align-items:flex-end; gap:18px; padding-bottom:14px; border-bottom:1px solid var(--line)}
-.head h1{margin:0; font-size:34px; letter-spacing:.22em; font-weight:600}
-.head h1 small{display:block; font-size:12px; letter-spacing:.42em; color:var(--ink3); margin-top:8px; font-weight:400}
+.head h1{margin:0; font-size:36px; letter-spacing:.22em; font-weight:600}
+.head h1 small{display:block; font-size:14px; letter-spacing:.42em; color:var(--ink3); margin-top:8px; font-weight:400}
 .seal{width:44px;height:44px;background:var(--red);color:#eff0e6;display:flex;align-items:center;justify-content:center;
   font-size:14px;line-height:1.05;letter-spacing:0;border-radius:3px;transform:rotate(-2.5deg);
   box-shadow:0 1px 0 rgba(0,0,0,.12); text-align:center; padding:2px; margin-left:auto}
-.head .meta{margin-left:auto; text-align:right; font-size:12.5px; color:var(--ink2); line-height:1.9}
-.head .meta button{background:none;border:none;color:var(--ink2);font-size:13.5px;letter-spacing:.05em;text-decoration:underline;text-underline-offset:3px;padding:0;cursor:pointer}
+.head .meta{margin-left:auto; text-align:right; font-size:14.5px; color:var(--ink2); line-height:1.9}
+.head .meta button{background:none;border:none;color:var(--ink2);font-size:15.5px;letter-spacing:.05em;text-decoration:underline;text-underline-offset:3px;padding:0;cursor:pointer}
 
 /* ---------- 主体 ---------- */
 .main{display:grid; grid-template-columns:1.55fr .95fr; gap:22px; margin-top:20px; align-items:stretch}
@@ -54,26 +54,26 @@ body::after{
   background-size:auto, cover; background-position:center, center 48%; background-repeat:no-repeat;
   -webkit-mask-image:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.55) 50%,transparent 100%);
   mask-image:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.55) 50%,transparent 100%)}
-.scene-name{margin:0 0 4px; font-size:26px; letter-spacing:.12em; font-weight:600; position:relative}
+.scene-name{margin:0 0 4px; font-size:28px; letter-spacing:.12em; font-weight:600; position:relative}
 .scene-name .gloss{border-bottom-style:dotted; border-bottom-width:2px}
-.scene-tag{font-size:12px; letter-spacing:.3em; color:var(--red); opacity:.8; margin-bottom:14px; position:relative}
-.scene-desc{font-size:15.5px; line-height:2.05; color:var(--ink2); margin:0 0 22px; position:relative; max-width:44em}
+.scene-tag{font-size:13.5px; letter-spacing:.3em; color:var(--red); opacity:.8; margin-bottom:14px; position:relative}
+.scene-desc{font-size:17.5px; line-height:2.05; color:var(--ink2); margin:0 0 22px; position:relative; max-width:44em}
 .scene-desc b{color:var(--ink)}
 
 .rules{margin:6px 0 20px; padding:14px 18px; border:1px solid var(--line); background:rgba(250,251,247,.55); position:relative}
-.rules-h{font-size:12px; letter-spacing:.3em; color:var(--red); margin-bottom:8px}
-.rules ul{margin:0; padding-left:1.2em; font-size:13.5px; line-height:2.1; color:var(--ink2)}
+.rules-h{font-size:13.5px; letter-spacing:.3em; color:var(--red); margin-bottom:8px}
+.rules ul{margin:0; padding-left:1.2em; font-size:15.5px; line-height:2.1; color:var(--ink2)}
 .rules li{margin:2px 0}
 .rules b{color:var(--ink); font-weight:600}
 .stage-foot{margin-top:auto; padding-top:12px; border-top:1px dashed var(--line);
-  display:flex; justify-content:space-between; gap:14px; font-size:12px; color:var(--ink3); letter-spacing:.04em; position:relative}
+  display:flex; justify-content:space-between; gap:14px; font-size:14px; color:var(--ink3); letter-spacing:.04em; position:relative}
 .stage-foot b{color:var(--ink2); font-weight:600}
 .acts{display:grid; grid-template-columns:repeat(auto-fill,minmax(168px,1fr)); gap:10px; position:relative}
 button{font-family:inherit; cursor:pointer; color:var(--ink)}
 .act{background:rgba(250,251,247,.6); border:1px solid var(--line); padding:12px 14px; text-align:left;
   transition:.16s; position:relative; border-radius:2px}
-.act b{display:block; font-size:15px; font-weight:600; letter-spacing:.06em}
-.act span{display:block; font-size:11.5px; color:var(--ink3); margin-top:5px; letter-spacing:.04em}
+.act b{display:block; font-size:16.5px; font-weight:600; letter-spacing:.06em}
+.act span{display:block; font-size:13px; color:var(--ink3); margin-top:5px; letter-spacing:.04em}
 .act:hover:not(:disabled){background:rgba(51,54,46,.055); border-color:rgba(51,54,46,.45); transform:translateY(-1px)}
 .act:disabled{opacity:.38; cursor:not-allowed}
 .act.primary{background:rgba(166,58,44,.08); border-color:rgba(166,58,44,.32)}
@@ -82,34 +82,34 @@ button{font-family:inherit; cursor:pointer; color:var(--ink)}
 /* ---------- 状态栏 ---------- */
 .status{display:flex; flex-direction:column}
 .status .card{padding:20px 22px; flex:1; display:flex; flex-direction:column}
-.row{display:flex; justify-content:space-between; align-items:baseline; padding:7px 0; font-size:16px; color:var(--ink2)}
-.row b{font-size:17.5px; color:var(--ink); font-weight:600}
+.row{display:flex; justify-content:space-between; align-items:baseline; padding:7px 0; font-size:17px; color:var(--ink2)}
+.row b{font-size:18.5px; color:var(--ink); font-weight:600}
 .sep{height:1px; background:var(--line); margin:12px 0}
 .stat{margin:13px 0}
-.stat .top{display:flex; justify-content:space-between; font-size:15.5px; margin-bottom:6px; letter-spacing:.08em}
-.stat .top i{font-style:normal; color:var(--ink3); font-size:13px; letter-spacing:.02em}
+.stat .top{display:flex; justify-content:space-between; font-size:16.5px; margin-bottom:6px; letter-spacing:.08em}
+.stat .top i{font-style:normal; color:var(--ink3); font-size:14px; letter-spacing:.02em}
 .pips{display:flex; gap:4px}
 .pip{flex:1; height:7px; background:rgba(51,54,46,.09); border-radius:1px}
 .pip.on{opacity:.85}
 .pip.on.zhi{background:var(--blue)} .pip.on.jing{background:var(--gold)} .pip.on.yuan{background:var(--red)}
-.ap{display:flex; align-items:center; gap:8px; font-size:15.5px; margin-top:14px}
+.ap{display:flex; align-items:center; gap:8px; font-size:16.5px; margin-top:14px}
 .ap .dots{display:flex; gap:6px}
 .ap .dot{width:11px;height:11px;border-radius:50%;border:1px solid var(--ink3)}
 .ap .dot.on{background:var(--ink); border-color:var(--ink)}
 
-.log{margin-top:auto; flex:1 1 auto; min-height:0; max-height:320px; overflow:auto; font-size:15px; line-height:1.85; color:var(--ink2);
+.log{margin-top:auto; flex:1 1 auto; min-height:0; max-height:320px; overflow:auto; font-size:16px; line-height:1.85; color:var(--ink2);
   border-top:1px dashed var(--line); padding-top:10px}
 .log div{padding:2px 0}
-.log span{color:var(--ink3); margin-right:6px; font-size:12.5px}
+.log span{color:var(--ink3); margin-right:6px; font-size:13.5px}
 .gloss{border-bottom:1px dotted rgba(166,58,44,.55); cursor:help}
-.gq{display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;margin-left:6px;
-  border-radius:50%;background:rgba(166,58,44,.10);color:var(--red);font-style:normal;font-size:10px;line-height:1;
+.gq{display:inline-flex;align-items:center;justify-content:center;width:17px;height:17px;margin-left:6px;
+  border-radius:50%;background:rgba(166,58,44,.10);color:var(--red);font-style:normal;font-size:11px;line-height:1;
   border:1px solid rgba(166,58,44,.42);vertical-align:2px;cursor:help}
 .gq:hover{background:rgba(166,58,44,.20)}
 .gloss:hover{background:rgba(166,58,44,.08)}
-.gloss-src{font-size:13.5px; line-height:1.95; color:var(--ink2); margin-top:10px; padding-left:12px; border-left:2px solid rgba(128,132,112,.45)}
+.gloss-src{font-size:15.5px; line-height:1.95; color:var(--ink2); margin-top:10px; padding-left:12px; border-left:2px solid rgba(128,132,112,.45)}
 .gloss-src b{color:var(--ink)}
-.log .hist{color:var(--ink3); font-size:13px; padding-left:8px; border-left:2px solid rgba(128,132,112,.35)}
+.log .hist{color:var(--ink3); font-size:14px; padding-left:8px; border-left:2px solid rgba(128,132,112,.35)}
 
 /* ---------- 弹层 ---------- */
 .overlay{position:fixed; inset:0; background:rgba(26,30,24,.38); display:flex; align-items:center; justify-content:center;
@@ -119,40 +119,40 @@ button{font-family:inherit; cursor:pointer; color:var(--ink)}
   box-shadow:0 22px 60px rgba(38,42,34,.22)}
 .sheet .stamp{position:absolute; top:18px; right:20px; width:40px; height:40px; background:var(--red); color:#eff0e6;
   display:flex; align-items:center; justify-content:center; font-size:13px; border-radius:2px; transform:rotate(3deg); opacity:.92}
-.sheet h3{margin:0 0 6px; font-size:19px; letter-spacing:.06em; font-weight:600; line-height:1.75; padding-right:52px}
-.sheet .qtag{font-size:11.5px; letter-spacing:.2em; color:var(--red); opacity:.85; margin-bottom:14px}
+.sheet h3{margin:0 0 6px; font-size:21px; letter-spacing:.06em; font-weight:600; line-height:1.75; padding-right:52px}
+.sheet .qtag{font-size:13px; letter-spacing:.2em; color:var(--red); opacity:.85; margin-bottom:14px}
 .opts{display:grid; gap:9px; margin-top:6px}
 .opt{display:flex; gap:12px; align-items:flex-start; background:rgba(250,251,247,.65); border:1px solid var(--line);
-  padding:11px 14px; text-align:left; font-size:14.5px; line-height:1.7; transition:.15s; width:100%}
+  padding:11px 14px; text-align:left; font-size:16.5px; line-height:1.7; transition:.15s; width:100%}
 .opt:hover:not(:disabled){background:rgba(51,54,46,.06); border-color:rgba(51,54,46,.4)}
-.opt em{font-style:normal; color:var(--ink3); font-size:12px; padding-top:3px; min-width:12px}
+.opt em{font-style:normal; color:var(--ink3); font-size:13.5px; padding-top:3px; min-width:14px}
 .opt.right{background:rgba(92,107,74,.14); border-color:rgba(92,107,74,.5)}
 .opt.wrong{background:rgba(166,58,44,.1); border-color:rgba(166,58,44,.4)}
 .opt:disabled{cursor:default}
 .opt.off{opacity:.42}
-.fb{margin-top:16px; font-size:13.5px; line-height:1.95; color:var(--ink2); border-left:3px solid var(--gold);
+.fb{margin-top:16px; font-size:15.5px; line-height:1.95; color:var(--ink2); border-left:3px solid var(--gold);
   padding:8px 0 8px 14px; background:rgba(128,132,112,.08)}
 .fb b{color:var(--ink)}
-.poem-box{width:100%; margin-top:14px; padding:14px 16px; font-family:inherit; font-size:15px;
+.poem-box{width:100%; margin-top:14px; padding:14px 16px; font-family:inherit; font-size:17px;
   line-height:2.1; color:var(--ink); background:rgba(250,251,247,.62); border:1px solid var(--line);
   resize:vertical; outline:none; min-height:132px}
 .poem-box::placeholder{color:var(--ink3); opacity:.6}
 .poem-box:focus{border-color:rgba(51,54,46,.45); background:rgba(250,251,247,.9)}
 .center{display:flex; gap:10px; justify-content:flex-end; margin-top:18px}
-.btn{background:var(--ink);   color:#f1f2e9; border:1px solid var(--ink); padding:9px 22px; font-size:14px; letter-spacing:.12em}
+.btn{background:var(--ink);   color:#f1f2e9; border:1px solid var(--ink); padding:9px 22px; font-size:15.5px; letter-spacing:.12em}
 .btn.ghost{background:transparent; color:var(--ink)}
 
 /* ---------- 结局 ---------- */
 .final{text-align:center; padding:30px 10px 10px; position:relative}
 .final .rank{font-size:clamp(34px,7vw,52px); letter-spacing:.22em; margin:12px 0 8px; font-weight:600}
 .final .rank.red{color:var(--red)} .final .rank.dim{color:var(--ink3)}
-.final p{color:var(--ink2); line-height:2.1; font-size:14.5px; max-width:34em; margin:10px auto}
-.tally{display:flex; gap:26px; justify-content:center; margin:22px 0; font-size:13px; color:var(--ink2); flex-wrap:wrap}
-.tally b{display:block; font-size:20px; color:var(--ink); letter-spacing:.06em}
+.final p{color:var(--ink2); line-height:2.1; font-size:16.5px; max-width:34em; margin:10px auto}
+.tally{display:flex; gap:26px; justify-content:center; margin:22px 0; font-size:14.5px; color:var(--ink2); flex-wrap:wrap}
+.tally b{display:block; font-size:22px; color:var(--ink); letter-spacing:.06em}
 
 @media (max-width:860px){
   .main{grid-template-columns:1fr}
-  .head h1{font-size:26px} .stage{min-height:0; padding-top:150px}
+  .head h1{font-size:28px} .stage{min-height:0; padding-top:150px}
   .card.stage::before{height:136px}
   .sheet{padding:24px 20px}
 }
@@ -1286,7 +1286,7 @@ function renderOverlay(){
       <div class="stamp">词</div>
       <div class="qtag">词条</div>
       <h3>${esc(S.gloss)}</h3>
-      <p class="scene-desc" style="font-size:15.5px; line-height:2">${esc(g.def)}</p>
+      <p class="scene-desc" style="font-size:17.5px; line-height:2">${esc(g.def)}</p>
       ${srcHtml}
       ${g.note ? `<div class="fb">${esc(g.note)}</div>` : ''}
       <div class="center"><button class="btn" data-act="closeGloss">知道</button></div>
@@ -1294,7 +1294,7 @@ function renderOverlay(){
   } else if (S.glossIndex){
     const names = Object.keys(GLOSSARY);
     const chips = names.map(function(t){
-      return `<button class="opt" data-term="${t}" style="width:auto; padding:7px 12px; font-size:14px"><span>${t}</span></button>`;
+      return `<button class="opt" data-term="${t}" style="width:auto; padding:7px 12px; font-size:16px"><span>${t}</span></button>`;
     }).join('');
     html = `<div class="overlay" id="overlay"><div class="sheet">
       <div class="stamp">目</div>
@@ -1319,7 +1319,7 @@ function renderOverlay(){
       <div class="stamp">事</div>
       <div class="qtag">行程小记</div>
       <h3>${esc(e.title)}</h3>
-      <p class="scene-desc" style="white-space:pre-line; font-size:15px; line-height:2">${esc(e.text)}</p>
+      <p class="scene-desc" style="white-space:pre-line; font-size:17px; line-height:2">${esc(e.text)}</p>
       ${body}
     </div></div>`;
   } else if (S.letter){
@@ -1327,7 +1327,7 @@ function renderOverlay(){
       <div class="stamp">短笺</div>
       <div class="qtag">省试前夜 · 贡院门外</div>
       <h3>有人从门缝里递进一纸短笺</h3>
-      <p class="scene-desc" style="white-space:pre-line; font-size:15px; line-height:2.1">${esc(S.letter.text)}</p>
+      <p class="scene-desc" style="white-space:pre-line; font-size:17px; line-height:2.1">${esc(S.letter.text)}</p>
       <div class="fb">${S.letter.effect}</div>
       <div class="center"><button class="btn" data-act="closeLetter">收好，入场</button></div>
     </div></div>`;
@@ -1338,7 +1338,7 @@ function renderOverlay(){
         <div class="stamp">题诗</div>
         <div class="qtag">${S.poem.mode === 'poem' ? '驿壁留题' : '街头鬻诗'} · ${th.name}</div>
         <h3>${th.prompt}</h3>
-        <p class="scene-desc" style="font-size:13px; margin-bottom:0">写四句，每句字数一样，就是上品；能对上一联更妙。不必字字珠玑，肯写就值得。</p>
+        <p class="scene-desc" style="font-size:15px; margin-bottom:0">写四句，每句字数一样，就是上品；能对上一联更妙。不必字字珠玑，肯写就值得。</p>
         <textarea class="poem-box" id="poemBox" rows="5" placeholder="例：${(th.ex || '').split('\n').join('&#10;')}">${esc(S.poem.text || '')}</textarea>
         ${S.poem.warn ? '<div class="fb">主人还在等，多少写两句罢。</div>' : ''}
         <div class="center">
