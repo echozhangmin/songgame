@@ -35,9 +35,18 @@ body::after{
 .head{display:flex; align-items:flex-end; gap:18px; padding-bottom:14px; border-bottom:1px solid var(--line)}
 .head h1{margin:0; font-size:36px; letter-spacing:.22em; font-weight:600}
 .head h1 small{display:block; font-size:14px; letter-spacing:.42em; color:var(--ink3); margin-top:8px; font-weight:400}
-/* ---------- 横卷 · 赴京应试（画轴图） ---------- */
-.scroll{margin-left:auto; flex:none; height:88px; width:auto; display:block; transform:rotate(-.8deg);
-  filter:drop-shadow(0 2px 7px rgba(60,60,45,.25)); border-radius:2px}
+/* ---------- 横卷 · 赴京应试（画轴图：首次加载展开，其后轻曳） ---------- */
+.scroll{margin-left:auto; flex:none; height:88px; width:auto; display:block;
+  filter:drop-shadow(0 2px 7px rgba(60,60,45,.25)); border-radius:2px;
+  animation:scrollSway 6.5s ease-in-out infinite alternate}
+.scroll.unroll{animation:scrollUnroll 1.4s cubic-bezier(.22,.9,.32,1) both,
+  scrollSway 6.5s ease-in-out 1.5s infinite alternate}
+@keyframes scrollSway{from{transform:rotate(-1.2deg)}to{transform:rotate(-.4deg)}}
+@keyframes scrollUnroll{
+  0%{clip-path:inset(0 100% 0 0); opacity:0; transform:rotate(-1.2deg) translateX(10px)}
+  12%{opacity:1}
+  100%{clip-path:inset(0 0 0 0); opacity:1; transform:rotate(-1.2deg) translateX(0)}
+}
 .head .meta{margin-left:auto; text-align:right; font-size:14.5px; color:var(--ink2); line-height:1.9}
 .head .meta button{background:none;border:none;color:var(--ink2);font-size:15.5px;letter-spacing:.05em;text-decoration:underline;text-underline-offset:3px;padding:0;cursor:pointer}
 
@@ -179,7 +188,7 @@ button{font-family:inherit; cursor:pointer; color:var(--ink)}
   from{transform:translateX(calc(0px - var(--amp))) rotate(calc(-1 * var(--tilt)))}
   to{transform:translateX(var(--amp)) rotate(var(--tilt))}
 }
-@media (prefers-reduced-motion:reduce){#petals{display:none}}
+@media (prefers-reduced-motion:reduce){#petals{display:none} .scroll{animation:none; transform:rotate(-.8deg)}}
 </style>
 </head>
 <body>
@@ -190,6 +199,7 @@ const QUESTIONS = __QUESTIONS__;
 
 /* ============================ 常量 ============================ */
 const MAX = 10, TOTAL_DAYS = 30;
+let scrollPlayed = false;   // 画轴「展开」动画只在首次加载播一次
 const CN_NUM = ['','初一','初二','初三','初四','初五','初六','初七','初八','初九','初十',
   '十一','十二','十三','十四','十五','十六','十七','十八','十九','二十',
   '廿一','廿二','廿三','廿四','廿五','廿六','廿七','廿八','廿九','三十'];
@@ -1080,7 +1090,7 @@ function render(){
   <header class="head">
     <h1>北宋赶考记<small>嘉祐二年 · 丁酉 · 临川举子赴京应省试</small></h1>
     ${S.phase === 'over' ? '' : `<div class="meta">第 ${S.day} 日 / 30 · ${dateLabel(S.day)}<br><button data-act="help">凡例</button> · <button data-act="glossIndex">词条</button> · <button data-act="restart">重开</button></div>`}
-    <img class="scroll" src="data:image/jpeg;base64,__SCROLL_IMG__" alt="赴京应试 · 画轴" title="赴京应试">
+    <img class="scroll${scrollPlayed ? '' : ' unroll'}" src="data:image/jpeg;base64,__SCROLL_IMG__" alt="赴京应试 · 画轴" title="赴京应试">
   </header>
   <div class="main"${S.phase === 'over' ? ' style="grid-template-columns:1fr"' : ''}>
     <section class="card stage">${renderBody()}</section>
@@ -1097,6 +1107,7 @@ function render(){
       </div>
     </aside>`}
   </div>`;
+  if (!scrollPlayed) scrollPlayed = true;
 
   annotateTerms(app);
   renderOverlay();
@@ -1114,7 +1125,7 @@ function renderTitle(){
   app.innerHTML = `
   <header class="head">
     <h1>北宋赶考记<small>嘉祐二年 · 丁酉 · 临川举子赴京应省试</small></h1>
-    <img class="scroll" src="data:image/jpeg;base64,__SCROLL_IMG__" alt="赴京应试 · 画轴" title="赴京应试">
+    <img class="scroll${scrollPlayed ? '' : ' unroll'}" src="data:image/jpeg;base64,__SCROLL_IMG__" alt="赴京应试 · 画轴" title="赴京应试">
   </header>
   <div class="main" style="grid-template-columns:1fr">
     <section class="card stage" style="min-height:0">
@@ -1143,6 +1154,7 @@ function renderTitle(){
       </div>
     </section>
   </div>`;
+  if (!scrollPlayed) scrollPlayed = true;
   annotateTerms(app);
   renderOverlay();
 }
