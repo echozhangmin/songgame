@@ -12,6 +12,7 @@ function mkEl(){
 }
 globalThis.document = {
   getElementById:function(){ return mkEl(); },
+  createElement:function(){ return mkEl(); },
   body:{ insertAdjacentHTML:function(){}, appendChild:function(){} },
   addEventListener:function(){}
 };

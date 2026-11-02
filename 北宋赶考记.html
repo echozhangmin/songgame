@@ -1483,7 +1483,7 @@ function startPetals(){
   document.body.appendChild(box);
 }
 
-if (typeof document !== 'undefined') startPetals();
+if (typeof document !== 'undefined' && document.createElement && document.body) startPetals();
 
 if (typeof document !== 'undefined') boot();
 
