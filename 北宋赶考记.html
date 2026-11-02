@@ -121,6 +121,13 @@ button{font-family:inherit; cursor:pointer; color:var(--ink)}
   display:flex; align-items:center; justify-content:center; font-size:13px; border-radius:2px; transform:rotate(3deg); opacity:.92}
 .sheet h3{margin:0 0 6px; font-size:21px; letter-spacing:.06em; font-weight:600; line-height:1.75; padding-right:52px}
 .sheet .qtag{font-size:13px; letter-spacing:.2em; color:var(--red); opacity:.85; margin-bottom:14px}
+.sheet h4{margin:20px 0 4px; font-size:14px; letter-spacing:.24em; color:var(--red); font-weight:600; opacity:.92}
+.help-sec h4:first-child{margin-top:10px}
+.sheet ul.help{margin:0; padding:0; list-style:none; font-size:16px; line-height:2.0; color:var(--ink2)}
+.sheet ul.help li{padding-left:1.05em; position:relative; margin:3px 0}
+.sheet ul.help li::before{content:"·"; position:absolute; left:.15em; color:var(--gold); font-weight:700}
+.sheet ul.help b{color:var(--ink); font-weight:600}
+.num{font-style:normal; font-weight:700; color:var(--red); font-size:1.1em; padding:0 1px; letter-spacing:0}
 .opts{display:grid; gap:9px; margin-top:6px}
 .opt{display:flex; gap:12px; align-items:flex-start; background:rgba(250,246,232,.65); border:1px solid var(--line);
   padding:11px 14px; text-align:left; font-size:16.5px; line-height:1.7; transition:.15s; width:100%}
@@ -1362,16 +1369,37 @@ function renderOverlay(){
     html = `<div class="overlay" id="overlay"><div class="sheet">
       <div class="stamp">凡例</div>
       <h3>怎么玩</h3>
-      <p class="scene-desc" style="margin-top:10px">
-      每日有 <b>4 点行动</b>：温书、歇息、交游各占 1 点。<br>
-      入夜结算：凡当日没做的那一类事，对应属性（智力／精力／人缘）各减 1 分；任一项归零，旅程终止。<br>
-      赶路的日子要耗掉 2 点，只剩 2 点行动，必有一样要放下——这就是取舍。<br>
-      第 25–27 日为省试三场，每场 5 题；第 28 日放榜，第 29 日殿试，第 30 日琼林宴。<br>
-      智力决定笔墨成色，精力影响临场发挥，人缘决定能否拜访大儒、探听主司。<br>
-      驿站、山道、虹桥、城门可「题诗换宿」，市口可「街头鬻诗」：给一个题材，当场写四句。四句字数齐整评为上品，题诗得 5 贯、鬻诗得 4 贯；字数不齐为中品，分文不给。<br>
-      酒楼、书库、舟中可结识嘉祐二年的真实人物——苏轼兄弟、曾巩、程颢、张载、吕惠卿、苏洵，以及欧阳修、梅尧臣、司马光。<br>
-      想见知贡举欧阳修，用酒楼里的「投行卷」，只此一次；酒楼连访大儒三次，也能依次见到欧阳修、梅尧臣、司马光。<br>
-      正文里带虚线的小词（如“程仪”“解状”“省试”）可以点开，看释义与史料出处。</p>
+      <div class="help-sec">
+        <h4>一 · 每日行动</h4>
+        <ul class="help">
+          <li>每天 <em class="num">4</em> 点行动：温书、歇息、交游各占 <em class="num">1</em> 点。</li>
+          <li>赶路日先耗 <em class="num">2</em> 点，只剩 <em class="num">2</em> 点——<b>必有一样要放下</b>，这就是取舍。</li>
+        </ul>
+        <h4>二 · 入夜结算</h4>
+        <ul class="help">
+          <li>当日没做的那一类事，对应属性（智力／精力／人缘）各减 <em class="num">1</em> 分。</li>
+          <li><b>任一项归零，旅程终止</b>：智力尽则胸无点墨，精力尽则病卧逆旅，人缘尽则孤身无援。</li>
+        </ul>
+        <h4>三 · 三项属性</h4>
+        <ul class="help">
+          <li><b>智力</b>管笔墨成色，<b>精力</b>管临场发挥，<b>人缘</b>管拜访大儒、探听主司。</li>
+        </ul>
+        <h4>四 · 行程与考试</h4>
+        <ul class="help">
+          <li>第 <em class="num">25–27</em> 日省试三场、每场 <em class="num">5</em> 题；第 <em class="num">28</em> 日放榜，第 <em class="num">29</em> 日殿试，第 <em class="num">30</em> 日琼林宴。</li>
+        </ul>
+        <h4>五 · 题诗换钱</h4>
+        <ul class="help">
+          <li>驿站、山道、虹桥、城门可「题诗换宿」，市口可「街头鬻诗」。</li>
+          <li><b>四句、每句字数齐整＝上品</b>：题诗得 <em class="num">5</em> 贯、鬻诗得 <em class="num">4</em> 贯；字数不齐为中品，分文不给。</li>
+        </ul>
+        <h4>六 · 人物与词条</h4>
+        <ul class="help">
+          <li>酒楼、书库、舟中可结识嘉祐二年的真实人物：苏轼兄弟、曾巩、程颢、张载、吕惠卿、苏洵，以及欧阳修、梅尧臣、司马光。</li>
+          <li>想见知贡举欧阳修：酒楼「投行卷」只此一次；或连访大儒 <em class="num">3</em> 次，依次得见欧阳修、梅尧臣、司马光。</li>
+          <li>正文带虚线的小词（如程仪、解状、省试）可以点开，看释义与史料出处。</li>
+        </ul>
+      </div>
       <div class="center"><button class="btn" data-act="closeHelp">${S.day === 1 ? '知道了，启程' : '知道了'}</button></div>
     </div></div>`;
   }
