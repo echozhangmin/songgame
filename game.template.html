@@ -56,13 +56,13 @@ body::after{
   border:1px solid var(--line); box-shadow:0 1px 0 rgba(255,255,255,.5) inset, 0 6px 24px rgba(90,75,45,.07);
   padding:24px 26px; position:relative; overflow:hidden}
 .stage{min-height:430px; padding-top:218px; display:flex; flex-direction:column}
-.card.stage::before{content:""; position:absolute; left:0; right:0; top:0; height:202px; pointer-events:none;
+.card.stage::before{content:""; position:absolute; left:0; right:0; top:0; height:312px; pointer-events:none;
   background-image:
-    linear-gradient(180deg, rgba(229,216,186,0) 0%, rgba(229,216,186,.12) 62%, rgba(229,216,186,.52) 100%),
+    linear-gradient(180deg, rgba(229,216,186,0) 0%, rgba(229,216,186,.10) 50%, rgba(229,216,186,.55) 86%, rgba(229,216,186,.95) 100%),
     url(data:image/jpeg;base64,__SCENE_BG__);
   background-size:auto, cover; background-position:center, center 48%; background-repeat:no-repeat;
-  -webkit-mask-image:linear-gradient(to bottom,#000 68%,rgba(0,0,0,.6) 86%,transparent 100%);
-  mask-image:linear-gradient(to bottom,#000 68%,rgba(0,0,0,.6) 86%,transparent 100%)}
+  -webkit-mask-image:linear-gradient(to bottom,#000 62%,rgba(0,0,0,.6) 86%,transparent 100%);
+  mask-image:linear-gradient(to bottom,#000 62%,rgba(0,0,0,.6) 86%,transparent 100%)}
 .scene-name{margin:0 0 4px; font-size:28px; letter-spacing:.12em; font-weight:600; position:relative}
 .scene-name .gloss{border-bottom-style:dotted; border-bottom-width:2px}
 .scene-tag{font-size:13.5px; letter-spacing:.3em; color:var(--red); opacity:.8; margin-bottom:14px; position:relative}
@@ -171,7 +171,7 @@ button{font-family:inherit; cursor:pointer; color:var(--ink)}
   .head h1{font-size:28px} .stage{min-height:0; padding-top:150px}
   .scroll{height:62px}
   #petals i:nth-child(n+15){display:none}
-  .card.stage::before{height:136px}
+  .card.stage::before{height:208px}
   .sheet{padding:24px 20px}
 }
 
