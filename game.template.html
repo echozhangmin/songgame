@@ -240,7 +240,7 @@ const SCENES = [
    desc:'州桥旁的酒楼三层灯火，举子、书商、说书人挤在一处。满楼都在说同一个名字：欧阳修知贡举。邻座有人压低声音：“他这些日子在礼部，行卷还能递进去。”',
    acts:['toujuan','social','master','study','info','rest','sell','sleep']},
   {id:'shuku', name:'国子监 · 书库', glyph:'库', from:20, to:24, kind:'hub', tag:'第八幕 · 书库',
-   desc:'书库里尘埃在光柱中浮沉。抄书吏压低声音说，今年主司好经义，诗赋未必是重头。',
+   desc:'书库里尘埃在光柱中浮沉。抄书吏压低声音说，今年主司厌险怪、好平实——文章少些花腔为妙。',
    acts:['study','copy','social','master','rest','sleep']},
   {id:'gongyuan', name:'贡院 · 号舍', glyph:'院', from:25, to:27, kind:'exam', tag:'第九幕 · 省试',
    desc:'号舍狭如匣，一灯一砚一席。锁院三日，连咳嗽都要压低。三场之后，便是放榜。'},
@@ -251,7 +251,7 @@ const SCENES = [
 // 分场景插图：assets/scene_<场景id>.jpg 由 build.py 按文件名 base64 内嵌成此表；无图场景回落共用 __SCENE_BG__
 const SCENE_ART = __SCENE_ART__;
 
-const EXAM_ROUNDS = ['第一场 · 诗赋', '第二场 · 经义', '第三场 · 策论'];
+const EXAM_ROUNDS = ['第一场 · 诗赋', '第二场 · 论', '第三场 · 策论'];
 const EXAM_POOLS = [
   q => q.era === '先秦' || q.era === '秦汉',
   q => q.era === '魏晋南北朝' || q.era === '隋唐',
@@ -263,7 +263,7 @@ const MASTER_LINES = [
   '“今之科举，取通变之士，非取记诵之童。”',
   '“你的策论锋芒太露，宜藏三分。”',
   '“文中要有己见，不可尽抄程文。”',
-  '“此次主司好经义，你把《周礼》再读一遍。”'
+  '“此次主司好古文，你把文章再删简一遍。”'
 ];
 
 
@@ -558,7 +558,7 @@ const ACT = {
 
   info:{ name:'打听消息', hint:'人缘+1 探听主司', ap:1,
     run(){ S.maintained.yuan = true; money(-1); addStat('yuan', 1);
-      if (!S.flags.rumor){ S.flags.rumor = true; log('酒保凑近低声道：今年知贡举换了人，好经义，厌浮词。'); }
+      if (!S.flags.rumor){ S.flags.rumor = true; log('酒保凑近低声道：今年知贡举换了人，好古文，厌险怪。'); }
       else log('你又听了一耳朵传闻，多半是重复的旧话。');
     } },
 
@@ -988,7 +988,7 @@ function finishEnding(){
   else if (score >= 0.78) e = {rank:'一甲进士', cls:'red', text:'你列名一甲，入馆阁读书。同榜的人都说，临川来的这位王举子，文章有锋芒。'};
   else if (score >= 0.68) e = {rank:'二甲进士', cls:'red', text:'你中了二甲进士，授官外放。离京那日，你在州桥边站了很久，看汴河的水往东去。'};
   else if (score >= 0.58) e = {rank:'同进士出身', cls:'', text:'你以同进士出身及第，虽非高第，终究脱了白身。回乡时，先生在牌位前多摆了一壶酒。'};
-  else e = {rank:'特奏名', cls:'dim', text:'你的卷子被归入特奏名，赐同进士出身，授一县主簿。仕途虽小，终究入了门。'};
+  else e = {rank:'特奏名', cls:'dim', text:'你的卷子被归入特奏名，赐出身，授一县主簿。仕途虽小，终究入了门。（史实中特奏名须积举数与年岁，首举者不与；此为游戏性保底档。）'};
   S.phase = 'over';
   S.ending = Object.assign({kind:'ending'}, e);
 }
