@@ -26,6 +26,7 @@ var code = m[1].replace('"use strict";', '');
 code += '\n;__G = {QUESTIONS:QUESTIONS,SCENES:SCENES,ACT:ACT,MAX:MAX,startStudy:startStudy,' +
         'answer:answer,continueAfterAnswer:continueAfterAnswer,endDay:endDay,doAct:doAct,' +
         'enterDay:enterDay,finishEnding:finishEnding,failExam:failExam,freshState:freshState,' +
+        'chooseEvent:chooseEvent,' +
         'setS:function(z){S=z;},getS:function(){return S;}};';
 eval(code);
 var G = __G;
@@ -37,7 +38,7 @@ function has(arr, x){ return arr.indexOf(x) >= 0; }
 function chooseAction(s){
   var sc = G.SCENES[s.scene];
   var acts = (sc.acts || []).slice();
-  var ok = acts.filter(function(id){ var a = G.ACT[id]; return a && a.ap <= s.ap && (!a.can || a.can()); });
+  var ok = acts.filter(function(id){ var a = G.ACT[id]; return a && a.ap <= s.ap && (!a.can || a.can()) && (!a.hideIf || !a.hideIf()); });
   if (!ok.length) return has(acts,'sleep') ? 'sleep' : null;
 
   function chk(){ return G.getS(); }
@@ -57,7 +58,15 @@ function chooseAction(s){
     if (has(ok,'rest')) return 'rest';
     if (has(ok,'study')) return 'study';
   }
+  if (cur.jing <= 5 && has(ok,'lodge')) return 'lodge';
   if (cur.jing <= 4 && has(ok,'rest')) return 'rest';
+  if (cur.jing <= 4 && !has(ok,'rest') && !has(ok,'lodge')){
+    if (cur.yuan <= 4 && has(ok,'social')) return 'social';
+    if (has(ok,'view')) return 'view';
+    if (has(ok,'chat')) return 'chat';
+    if (has(ok,'watch')) return 'watch';
+    return has(acts,'sleep') ? 'sleep' : ok[0];
+  }
   if (cur.money < 20 && has(ok,'sell')) return 'sell';
   if (cur.yuan <= 4 && has(ok,'social')) return 'social';
   if (cur.yuan <= 4 && has(ok,'view')) return 'view';
@@ -69,6 +78,25 @@ function chooseAction(s){
   if (has(ok,'copy')) return 'copy';
   if (has(ok,'sell')) return 'sell';
   return has(acts,'sleep') ? 'sleep' : ok[0];
+}
+
+function pickChoice(e, s){
+  var best = 0, bestScore = -1e9;
+  for (var i = 0; i < e.choice.length; i++){
+    var c = e.choice[i];
+    if (c.needSafe && !(s.safe && s.safe[e.safeKey])) continue;
+    if (c.req && c.req.yuan && s.yuan < c.req.yuan) continue;
+    var cost = c.cost || {}, gain = c.gain || {}, sc = 0;
+    if (cost.jing) sc -= 8 * cost.jing;
+    if (cost.money) sc -= cost.money;
+    if (gain.jing) sc += (s.jing <= 5 ? 6 : 3) * gain.jing;
+    if (gain.zhi) sc += (s.zhi <= 8 ? 2 : 1) * gain.zhi;
+    if (gain.yuan) sc += (s.yuan <= 5 ? 2 : 1) * gain.yuan;
+    if (gain.money) sc += 2 * gain.money;
+    if (c.needSafe) sc += 5;
+    if (sc > bestScore){ bestScore = sc; best = i; }
+  }
+  return best;
 }
 
 function play(skill){
@@ -83,6 +111,11 @@ function play(skill){
       var pick = (Math.random() < skill) ? idx : rnd(4);
       G.answer(pick);
       G.continueAfterAnswer();
+      continue;
+    }
+    if (s.event){
+      if (s.event.choice && !s.event.done) G.chooseEvent(pickChoice(s.event, s));
+      s.event = null;
       continue;
     }
     if (s.phase === 'play'){
