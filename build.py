@@ -6,8 +6,9 @@
     北宋赶考记.html
 模板里的占位符在生成时替换：
     __QUESTIONS__ / __GLOSSARY__   ← 题库与词条
-    __SCENE_BG__                   ← assets/scene_bg.jpg（场景背景图，base64 内嵌）
-    __SCROLL_IMG__                 ← assets/scroll.jpg（页眉画轴图，base64 内嵌）
+    __SCENE_BG__                   ← assets/scene_bg.jpg（共用场景背景，base64 内嵌）
+    __SCENE_ART__                  ← assets/scene_<场景id>.jpg（分场景插图，按文件名内嵌成 JS 表）
+    __SCROLL_IMG__                 ← assets/scroll.jpg（页眉画轴图，base64 内嵌，替换全部出现处）
 """
 import base64
 import json
@@ -83,7 +84,26 @@ def embed_image(html, token, path, label):
         raise SystemExit(f"模板里有 {token} 占位符，但找不到{label}：" + path)
     b64 = base64.b64encode(open(path, "rb").read()).decode("ascii")
     print(f"{label}内嵌：{os.path.relpath(path, HERE)}（{os.path.getsize(path)/1024:.0f} KB）")
-    return html.replace(token, b64, 1)
+    return html.replace(token, b64)
+
+
+def load_scene_art():
+    """assets/scene_<场景id>.jpg → {id: dataURI}；scene_bg.jpg 是共用底图，不在此列。
+
+    文件名约定：场景 id 见模板 SCENES（jiaxu/changting/yizhan/shandao/bianhe/
+    hongqiao/chengmen/jiulou/shuku/gongyuan/fangbang）。两段汴河共用 bianhe 一张。
+    """
+    arts = {}
+    d = os.path.join(HERE, "assets")
+    for fn in sorted(os.listdir(d)):
+        m = re.match(r"scene_([A-Za-z0-9_]+)\.(jpe?g|png)$", fn)
+        if not m or m.group(1) == "bg":
+            continue
+        mime = "image/png" if m.group(2) == "png" else "image/jpeg"
+        raw = open(os.path.join(d, fn), "rb").read()
+        arts[m.group(1)] = f"data:{mime};base64," + base64.b64encode(raw).decode("ascii")
+        print(f"场景图内嵌：{fn}（{len(raw)/1024:.0f} KB）")
+    return arts
 
 
 def main():
@@ -99,6 +119,9 @@ def main():
     html = html.replace("__GLOSSARY__", json.dumps(glossary, ensure_ascii=False, separators=(",", ":")), 1)
     html = embed_image(html, "__SCENE_BG__", SCENE_BG, "背景图")
     html = embed_image(html, "__SCROLL_IMG__", SCROLL, "画轴图")
+    if "__SCENE_ART__" not in html:
+        raise SystemExit("模板缺少 __SCENE_ART__ 占位符")
+    html = html.replace("__SCENE_ART__", json.dumps(load_scene_art(), ensure_ascii=False, separators=(",", ":")))
     open(OUT, "w", encoding="utf-8").write(html)
     open(INDEX, "w", encoding="utf-8").write(html)
     print(f"题库注入：{len(qs)} 题")

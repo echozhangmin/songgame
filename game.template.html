@@ -59,7 +59,7 @@ body::after{
 .card.stage::before{content:""; position:absolute; left:0; right:0; top:0; height:312px; pointer-events:none;
   background-image:
     linear-gradient(180deg, rgba(229,216,186,0) 0%, rgba(229,216,186,.10) 50%, rgba(229,216,186,.55) 86%, rgba(229,216,186,.95) 100%),
-    url(data:image/jpeg;base64,__SCENE_BG__);
+    var(--scene-art, url(data:image/jpeg;base64,__SCENE_BG__));
   background-size:auto, cover; background-position:center, center 48%; background-repeat:no-repeat;
   -webkit-mask-image:linear-gradient(to bottom,#000 62%,rgba(0,0,0,.6) 86%,transparent 100%);
   mask-image:linear-gradient(to bottom,#000 62%,rgba(0,0,0,.6) 86%,transparent 100%)}
@@ -247,6 +247,9 @@ const SCENES = [
   {id:'fangbang', name:'琼林苑 · 放榜', glyph:'榜', from:28, to:30, kind:'ending', tag:'第十幕 · 放榜',
    desc:'榜下人潮如墙。榜文贴出那一刻，有人抚掌大笑，有人掩面而去。'}
 ];
+
+// 分场景插图：assets/scene_<场景id>.jpg 由 build.py 按文件名 base64 内嵌成此表；无图场景回落共用 __SCENE_BG__
+const SCENE_ART = __SCENE_ART__;
 
 const EXAM_ROUNDS = ['第一场 · 诗赋', '第二场 · 经义', '第三场 · 策论'];
 const EXAM_POOLS = [
@@ -1080,6 +1083,7 @@ function render(){
   if (S.phase === 'title'){ renderTitle(); return; }
   const app = document.getElementById('app');
   const sc = curScene();
+  const artUrl = SCENE_ART[sc.id] ? ' style="--scene-art:url(' + SCENE_ART[sc.id] + ')"' : '';
   const apDots = [1,2,3,4].map(i => '<div class="dot ' + (i <= S.ap ? 'on' : '') + '"></div>').join('');
   const logHtml = S.log.map(l => {
     const cls = l.t.indexOf('〔史料〕') === 0 ? ' class="hist"' : '';
@@ -1093,7 +1097,7 @@ function render(){
     <img class="scroll${scrollPlayed ? '' : ' unroll'}" src="data:image/jpeg;base64,__SCROLL_IMG__" alt="赴京应试 · 画轴" title="赴京应试">
   </header>
   <div class="main"${S.phase === 'over' ? ' style="grid-template-columns:1fr"' : ''}>
-    <section class="card stage">${renderBody()}</section>
+    <section class="card stage"${artUrl}>${renderBody()}</section>
     ${S.phase === 'over' ? '' : `<aside class="status">
       <div class="card">
         <div class="row"><span>行程</span><span>${sc.tag}</span></div>
