@@ -43,7 +43,6 @@ function chooseAction(s){
 
   function chk(){ return G.getS(); }
   var cur = chk();
-  if (has(ok,'enter')) return 'enter';
   if (MODE === 'neglectYuan'){
     if (cur.jing <= 4 && has(ok,'rest')) return 'rest';
     if (has(ok,'study')) return 'study';

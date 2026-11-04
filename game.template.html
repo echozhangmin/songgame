@@ -228,7 +228,7 @@ const SCENES = [
 
   {id:'hongqiao', name:'虹桥 · 汴河闸口', glyph:'桥', from:12, to:12, kind:'hub', tag:'第五幕 · 闸口',
    desc:'船到虹桥，闸口水门正候闸。船家把缆绳系在柳树上：“要等半日，举子可上岸走走。”桥两岸的摊子一直摆到水边，脚店挑着灯笼，卖胡饼的吆喝声顺着河风过来。',
-   acts:['bridge_walk','bridge_supply','ask','poem','social','rest','sleep']},
+   acts:['bridge_walk','bridge_supply','info','poem','social','rest','sleep']},
 
   {id:'bianhe', name:'汴河 · 舟中', glyph:'舟', from:13, to:14, kind:'travel', tag:'第五幕 · 舟行（续）',
    desc:'过了虹桥，水面忽然开阔。船家说，再两日便是汴京东水门，进城要先验解状。',
@@ -601,10 +601,6 @@ const ACT = {
       log('欧阳修（翰林学士 · 知贡举）展卷细读，半晌才道：“文从字顺，可再简。少年人肯把话说尽，是长处，也是短处。”');
       log('〔史料〕嘉祐二年省试由欧阳修主考、梅尧臣点检试卷；苏轼正是此榜见知于欧公。');
     } },
-
-  enter:{ name:'入城安顿', hint:'盘缠 -2 · 推进一日', ap:1, primary:true,
-    run(){ money(-2); S.flags.entered = true;
-      log('你穿过新宋门，车马喧嚣扑面而来，汴京到了。'); endDay(); } },
 
   guard:{ name:'结伴同行', hint:'盘缠-1 人缘+1 · 遇匪可呼救', ap:1,
     run(){ money(-1); addStat('yuan', 1); S.maintained.yuan = true; S.safe.shan = true;
