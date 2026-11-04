@@ -185,7 +185,9 @@ MODE=neglectYuan osascript -l JavaScript sim.js     # 验证「孤身无援」�
 MODE=neglectJing osascript -l JavaScript sim.js     # 验证「病卧逆旅」可触发
 ```
 
-55%／70%／85% 三档作答正确率各跑 60 局：正常经营不会崩盘，55% 水平多为同进士或特奏名，85% 水平多为一甲、约六分之一状元。
+55%／70%／85% 三档作答正确率各跑 60 局：正常经营不会崩盘。2026-11-02 基线（sim 策略修复后）：55% 档同进士 17／特奏名 12／二甲 19／落第 6；70% 档二甲 26／一甲 15；85% 档一甲 31／状元 15（约四分之一）。全程仅 5/180 局「困于逆旅」（第 24–28 日盘缠见底）——sim 现在会真实支付事件开销（山匪舍财、门税、住处、桥头看房），期末盘缠从旧版的 40+ 贯收紧到个位数，更接近真实玩家。
+
+> sim 策略修复记录（2026-11-02）：旧策略不认识第 15 日城门动作集（无 rest，回精力正解是「寻住处」），且不结算任何二选一事件（门税／桥头／山匪／书肆等形同虚设）、无视 hideIf（一次性动作可重复点）——导致 175/180 局在第 15 日「病卧逆旅」。修复：`chooseAction` 加 lodge 优先级与"无回精力手段时停做耗精力事"护栏；行动表过滤 `hideIf`；主循环经 `chooseEvent` 按 cost/gain 评分结算事件；`__G` 导出 `chooseEvent`。游戏本体无改动。
 
 题诗判定另有单独用例：山水（王维）、思乡（李白）、送别（王维《渭城曲》）、怀古（刘禹锡）均判上品；跑题的山水诗投"送别"题会掉到中品；乱写判下品。
 
@@ -197,7 +199,7 @@ python3 build.py     # 读 game.template.html + ../history-quiz/quiz_150.json �
 
 题库（150 道）来自 `../history-quiz/quiz_150.json`，生成时会把 ASCII 单引号规范成中文引号。
 改题目只改题库；改规则、文案、数值、人物只改 `game.template.html`。
-内嵌图片有两张：场景背景图 `assets/scene_bg.jpg`（进京赶考场景）与页眉画轴图 `assets/scroll.jpg`，生成时均以 base64 内嵌进 HTML，仍是单文件。要换图，覆盖对应文件再跑 `build.py` 即可。
+内嵌图片分两层：**共用底图** `assets/scene_bg.jpg`（进京赶考场景）与页眉画轴图 `assets/scroll.jpg`，生成时均以 base64 内嵌进 HTML（画轴占位符替换全部出现处，含开始页）；**分场景插图**按文件名约定 `assets/scene_<场景id>.jpg`（如 `scene_changting.jpg`），build 时自动扫进 `SCENE_ART` 表内嵌，无图场景回落共用底图。场景 id：jiaxu／changting／yizhan／shandao／bianhe（两段汴河共用）／hongqiao／chengmen／jiulou／shuku／gongyuan／fangbang。换图：覆盖对应文件或按命名新添，再跑 `build.py`。
 
 ## 八、已知取舍（等你拍板）
 
@@ -205,7 +207,7 @@ python3 build.py     # 读 game.template.html + ../history-quiz/quiz_150.json �
 2. **人物只出现一次**：每人遇过一次就不再出现，30 天里最多遇见 10 位。想让人物贯穿全程（例如苏轼考前考后各一场），可以改成按日解锁的多段对话。
 3. **智力会顶满**：温书 +1／次、五点就到顶。想让智力全程吃紧，可把初始值降到 3。
 4. **盘缠仍偏宽**：实测平均剩 12 贯。题诗奖励 +2～5 贯之后更宽了，可以考虑把京城房钱涨到 3 贯。
-5. **场景插图空缺**：全部场景页与开始页现已共用一张「进京赶考」横幅背景图（`assets/scene_bg.jpg`，build 时 base64 内嵌，替代原先的巨型汉字水印）。分场景的 10 张水墨图仍未做；SCENES 里各场景的 `glyph` 字段保留着，配好图后可按场景替换。页面另有几片桂花与叶子徐徐飘落的点缀（纯 CSS 动画、`pointer-events:none`，不挡操作；`prefers-reduced-motion` 时自动关闭）。
+5. **场景插图**：分场景插图机制已就位（`assets/scene_<场景id>.jpg`，build 自动内嵌，无图场景回落共用横幅 `assets/scene_bg.jpg`）。已配第二幕长亭一张（`scene_changting.jpg`，1600px JPEG）；其余 11 张待配，全配后注意单文件体积（每张约 +650 KB base64，必要时把质量降到 70 以下或 1400px）。页面另有几片桂花与叶子徐徐飘落的点缀（纯 CSS 动画、`pointer-events:none`，不挡操作；`prefers-reduced-motion` 时自动关闭）。
 
 ---
 
