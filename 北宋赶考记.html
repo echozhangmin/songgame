@@ -366,6 +366,32 @@ Object.keys(RHYME_GROUPS).forEach(function(g){
 });
 function rhymeOf(ch){ return RHYME_OF[ch] || null; }
 
+/* 题诗三重标准（2026-11 拍板）：切题、四句齐整、非抄示范诗 */
+const THEME_WORDS = {
+  shan:'山川峰岭江湖河溪泉石云风雨雪霜月日星天海涛沙岸林松',
+  you:'君送别离友客酒逢赠思期故人情杯',
+  xiang:'乡家归思亲母梦客故望灯白千里',
+  fu:'母父娘爷亲线衣缝游子白头寒',
+  xiong:'兄弟手足昆仲佳节堂棠',
+  xue:'灯更读学书笔墨首勤鸡窗卷',
+  kao:'试场榜名题卷愁眠安心问举时妆眉烛',
+  meng:'马街花春风得意长安路途游',
+  guo:'国家戈甲兵关塞沙战功汉烽',
+  qiong:'贫囊空钱墨砚粗衣菜粥寒瓢',
+  zhan:'边关塞戍烽沙雪马弓刀战军鼓',
+  sheng:'生死命年岁光阴须臾春秋发',
+  shi:'仕官途路进退名利禄位门',
+  ji:'旅客舟船馆驿钟夜愁眠归梦',
+  min:'农田禾锄汗粟蚕桑织衣饭牛',
+  mei:'花梅雪香枝开落红白绿物',
+  ya:'酒宴集同座客醉歌和斟盏酬',
+  chan:'空山寺钟僧禅心静无尘灯花'
+};
+const FAMOUS_LINES = {};
+POEM_THEMES.forEach(function(t){
+  t.ex.split(/\n+/).map(stripPunct).forEach(function(l){ if (l && !FAMOUS_LINES[l]) FAMOUS_LINES[l] = t.name; });
+});
+
 
 
 /* ============================ 支线事件 ============================ */
@@ -702,21 +728,39 @@ function gradePoem(text, themeKey){
   const dui = four && uniform &&
     (isParallel(lines[0], lines[1]) || isParallel(lines[1], lines[2]) || isParallel(lines[2], lines[3]));
 
+  const th = POEM_THEMES.filter(function(t){ return t.key === themeKey; })[0] || {name:''};
+  const joined = lines.join('');
+  const hits = [];
+  for (const ch of (THEME_WORDS[themeKey] || '')){
+    if (hits.indexOf(ch) < 0 && joined.indexOf(ch) >= 0) hits.push(ch);
+  }
+  const onTopic = hits.length >= 2;
+
+  let copyFrom = null;
+  for (const l of lines){ if (FAMOUS_LINES[l]) { copyFrom = FAMOUS_LINES[l]; break; } }
+
   const notes = [];
   if (four) notes.push('四句成篇'); else notes.push('共 ' + n + ' 句');
   if (uniform) notes.push('字数齐整（每句 ' + lens[0] + ' 字）'); else notes.push('字数参差');
+  if (onTopic) notes.push('切「' + th.name + '」题');
+  if (copyFrom) notes.push('有句与《' + copyFrom + '》示范诗同');
   if (dui) notes.push('中二联相对');
 
-  const grade = (four && uniform) ? '上品' : '中品';
+  const pass = four && uniform && onTopic && !copyFrom;
+  const grade = pass ? '上品' : '中品';
   let note;
   if (grade === '上品' && dui)
-    note = '四句齐整，中二联又对得稳当，越发见功夫。主人读了两遍，连声称善。';
+    note = '四句齐整，又切「' + th.name + '」之题，中二联对得稳当，越发见功夫。主人读了两遍，连声称善。';
   else if (grade === '上品')
-    note = '四句齐整，字字相当，已是一首成样的诗。主人抚掌道：“好，好！”';
+    note = '四句齐整，字字相当，又切「' + th.name + '」之题，已是一首成样的诗。主人抚掌道：“好，好！”';
+  else if (copyFrom)
+    note = '这句子与《' + copyFrom + '》里的示范诗一字不差——借句不成诗。主人笑着摇头，程仪就免了。';
+  else if (four && uniform)
+    note = '四句虽齐，却不在「' + th.name + '」题内——离题的诗，主人家不好奉上程仪。';
   else
-    note = '肯写就好。下一回写四句、每句字数一样，便是上品——主人家也才好奉上程仪。';
+    note = '肯写就好。下一回写四句、每句字数一样，又切着题，便是上品——主人家也才好奉上程仪。';
 
-  return {grade:grade, notes:notes, lines:lines, note:note, dui:dui, uniform:uniform, n:n};
+  return {grade:grade, notes:notes, lines:lines, note:note, dui:dui, uniform:uniform, n:n, onTopic:onTopic, copyFrom:copyFrom};
 }
 
 
@@ -1359,7 +1403,7 @@ function renderOverlay(){
         <div class="stamp">题诗</div>
         <div class="qtag">${S.poem.mode === 'poem' ? '驿壁留题' : '街头鬻诗'} · ${th.name}</div>
         <h3>${th.prompt}</h3>
-        <p class="scene-desc" style="font-size:15px; margin-bottom:0">写四句，每句字数一样，就是上品；能对上一联更妙。不必字字珠玑，肯写就值得。</p>
+        <p class="scene-desc" style="font-size:15px; margin-bottom:0">三样齐了便是上品：一要切题，二要四句、每句字数一样，三不能照抄壁上的示范诗。能对上一联更妙。不必字字珠玑，肯写就值得。</p>
         <textarea class="poem-box" id="poemBox" rows="5" placeholder="例：${(th.ex || '').split('\n').join('&#10;')}">${esc(S.poem.text || '')}</textarea>
         ${S.poem.warn ? '<div class="fb">主人还在等，多少写两句罢。</div>' : ''}
         <div class="center">
