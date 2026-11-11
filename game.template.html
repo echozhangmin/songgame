@@ -146,7 +146,7 @@ button{font-family:inherit; cursor:pointer; color:var(--ink)}
 .opt.wrong{background:rgba(166,58,44,.1); border-color:rgba(166,58,44,.4)}
 .opt:disabled{cursor:default}
 .opt.off{opacity:.42}
-.fb{margin-top:16px; font-size:15.5px; line-height:1.95; color:var(--ink2); border-left:3px solid var(--gold);
+  .fb{white-space:pre-line; margin-top:16px; font-size:15.5px; line-height:1.95; color:var(--ink2); border-left:3px solid var(--gold);
   padding:8px 0 8px 14px; background:rgba(150,125,80,.08)}
 .fb b{color:var(--ink)}
 .poem-box{width:100%; margin-top:14px; padding:14px 16px; font-family:inherit; font-size:17px;
@@ -308,6 +308,60 @@ const NPCS = {
   simaguang:{ name:'司马光', tag:'谏官 · 三十八岁', tier:'master', where:['jiulou'], prio:3,
     desc:'司马光正色道：“取士当先德行，而后文艺。”说完略一颔首：“足下文章，仆读过。”',
     note:'司马光此时已以直谏知名；三十年后，他将尽废熙宁新法。' }
+};
+
+/* ============================ 大儒座谈（2026-11 拍板） ============================
+   每次拜访谈一个话题（追问同席展开、不另计）；话题按场景解锁、谈过打勾、
+   谈尽回落 MASTER_LINES。台词出处对照见工作区 research/drafts/master_dialogues_draft.md。 */
+const DIALOGUES = {
+  xiansheng: { name:'乡先生', topics:[
+    { id:'qiancheng', label:'问前程', gain:{yuan:1},
+      reply:'“庆历二年，乡里王介甫一榜登第，如今已出知常州。你此去，莫堕了临川人的志气。”' },
+    { id:'weixue', label:'问为学', gain:{zhi:1},
+      reply:'“读经不必贪多。一经读透，胜过五经都只记得半截。你《周礼》既带在身边，路上就只读它。”' },
+    { id:'xingcheng', label:'问行程',
+      reply:'“三千里是虚数，你只记一句：赶路的日子，书别放下；住店的日子，觉别欠下。”' }
+  ]},
+  ouyang: { name:'欧阳修', topics:[
+    { id:'wenfeng', label:'问今年文风', gain:{zhi:1}, rumor:true,
+      reply:'“场屋近有一种险怪习气——堆砌僻字，句读不齐，读之不解。老夫此番阅卷，唯取平安朴实者。”',
+      ask:'何谓险怪？',
+      follow:'“满纸玄言而不知所云，是谓险怪。文章只如说话——话说不明白，字再奇也没用。”' },
+    { id:'xingjuan', label:'问行卷文章', gain:{zhi:1}, needJuan:true,
+      reply:'“你那十篇，文从字顺，是长处。只是少年人贪多说尽——删去三成，更有余味。”',
+      ask:'如何删？',
+      follow:'“写毕置数日再读，凡可删者删之。老夫《醉翁亭记》初稿说滁州之山数十言，定稿只余‘环滁皆山也’五字。”' },
+    { id:'suoyuan', label:'问锁院', gain:{yuan:1},
+      reply:'“贡院锁宿五十日，不得出，不得见客。同僚唱和成集，梅圣俞诗最清。——苦是苦，也是一段雅事。”',
+      ask:'梅圣俞何如？',
+      follow:'“圣俞沉沦下僚三十年，诗名满天下而官不达。老夫每读其诗，愧然。”' }
+  ]},
+  meiyaochen: { name:'梅尧臣', topics:[
+    { id:'zuoshi', label:'问作诗', gain:{zhi:1},
+      reply:'“状难写之景，如在目前；含不尽之意，见于言外。——足下那一联，景是够了，意还欠些。”',
+      ask:'如何得意？',
+      follow:'“少用典，多写眼前。眼前景人人见得，独你能写出来，便是意。”' },
+    { id:'pingdan', label:'问平淡',
+      reply:'“作诗无古今，唯造平淡难。”' },
+    { id:'yuejuan', label:'问阅卷', gain:{yuan:1},
+      reply:'“数百卷经我点检。糊名誊录，只认文字不认人。灯下看到后半夜，眼里只有字，没有人。”' }
+  ]},
+  simaguang: { name:'司马光', topics:[
+    { id:'quishi', label:'问取士', gain:{zhi:1},
+      reply:'“取士之道，当先德行，后文学；就文学言之，经术又当先于词采。”' },
+    { id:'jianzhi', label:'问谏职', gain:{yuan:1},
+      reply:'“居言路者，当言人所不敢言。至于祸福，非所计也。”' },
+    { id:'jiansu', label:'问俭素',
+      reply:'“由俭入奢易，由奢入俭难。吾本寒家，世以清白相承。”' }
+  ]},
+  suXun: { name:'苏洵', topics:[
+    { id:'erzi', label:'问二子', gain:{yuan:1},
+      reply:'“轼儿文如汩汩流泉，不知其所止；辙儿澹然深沉，善处祸福之间。老夫不虑他们不达，虑其太易达。”' },
+    { id:'lvshi', label:'问屡试', gain:{yuan:1},
+      reply:'“老夫二十七岁才发愤为学，今岁四十有九，两试皆黜。功名于我看得淡了——只是二子正当其时。”' },
+    { id:'weiwen', label:'问为文', gain:{zhi:1},
+      reply:'“文章如风水相遭，自然成文。天下至文，皆无意于文者为之。”' }
+  ]}
 };
 
 /* ============================ 题诗（题材与韵部） ============================ */
@@ -504,7 +558,7 @@ function freshState(){
     maintained:{zhi:false, jing:false, yuan:false},
     log:[], phase:'play', pending:null, feedback:null, help:false,
     exam:{total:0, palace:0, round:0, queue:[], cur:0, correct:0, pcur:0, palaceQueue:[]},
-    used:[], ending:null, met:[], poems:[], poem:null, poemUsed:[], event:null, seenEvents:[], safe:{shan:false, shui:false}, banditDone:{shan:false, shui:false}, gloss:null, glossIndex:false, tou:false, lodged:false, scouted:false
+    used:[], ending:null, met:[], poems:[], poem:null, poemUsed:[], event:null, seenEvents:[], talked:{}, safe:{shan:false, shui:false}, banditDone:{shan:false, shui:false}, gloss:null, glossIndex:false, tou:false, lodged:false, scouted:false
   };
 }
 
@@ -608,6 +662,8 @@ const ACT = {
       if (npc){
         log('〔史料〕' + npc.note);
         log(npc.name + '（' + npc.tag + '）见了你。' + npc.desc);
+      } else if (openDialogue()){
+        /* 座谈已开：话题见弹窗，每次拜访谈一个 */
       } else {
         log('你呈上旧作，先生看了半晌，只说了句：' + MASTER_LINES[S.flags.master % MASTER_LINES.length]);
       }
@@ -978,6 +1034,11 @@ function chooseEvent(i){
   if (c.req && c.req.yuan && S.yuan < c.req.yuan) return;
   applyDelta(c.cost, c.gain);
   if (e.tag === 'lodge') S.lodged = true;
+  if (e.tag === 'talk'){
+    (S.talked[c.master] = S.talked[c.master] || []).push(c.topic);
+    if (c.rumor && !S.flags.rumor){ S.flags.rumor = true;
+      log('先生的话印证了传闻：今年主司好古文、厌险怪。'); }
+  }
   log(c.msg);
   e.msg = c.msg;
   e.done = true;
@@ -1017,6 +1078,29 @@ function openGateTax(){
       { label: '与他理论（精力 -1，人缘 -1）', cost: { jing: 1 }, gain: { yuan: -1 },
         msg: '你争了半个时辰，钱是省下了，人却得罪了。' }
     ] };
+}
+
+function openDialogue(){
+  const sc = curScene();
+  const present = Object.keys(NPCS).filter(function(k){
+    return NPCS[k].tier === 'master' && NPCS[k].where.indexOf(sc.id) >= 0 && S.met.indexOf(k) >= 0;
+  });
+  const list = [];
+  present.forEach(function(k){
+    (DIALOGUES[k] ? DIALOGUES[k].topics : []).forEach(function(t){
+      if (t.needJuan && !S.flags.juan) return;
+      if ((S.talked[k] || []).indexOf(t.id) >= 0) return;
+      list.push({ master:k, topic:t.id,
+        label: (present.length > 1 ? DIALOGUES[k].name + ' · ' : '') + t.label,
+        gain: t.gain || {}, rumor: !!t.rumor,
+        msg: t.reply + (t.ask ? '\n\n你问：' + t.ask + '\n' + t.follow : '') });
+    });
+  });
+  if (!list.length) return false;
+  S.event = { title:'座 谈', tag:'talk', done:false, safeKey:'',
+    text:'落座奉茶。' + (present.length > 1 ? '座上几位先生神色各异，你拣要紧的问。' : '先生放下手中的卷子，等你开口。'),
+    choice: list };
+  return true;
 }
 
 function showBandit(key){
@@ -1499,6 +1583,7 @@ function renderOverlay(){
         <ul class="help">
           <li>酒楼、书库、舟中可结识嘉祐二年的真实人物：苏轼兄弟、曾巩、程颢、张载、吕惠卿、苏洵，以及欧阳修、梅尧臣、司马光。</li>
           <li>想见知贡举欧阳修：酒楼「投行卷」只此一次；或连访大儒 <em class="num">3</em> 次，依次得见欧阳修、梅尧臣、司马光。</li>
+          <li>见过的大儒可再拜访<b>座谈</b>：每次拣<b>一个</b>话题请教，追问在同席展开、不另计；话题谈尽，便只剩寒暄。</li>
           <li>正文带虚线的小词（如程仪、解状、省试）可以点开，看释义与史料出处。</li>
         </ul>
       </div>
