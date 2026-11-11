@@ -542,7 +542,7 @@ function nextPalaceQuestion(){
 
 /* ============================ 行动 ============================ */
 const ACT = {
-  study:{ name:'温书做题', hint:'智力+1 精力-1', ap:1, primary:true,
+  study:{ name:'温书做题', hint:'答对智力+1 精力-1', ap:1, primary:true,
     run(){ S.maintained.zhi = true; fatigue(); startStudy(); } },
 
   rest:{ name:'歇息', hint:'精力+3（驿站+4）', ap:1,
@@ -792,7 +792,7 @@ function answer(i){
   if (!S.pending || S.feedback) return;
   const q = S.pending.q, my = LETTERS[i], ok = my === q.answer;
   if (S.pending.kind === 'study'){
-    addStat('zhi', ok ? 1 : 1);
+    if (ok) addStat('zhi', 1);
     log(ok ? '此题你答得干脆，心中又亮了一分。' : '此题答错，你把出处又看了一遍。');
   } else if (S.pending.kind === 'exam'){
     if (ok) S.exam.correct++;
