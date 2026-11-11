@@ -392,6 +392,37 @@ POEM_THEMES.forEach(function(t){
   t.ex.split(/\n+/).map(stripPunct).forEach(function(l){ if (l && !FAMOUS_LINES[l]) FAMOUS_LINES[l] = t.name; });
 });
 
+/* 第四条：非白话（2026-11-04 二次拍板）——白话字/词/句末语助词黑名单，近似判断 */
+const BAIHUA_CHARS = '们吗呢吧啊呀哦嗯咱呗挺很';
+const BAIHUA_WORDS = ['今天','明天','昨天','我们','你们','他们','它们','咱们','什么','怎么','这样','那样','这里','那里','没有','就是','但是','所以','因为','如果','知道','觉得','开始','已经','可以','应该','可能','非常','特别','真的','喝酒'];
+
+/* 名句库：示范诗之外的常被默写的唐宋名句（任一句相同即判抄写；近似覆盖，非全集） */
+const FAMOUS_EXTRA = {
+  '春眠不觉晓':'孟浩然《春晓》','夜来风雨声':'孟浩然《春晓》','处处闻啼鸟':'孟浩然《春晓》','花落知多少':'孟浩然《春晓》',
+  '白日依山尽':'王之涣《登鹳雀楼》','黄河入海流':'王之涣《登鹳雀楼》','欲穷千里目':'王之涣《登鹳雀楼》','更上一层楼':'王之涣《登鹳雀楼》',
+  '国破山河在':'杜甫《春望》','感时花溅泪':'杜甫《春望》','烽火连三月':'杜甫《春望》',
+  '会当凌绝顶':'杜甫《望岳》','一览众山小':'杜甫《望岳》',
+  '海内存知己':'王勃《送杜少府之任蜀州》','天涯若比邻':'王勃《送杜少府之任蜀州》',
+  '两个黄鹂鸣翠柳':'杜甫《绝句》','一行白鹭上青天':'杜甫《绝句》',
+  '停车坐爱枫林晚':'杜牧《山行》','霜叶红于二月花':'杜牧《山行》',
+  '大漠孤烟直':'王维《使至塞上》','长河落日圆':'王维《使至塞上》',
+  '明月几时有':'苏轼《水调歌头》','但愿人长久':'苏轼《水调歌头》','千里共婵娟':'苏轼《水调歌头》',
+  '春风又绿江南岸':'王安石《泊船瓜洲》','明月何时照我还':'王安石《泊船瓜洲》',
+  '不识庐山真面目':'苏轼《题西林壁》','横看成岭侧成峰':'苏轼《题西林壁》',
+  '飞流直下三千尺':'李白《望庐山瀑布》','疑是银河落九天':'李白《望庐山瀑布》',
+  '桃花潭水深千尺':'李白《赠汪伦》','不及汪伦送我情':'李白《赠汪伦》',
+  '千山鸟飞绝':'柳宗元《江雪》','万径人踪灭':'柳宗元《江雪》','孤舟蓑笠翁':'柳宗元《江雪》','独钓寒江雪':'柳宗元《江雪》',
+  '红豆生南国':'王维《相思》',
+  '春蚕到死丝方尽':'李商隐《无题》','蜡炬成灰泪始干':'李商隐《无题》',
+  '身无彩凤双飞翼':'李商隐《无题》','心有灵犀一点通':'李商隐《无题》','相见时难别亦难':'李商隐《无题》',
+  '曾经沧海难为水':'元稹《离思》',
+  '秦时明月汉时关':'王昌龄《出塞》','但使龙城飞将在':'王昌龄《出塞》','不教胡马度阴山':'王昌龄《出塞》',
+  '山重水复疑无路':'陆游《游山西村》','柳暗花明又一村':'陆游《游山西村》',
+  '小荷才露尖尖角':'杨万里《小池》','接天莲叶无穷碧':'杨万里《晓出净慈寺送林子方》','映日荷花别样红':'杨万里《晓出净慈寺送林子方》',
+  '春色满园关不住':'叶绍翁《游园不值》','一枝红杏出墙来':'叶绍翁《游园不值》',
+  '十年生死两茫茫':'苏轼《江城子》'
+};
+
 
 
 /* ============================ 支线事件 ============================ */
@@ -588,7 +619,7 @@ const ACT = {
       else log('你又听了一耳朵传闻，多半是重复的旧话。');
     } },
 
-  poem:{ name:'题诗换宿', hint:'字数齐 5 贯 · 不齐无酬', ap:1,
+  poem:{ name:'题诗换宿', hint:'四条全过 5 贯 · 否则无酬', ap:1,
     can(){ return S.poemUsed.indexOf(curScene().id) < 0; },
     deny:'此地壁上已有你的诗，主人笑着摆手：“换处再写罢。”',
     run(){ fatigue(); S.maintained.zhi = true; openPoem('poem'); } },
@@ -597,7 +628,7 @@ const ACT = {
     run(){ money(3); fatigue(); S.maintained.zhi = true; addStat('zhi', 1);
       log('你替书库抄了两卷《汉书》，腕子发酸，却也把正文默记了一遍。'); } },
 
-  sell:{ name:'街头鬻诗', hint:'字数齐 4 贯 · 不齐无酬', ap:1,
+  sell:{ name:'街头鬻诗', hint:'四条全过 4 贯 · 否则无酬', ap:1,
     can(){ return S.poemUsed.indexOf(curScene().id) < 0; },
     deny:'这条街上已有人买过你的诗，再写便不值钱了。',
     run(){ fatigue(); openPoem('sell'); } },
@@ -737,16 +768,25 @@ function gradePoem(text, themeKey){
   const onTopic = hits.length >= 2;
 
   let copyFrom = null;
-  for (const l of lines){ if (FAMOUS_LINES[l]) { copyFrom = FAMOUS_LINES[l]; break; } }
+  for (const l of lines){
+    if (FAMOUS_LINES[l]) { copyFrom = '《' + FAMOUS_LINES[l] + '》题的示范诗'; break; }
+    if (FAMOUS_EXTRA[l]) { copyFrom = FAMOUS_EXTRA[l]; break; }
+  }
+
+  let vern = null;
+  for (const ch of BAIHUA_CHARS){ if (joined.indexOf(ch) >= 0){ vern = ch; break; } }
+  if (!vern){ for (const w of BAIHUA_WORDS){ if (joined.indexOf(w) >= 0){ vern = w; break; } } }
+  if (!vern){ for (const l of lines){ const c = l.charAt(l.length - 1); if ('了的吗呢吧啊呀'.indexOf(c) >= 0){ vern = '句末「' + c + '」'; break; } } }
 
   const notes = [];
   if (four) notes.push('四句成篇'); else notes.push('共 ' + n + ' 句');
   if (uniform) notes.push('字数齐整（每句 ' + lens[0] + ' 字）'); else notes.push('字数参差');
   if (onTopic) notes.push('切「' + th.name + '」题');
-  if (copyFrom) notes.push('有句与《' + copyFrom + '》示范诗同');
+  if (copyFrom) notes.push('有句出自' + copyFrom);
+  if (vern) notes.push('白话（' + vern + '）');
   if (dui) notes.push('中二联相对');
 
-  const pass = four && uniform && onTopic && !copyFrom;
+  const pass = four && uniform && onTopic && !copyFrom && !vern;
   const grade = pass ? '上品' : '中品';
   let note;
   if (grade === '上品' && dui)
@@ -754,13 +794,15 @@ function gradePoem(text, themeKey){
   else if (grade === '上品')
     note = '四句齐整，字字相当，又切「' + th.name + '」之题，已是一首成样的诗。主人抚掌道：“好，好！”';
   else if (copyFrom)
-    note = '这句子与《' + copyFrom + '》里的示范诗一字不差——借句不成诗。主人笑着摇头，程仪就免了。';
+    note = '这句子出自' + copyFrom + '——借句不成诗。主人笑着摇头，程仪就免了。';
+  else if (vern)
+    note = '字句太白，不像诗家语——主人家看了直摇头：“这算不得诗。”';
   else if (four && uniform)
     note = '四句虽齐，却不在「' + th.name + '」题内——离题的诗，主人家不好奉上程仪。';
   else
     note = '肯写就好。下一回写四句、每句字数一样，又切着题，便是上品——主人家也才好奉上程仪。';
 
-  return {grade:grade, notes:notes, lines:lines, note:note, dui:dui, uniform:uniform, n:n, onTopic:onTopic, copyFrom:copyFrom};
+  return {grade:grade, notes:notes, lines:lines, note:note, dui:dui, uniform:uniform, n:n, onTopic:onTopic, copyFrom:copyFrom, vern:vern};
 }
 
 
@@ -1403,7 +1445,7 @@ function renderOverlay(){
         <div class="stamp">题诗</div>
         <div class="qtag">${S.poem.mode === 'poem' ? '驿壁留题' : '街头鬻诗'} · ${th.name}</div>
         <h3>${th.prompt}</h3>
-        <p class="scene-desc" style="font-size:15px; margin-bottom:0">三样齐了便是上品：一要切题，二要四句、每句字数一样，三不能照抄壁上的示范诗。能对上一联更妙。不必字字珠玑，肯写就值得。</p>
+        <p class="scene-desc" style="font-size:15px; margin-bottom:0">四样齐了便是上品：一要切题，二要四句、每句字数一样，三不能照抄壁上的示范诗，四须是诗家语、不得写白话。能对上一联更妙。不必字字珠玑，肯写就值得。</p>
         <textarea class="poem-box" id="poemBox" rows="5" placeholder="例：${(th.ex || '').split('\n').join('&#10;')}">${esc(S.poem.text || '')}</textarea>
         ${S.poem.warn ? '<div class="fb">主人还在等，多少写两句罢。</div>' : ''}
         <div class="center">
@@ -1447,7 +1489,7 @@ function renderOverlay(){
         <h4>五 · 题诗换钱</h4>
         <ul class="help">
           <li>驿站、山道、虹桥、城门可「题诗换宿」，市口可「街头鬻诗」。</li>
-          <li><b>四句、每句字数齐整＝上品</b>：题诗得 <em class="num">5</em> 贯、鬻诗得 <em class="num">4</em> 贯；字数不齐为中品，分文不给。</li>
+          <li><b>上品要过四条</b>：一切题（须含所投题材的题眼字）、二四句、每句字数一样、三不得照抄示范诗、四不得写白话（“今天”“我们”“喝酒”这类口语）。题诗得 <em class="num">5</em> 贯、鬻诗得 <em class="num">4</em> 贯；任一条不过为中品，分文不给。</li>
         </ul>
         <h4>六 · 人物与词条</h4>
         <ul class="help">
