@@ -619,7 +619,7 @@ const ACT = {
       else log('你又听了一耳朵传闻，多半是重复的旧话。');
     } },
 
-  poem:{ name:'题诗换宿', hint:'四条全过 5 贯 · 否则无酬', ap:1,
+  poem:{ name:'题诗换宿', hint:'上品 5 贯 · 下品人缘-1', ap:1,
     can(){ return S.poemUsed.indexOf(curScene().id) < 0; },
     deny:'此地壁上已有你的诗，主人笑着摆手：“换处再写罢。”',
     run(){ fatigue(); S.maintained.zhi = true; openPoem('poem'); } },
@@ -628,7 +628,7 @@ const ACT = {
     run(){ money(3); fatigue(); S.maintained.zhi = true; addStat('zhi', 1);
       log('你替书库抄了两卷《汉书》，腕子发酸，却也把正文默记了一遍。'); } },
 
-  sell:{ name:'街头鬻诗', hint:'四条全过 4 贯 · 否则无酬', ap:1,
+  sell:{ name:'街头鬻诗', hint:'上品 4 贯 · 下品人缘-1', ap:1,
     can(){ return S.poemUsed.indexOf(curScene().id) < 0; },
     deny:'这条街上已有人买过你的诗，再写便不值钱了。',
     run(){ fatigue(); openPoem('sell'); } },
@@ -787,16 +787,16 @@ function gradePoem(text, themeKey){
   if (dui) notes.push('中二联相对');
 
   const pass = four && uniform && onTopic && !copyFrom && !vern;
-  const grade = pass ? '上品' : '中品';
+  const grade = pass ? '上品' : ((copyFrom || vern) ? '下品' : '中品');
   let note;
   if (grade === '上品' && dui)
     note = '四句齐整，又切「' + th.name + '」之题，中二联对得稳当，越发见功夫。主人读了两遍，连声称善。';
   else if (grade === '上品')
     note = '四句齐整，字字相当，又切「' + th.name + '」之题，已是一首成样的诗。主人抚掌道：“好，好！”';
   else if (copyFrom)
-    note = '这句子出自' + copyFrom + '——借句不成诗。主人笑着摇头，程仪就免了。';
+    note = '这句子出自' + copyFrom + '——当众默写古人成句，满座哄笑。主人把纸推了回来，你的面上有些挂不住。';
   else if (vern)
-    note = '字句太白，不像诗家语——主人家看了直摇头：“这算不得诗。”';
+    note = '字句太白，全然不是诗家语。围看的闲人笑出了声，你面上讪讪的。';
   else if (four && uniform)
     note = '四句虽齐，却不在「' + th.name + '」题内——离题的诗，主人家不好奉上程仪。';
   else
@@ -816,10 +816,14 @@ function submitPoem(text){
   const reward = g.grade === '上品' ? (S.poem.mode === 'poem' ? 5 : 4) : 0;
   money(reward);
   if (g.grade === '上品') addStat('zhi', 1);
+  if (g.grade === '下品') addStat('yuan', -1);
   S.poems.push({day:S.day, mode:S.poem.mode, theme:th.name, text:clean, grade:g.grade, reward:reward});
   if (S.poemUsed.indexOf(curScene().id) < 0) S.poemUsed.push(curScene().id);
   if (reward > 0){
     log('你' + (S.poem.mode === 'poem' ? '于驿壁题' : '当街鬻出一首') + th.name + '诗，上品，得 ' + reward + ' 贯。');
+  } else if (g.grade === '下品'){
+    log('你' + (S.poem.mode === 'poem' ? '于驿壁题' : '当街鬻出') + '一首' + th.name + '诗，下品——' +
+        (g.copyFrom ? '满座只当看了一回抄书。' : '白话连篇，众人只当听个笑话。') + '人缘折了一分。');
   } else {
     log('你' + (S.poem.mode === 'poem' ? '题了一首' : '当街鬻出一首') + th.name + '诗，' +
         (S.poem.mode === 'poem' ? '主人笑着收了，却未提程仪的事。' : '围观的人渐渐散了，没做成生意。'));
@@ -1445,7 +1449,7 @@ function renderOverlay(){
         <div class="stamp">题诗</div>
         <div class="qtag">${S.poem.mode === 'poem' ? '驿壁留题' : '街头鬻诗'} · ${th.name}</div>
         <h3>${th.prompt}</h3>
-        <p class="scene-desc" style="font-size:15px; margin-bottom:0">四样齐了便是上品：一要切题，二要四句、每句字数一样，三不能照抄壁上的示范诗，四须是诗家语、不得写白话。能对上一联更妙。不必字字珠玑，肯写就值得。</p>
+        <p class="scene-desc" style="font-size:15px; margin-bottom:0">四样齐了便是上品：一要切题，二要四句、每句字数一样，三不能照抄古人成句，四不得写白话。抄与白话判下品，当众折一分人缘；离题、不齐判中品，无酬。能对上一联更妙。不必字字珠玑，肯写就值得。</p>
         <textarea class="poem-box" id="poemBox" rows="5" placeholder="例：${(th.ex || '').split('\n').join('&#10;')}">${esc(S.poem.text || '')}</textarea>
         ${S.poem.warn ? '<div class="fb">主人还在等，多少写两句罢。</div>' : ''}
         <div class="center">
@@ -1489,7 +1493,7 @@ function renderOverlay(){
         <h4>五 · 题诗换钱</h4>
         <ul class="help">
           <li>驿站、山道、虹桥、城门可「题诗换宿」，市口可「街头鬻诗」。</li>
-          <li><b>上品要过四条</b>：一切题（须含所投题材的题眼字）、二四句、每句字数一样、三不得照抄示范诗、四不得写白话（“今天”“我们”“喝酒”这类口语）。题诗得 <em class="num">5</em> 贯、鬻诗得 <em class="num">4</em> 贯；任一条不过为中品，分文不给。</li>
+          <li><b>上品要过四条</b>：一切题（须含所投题材的题眼字）、二四句、每句字数一样、三不得照抄古人成句（示范诗与名句库都在内）、四不得写白话（“今天”“我们”“喝酒”这类口语）。题诗得 <em class="num">5</em> 贯、鬻诗得 <em class="num">4</em> 贯；<b>白话、默写判下品</b>——分文不给，还当众折一分人缘；离题、不齐判中品，无酬。</li>
         </ul>
         <h4>六 · 人物与词条</h4>
         <ul class="help">
