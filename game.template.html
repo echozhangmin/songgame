@@ -652,7 +652,7 @@ const ACT = {
       }
     } },
 
-  master:{ name:'拜访大儒', hint:'智力+1 人缘+1 盘缠-1', ap:1,
+  master:{ name:'拜访大儒', hint:'初见或座谈 · 智力+1 人缘+1 盘缠-1', ap:1,
     can(){ return S.yuan >= 3; },
     deny:'你与这位先生素无往来，门房只说“主人不见客”。',
     run(){ S.maintained.zhi = true; S.maintained.yuan = true; money(-1);
