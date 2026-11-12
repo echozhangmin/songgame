@@ -947,6 +947,10 @@ function enterDay(){
 
 function endDay(){
   if (S.phase === 'over') return;
+  if (S.event && !S.event.done){
+    log('夜里的事，终究没有个结果——你翻身睡下了。');
+  }
+  S.event = null;
   const kindNow = curScene().kind;
   let cost = (S.day >= 16 ? 2 : 1);
   if (kindNow === 'exam' || kindNow === 'ending') cost = 1;
