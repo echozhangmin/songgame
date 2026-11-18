@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="330" viewBox="0 0 900 330">
+  <rect width="900" height="330" fill="#faf7ef"/>
+  <style>
+    .t{font-family:'Songti SC','Noto Serif SC',serif;}
+    .lab{fill:#5a554d;font-size:14px;}
+    .num{font-weight:700;font-size:20px;}
+    .dim{fill:#8a8378;font-size:11px;}
+  </style>
+  <!-- baseline -->
+  <line x1="70" y1="280" x2="850" y2="280" stroke="#3b3630" stroke-width="1.5"/>
+
+  <!-- before bar: 38.0s, scale 780px / 40s = 19.5px per s -->
+  <rect x="70" y="120" width="741" height="46" fill="#9e3b2c" opacity="0.88"/>
+  <text class="t num" x="80" y="105" fill="#9e3b2c">单文件 · 7.9 MB（gzip 后 5.9 MB）</text>
+  <text class="t num" x="700" y="150" fill="#faf7ef">38.0 s</text>
+  <text class="t dim" x="80" y="180">4G 限速实测 load · DOMContentLoaded 38.0 s · FCP 3.2 s（只有纸色）</text>
+
+  <!-- after bar: 1.45s -->
+  <rect x="70" y="222" width="29" height="46" fill="#4a6741"/>
+  <text class="t num" x="112" y="252" fill="#3d5a35">1.45 s</text>
+  <text class="t num" x="70" y="207" fill="#3d5a35">拆分版 dist · HTML 158 KB（Brotli 61 KB）</text>
+  <text class="t dim" x="150" y="252">首屏约 330 KB：背景 + 画轴 + 当前幕；assets 一年 immutable 缓存</text>
+
+  <!-- tick labels -->
+  <text class="t dim" x="66" y="300">0 s</text>
+  <text class="t dim" x="440" y="300">20 s</text>
+  <text class="t dim" x="806" y="300">38 s</text>
+</svg>

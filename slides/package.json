@@ -1,0 +1,10 @@
+{
+  "name": "songgame-week10",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node \"${RESLIDES:-../../../reslides}/packages/slidev/bin/reslides.mjs\" slides.md --port 3100 --open",
+    "build": "node \"${RESLIDES:-../../../reslides}/packages/slidev/bin/reslides.mjs\" build slides.md --out dist",
+    "pdf": "node \"${RESLIDES:-../../../reslides}/packages/slidev/bin/reslides.mjs\" export slides.md --out 北宋赶考记-Week10-reslides.pdf"
+  }
+}
