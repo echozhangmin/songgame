@@ -1,0 +1,258 @@
+% ============================================================================
+% DHG508 Final Design Paper & Post-Mortem
+% 北宋赶考记 · 嘉祐二年 (A Scholar's Road to Bianjing, 1057)
+% Lingnan University — Critical Digital History
+%
+% OVERLEAF SETUP:
+%   1. Upload this paper/ folder (zipped) to Overleaf (New Project -> Upload Project)
+%   2. Menu (top left) -> Compiler -> XeLaTeX
+%   3. Click Recompile (Biber + Noto Serif CJK SC run automatically)
+% ============================================================================
+
+\documentclass[12pt,a4paper]{article}
+
+\usepackage{fontspec}
+\newcommand{\MainLatinFont}{Times New Roman}
+\newcommand{\FallbackLatinFont}{TeX Gyre Termes}
+\newcommand{\MainCJKFont}{Noto Serif CJK SC}
+\newcommand{\FallbackCJKFont}{FandolSong-Regular.otf}
+
+\IfFontExistsTF{\MainLatinFont}
+  {\setmainfont{\MainLatinFont}}
+  {\setmainfont{\FallbackLatinFont}}
+
+\usepackage{xeCJK}
+\IfFontExistsTF{\MainCJKFont}
+  {\setCJKmainfont{\MainCJKFont}}
+  {\IfFontExistsTF{Songti SC}
+    {\setCJKmainfont{Songti SC}}
+    {\IfFontExistsTF{SimSun}
+      {\setCJKmainfont{SimSun}}
+      {\setCJKmainfont{\FallbackCJKFont}}}}
+
+\usepackage[a4paper, margin=1in]{geometry}
+\usepackage{setspace}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{csquotes}
+
+% Chicago Manual of Style 18th ed., Notes-Bibliography (BibLaTeX + Biber)
+\usepackage[notes, backend=biber, autolang=other, isbn=false]{biblatex-chicago}
+\addbibresource{references.bib}
+
+\renewcommand{\footnotesize}{\fontsize{10}{12}\selectfont}
+\usepackage[hidelinks]{hyperref}
+
+\title{\textbf{North Song Examination Run: A Historical Simulation of the \emph{Jiayou} 2 (1057) Metropolitan Examination}\\[0.3em]
+\large Design Rationale, Evidence Boundaries, and Post-Mortem}
+\author{Zhang Min\\Lingnan University $\cdot$ DHG508 Critical Digital History\\
+\small Live URL: \url{https://songgame.pages.dev} $\cdot$ Repo: \url{https://github.com/echozhangmin/songgame}}
+\date{25 November 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\noindent
+This paper documents the design, evidence boundaries, and verification of
+\emph{North Song Examination Run} (\emph{Bei Song Gan Kao Ji}), a single-file
+HTML simulation of the 1057 metropolitan examination cycle. The player is a
+degree-holder from Linchuan who travels thirty days to Bianjing and passes
+through the documentary, financial, and epistemic machinery of the Song
+examination system: certification, registration, the three anonymised
+examination sessions, and the palace ranking. Every one of the game's 57
+glossary claims is tagged as \emph{ju} (documented), \emph{tui} (inferred), or
+\emph{she} (invented), with a hard epistemic cutoff at 1057. Four layers of
+automated tests (540 full simulation runs, a 54-case interactive walkthrough,
+poem-grading and dialogue suites) and two external playtests, each converted
+into regression tests, hold the build together. The paper argues that a
+simulation teaches what film cannot: examination success as \emph{management},
+not merely talent.
+\end{abstract}
+
+\onehalfspacing
+
+\section{Historical Question and Medium}
+
+The \emph{Jiayou} 2 (1057) examination cohort is remembered as the most
+illustrious in Chinese history: Su Shi, Su Zhe, Zeng Gong, Cheng Hao, Zhang
+Zai, and L\"{u} Huiqing passed in the same year under examiner Ouyang Xiu.
+That lustre, however, is hindsight. For an ordinary candidate without a
+biography, 1057 was first of all a machine: an autumn prefectural
+qualification (\emph{jie} examination), a thousand-mile journey with limited
+funds, the ritual of registration at the Ministry of Rites, three examination
+sessions graded blind under cover-name and transcription rules, and the
+final ranking. This project asks: \textbf{what did that machine feel like to
+pass through, and why did most candidates fail?}
+
+A static essay or documentary can only describe that passage; a simulation
+makes a reader \emph{be} the candidate. Three mechanics carry the argument.
+First, \emph{trade-offs}: each in-game day grants four action points, and
+studying, resting, socialising, and spending compete for them; on travel
+days only two remain, so something is always dropped. Second, an
+\emph{embodied sense of institutions}: because cover-naming and transcription
+were already in force,\autocite[juan 155]{songshi} the game's ``ask around
+about the examiners'' action can only ever return rumour---anonymity shapes
+candidate behaviour as a rule the player collides with, not a footnote. Third,
+\emph{failure is systemic}: four independent death-lines (learning, health,
+social capital, money) end the run; across 540 simulated runs, mid-ability
+agents cluster in the lower degree tiers. Failing is not stupidity but
+management failure---and unlike film, the player can replay and try a
+different strategy.
+
+\section{Sources and Scholarly Conversation}
+
+\textbf{Primary sources.} The institutional skeleton is drawn from the
+\emph{Song History: Treatise on Selection} (\emph{Song shi}, \emph{Xuanju
+zhi} 1), in which the sequence ``poetry and rhapsody first, \emph{lun} essay
+second, policy third'' and the calendar ``prefectural exams in autumn,
+assemble at the Ministry in winter, examine in spring'' were verified against
+the received text.\autocite[juan 155]{songshi} The lock-in of the examiners is
+documented in Ouyang Xiu's \emph{Guitian lu}: in 1057 he and Han Jiang served
+as chief examiners, recruited Mei Yaochen as checking official, and remained
+sealed in the compound for fifty days, composing poetry together.\autocite{guitianlu}
+The \emph{xing juan} (advance submission) custom is cited from Zhao Yanwei's
+\emph{Yunlu manchao}.\autocite[juan 8]{yunlu} Kaifeng geography follows the
+\emph{Dongjing meng hua lu}.\autocite{dongjingmenghualu} The limits are
+declared: citations are at \emph{juan}/chapter level pending page-by-page
+verification against the Zhonghua shuju punctuated editions; the detailed
+itinerary from Linchuan to Bianjing is not attested in a single source and is
+handled as a declared compression.
+
+\textbf{Scholarly conversation.} Three works shape the design. Rong
+Hengying's study of the 1057 triangle---chief examiner Ouyang Xiu, checking
+official Mei Yaochen, and newly-minted \emph{jinshi} Su Shi---shows how
+poetic exchange and letters of thanks generated ``elective affinity'' within
+a strictly hierarchical institution; the game's master-scholar
+\emph{conversations} (one topic per visit, with follow-up questions) are
+built directly on this account.\autocite[175--193]{rong2019} John Chaffee's
+social history of the Song examinations supplies the ``machine'' framing
+itself---the three-tier system, quotas, and the social meaning of
+failure---which the game's twelve scenes translate into levels of a
+course.\autocite{chaffee1985} Miyazaki Ichisada's classic account of
+examination life justifies the game's exhaustion, expense, and risk
+mechanics, and its depiction of the examination compound as an ordeal rather
+than a venue.\autocite{24--38}{miyazaki1976} The design responds to these
+works at specific points listed in the evidence table (Section~4).
+
+\section{Architecture and Boundaries}
+
+The system is four layers. \textbf{Data}: \texttt{data/glossary.json}
+(57 claims, each with a definition, source, note, and evidence-tier tag) and
+\texttt{data/quiz\_150.json} (150 questions). \textbf{Logic}: a day-loop
+state machine (four statistics, nightly settlement, four failure lines), a
+poem grader, and event/dialogue systems, written without DOM dependencies so
+that macOS's built-in JavaScript for Automation can execute them headlessly.
+\textbf{Rendering}: a single-file HTML build (\texttt{build.py} inlines the
+quiz, glossary, and twelve scene illustrations as base64). \textbf{Deployment}:
+a split variant (\texttt{build.py -{}-dist}) converts illustrations to linked
+WebP, shrinking the HTML from 7.9\,MB to 158\,KB, served on Cloudflare Pages
+with one-year immutable caching; the single-file build is kept as the offline
+edition. Figure~\ref{fig:schematic} shows the pipeline.
+
+Epistemic boundaries are enforced, not merely declared. A pytest gate rejects
+any glossary entry lacking a valid \emph{ju}/\emph{tui}/\emph{she} tag; quiz
+items later than 1057 must carry an explicit \texttt{afterCutoff} flag; and
+characters may not know what they could not have known (Huang Tingjian, aged
+twelve in 1057, and Mi Fu, aged six, are deliberately absent).
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.92\textwidth]{schematic.png}
+  \caption{Project architecture and interaction flow (agent-generated
+  schematic, \texttt{docs/architecture-explainer.html}).}
+  \label{fig:schematic}
+\end{figure}
+
+\section{Evidence Table}
+
+All 57 glossary claims are exported to \texttt{evidence.csv} and compiled
+into Table~\ref{tab:evidence} by \texttt{make\_evidence\_table.py}; no table
+row is typed by hand. The tier distribution---\emph{ju} 5, \emph{tui} 49,
+\emph{she} 3---is itself a methodological statement: the skeleton of a
+playable 1057 is documented, the flesh is responsible inference, and pure
+invention is small and explicitly labelled.
+
+\begin{table}[htbp]
+  \centering
+  \footnotesize
+  \singlespacing
+  \renewcommand{\arraystretch}{1.25}
+  \input{evidence-table.tex}
+  \caption{Claims and design elements with locators, evidence tiers
+  (\emph{ju} 据 documented, \emph{tui} 推断 inferred, \emph{she} 设 invented),
+  and limits. Full 57-row table; generated from \texttt{evidence.csv}.}
+  \label{tab:evidence}
+\end{table}
+
+\section{Verification and Playtesting}
+
+\textbf{Automated tests.} One command (\texttt{./test.sh}) runs four headless
+suites: (1) a balance simulation of 540 complete runs across three ability
+levels and two deliberately degenerate strategies, asserting zero
+pathological deaths and a plausible outcome distribution; (2) a 54-case
+interactive walkthrough (three random seeds) that pushes every popup,
+settlement, and side-effect from the title screen to the final banquet;
+(3) an 8-case poem-grading suite covering the four-part standard
+(line-length uniformity, no vernacular, no recitation of canonical lines,
+on-topic) and the three grades; (4) a 49-case dialogue suite covering topic
+gating and exhaustion. A pytest gate guards the data layer (tier tags, the
+1057 cutoff, build integrity), and Playwright end-to-end tests run against
+the deployed URL, asserting zero console errors, zero broken assets, and
+save/continue behaviour in a phone viewport.
+
+\textbf{External playtesting.} Two testers outside the project played the
+deployed game and independently reported the same reaction: ``the questions
+are a bit hard.'' The diagnosis: the intended audience is secondary-school
+history drilling, and the testers were not that audience, so the feedback was
+\emph{not} converted into easier questions. It was converted instead into a
+\emph{wrong-answer notebook}: missed study questions are recorded (cap 40),
+re-queued preferentially, and removed once answered correctly---locked by
+three permanent assertions in \texttt{data\_test.js} (record $\rightarrow$
+re-queue $\rightarrow$ removal). Two earlier internal playtest findings
+(hidden dialogue entry point; a pending event popup surviving the night) were
+likewise each turned into a permanent walkthrough assertion.
+
+\section{Post-Mortem}
+
+\begin{enumerate}
+  \item \textbf{What worked.} The two-tier source convention (quotation marks
+  only for verified verbatim text) prevented paraphrase from masquerading as
+  citation during writing. Separating logic from rendering made headless
+  testing possible, turning ``the game can be completed'' from an eyeball
+  claim into a repeatable command. A post-commit hook pushed every change to
+  the live build immediately.
+  \item \textbf{What failed.} Three real bugs, all caught by tests or
+  playtests: a pending event popup could be slept through and leak into the
+  next day (fixed: nightly settlement closes and clears it); in the headless
+  simulation 175 of 180 runs died on day 15 because the test agent's strategy
+  did not know the city-gate day's lodging action (fixed in the strategy, the
+  game unchanged); and a dead action reference made an advertised button
+  invisible (fixed). The most instructive failure was historiographical: the
+  second examination session was first built as ``classicist argument''
+  (\emph{jingyi}), but checking the \emph{Song shi} text showed that
+  dedicated \emph{jingyi} sessions date from the Xining reforms after 1069;
+  the session was corrected to \emph{lun} essay---which happens to be the
+  session in which Su Shi wrote his famous \emph{Xing shang zhong hou zhi zhi
+  lun}. A single-file 7.9\,MB build also cost 38 seconds to first render on
+  a throttled 4G phone; the split deployment cut this to 1.45\,s.
+  \item \textbf{What changed.} Poem grading was tightened twice, from
+  ``line-length only'' to a four-part standard with three grades; study
+  rewards changed from ``points for any answer'' to ``points for correct
+  answers only''; one-shot scholar encounters grew into a fifteen-topic
+  conversation system.
+  \item \textbf{Limits and AI tools.} Remaining limits: the canonical-line
+  recitation detector covers about sixty famous lines, not all; the
+  Linchuan--Bianjing itinerary is a declared compression; the ``special
+  nomination'' (\emph{te zou ming}) ending relaxes its documented
+  eligibility rule with an on-screen disclaimer. AI tools: OpenCode agents
+  (development, literature search, test writing) and DeepSeek models (code
+  and copy). All historical judgements and source verification were made and
+  are owned by the author.
+\end{enumerate}
+
+\singlespacing
+\printbibliography[title={Bibliography}]
+
+\end{document}
