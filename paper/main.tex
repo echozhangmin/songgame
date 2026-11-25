@@ -36,6 +36,7 @@
 \usepackage{array}
 \usepackage{graphicx}
 \usepackage{csquotes}
+\usepackage{longtable}
 
 % Chicago Manual of Style 18th ed., Notes-Bibliography (BibLaTeX + Biber)
 \usepackage[notes, backend=biber, autolang=other, isbn=false]{biblatex-chicago}
@@ -175,17 +176,12 @@ no table row is typed by hand. The tier distribution---\emph{ju} 5, \emph{tui} 4
 playable 1057 is documented, the flesh is responsible inference, and pure
 invention is small and explicitly labelled.
 
-\begin{table}[htbp]
-  \centering
-  \footnotesize
-  \singlespacing
-  \renewcommand{\arraystretch}{1.25}
-  \input{evidence-table.tex}
-  \caption{Claims and design elements with locators, evidence tiers
-  (\emph{ju} 据 documented, \emph{tui} 推断 inferred, \emph{she} 设 invented),
-  and limits. Full 57-row table; generated from \texttt{evidence.csv}.}
-  \label{tab:evidence}
-\end{table}
+\begingroup
+\footnotesize
+\setstretch{1.0}
+\renewcommand{\arraystretch}{1.25}
+\input{evidence-table.tex}
+\endgroup
 
 \section{Verification and Playtesting}
 
