@@ -34,7 +34,7 @@ if not rows or any(col not in rows[0] for col in required):
 
 lines = [
     f"% Auto-generated from {SRC.name} by make_evidence_table.py — edit the CSV, not this file.",
-    r"\begin{tabular}{p{0.27\textwidth}p{0.20\textwidth}p{0.13\textwidth}p{0.08\textwidth}p{0.22\textwidth}}",
+    r"\begin{tabular}{p{0.24\textwidth}p{0.18\textwidth}p{0.12\textwidth}p{0.07\textwidth}p{0.19\textwidth}}",
     r"  \toprule",
     r"  \textbf{Claim / Element} & \textbf{Source / File} & \textbf{Locator} & \textbf{Level} & \textbf{Boundary / Limit} \\",
     r"  \midrule",
