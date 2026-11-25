@@ -21,3 +21,5 @@ artifacts/
 
 # Playwright MCP 探索快照（工作产物）
 .playwright-mcp/
+__pycache__/
+*.pyc
