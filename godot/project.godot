@@ -1,0 +1,18 @@
+config_version=5
+
+[application]
+
+config/name="北宋赶考记"
+config/description="嘉祐二年 · 临川举子赴京应省试"
+run/main_scene="res://ui/main.tscn"
+config/features=PackedStringArray("4.7")
+
+[display]
+
+window/size/viewport_width=1360
+window/size/viewport_height=880
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"

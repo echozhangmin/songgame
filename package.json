@@ -1,0 +1,24 @@
+{
+  "name": "songgame",
+  "version": "1.0.0",
+  "private": true,
+  "description": "北宋赶考记 · 嘉祐二年 —— 单文件北宋科举模拟",
+  "homepage": "https://songgame.pages.dev/",
+  "scripts": {
+    "build": "python3 build.py",
+    "build:dist": "python3 build.py --dist",
+    "serve": "python3 -m http.server 8765",
+    "test": "./test.sh",
+    "test:e2e": "playwright test",
+    "test:all": "./test.sh --e2e",
+    "deploy:pages": "./deploy-pages.sh",
+    "test:dist": "python3 build.py --dist && DIST=1 playwright test",
+    "test:py": ".venv/bin/pytest -q",
+    "check:browser": "node scripts/browser-check.mjs",
+    "check:mcp": "node scripts/mcp-demo.mjs"
+  },
+  "devDependencies": {
+    "@playwright/mcp": "^0.0.85",
+    "@playwright/test": "^1.65.0"
+  }
+}

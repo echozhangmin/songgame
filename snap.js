@@ -10,7 +10,7 @@ function writeFile(p, s){
   str.writeToFileAtomicallyEncodingError(p, true, $.NSUTF8StringEncoding, null);
 }
 
-var DIR = '/Users/min/Documents/deepseek-harness/default-workspace/song-exam/';
+var DIR = (ObjC.unwrap($.NSProcessInfo.processInfo.environment.objectForKey('PWD')) || '.') + '/';
 var html = readFile(DIR + '北宋赶考记.html');
 var css = html.match(/<style>([\s\S]*?)<\/style>/)[1];
 var code = html.match(/<script>([\s\S]*)<\/script>/)[1].replace('"use strict";', '');

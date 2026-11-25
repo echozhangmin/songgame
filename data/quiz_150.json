@@ -1845,7 +1845,8 @@
     },
     "answer": "B",
     "explain": "王安石变法旨在改变北宋积贫积弱的局面，实现富国强兵。",
-    "is_new": false
+    "is_new": false,
+    "afterCutoff": 1069
   },
   {
     "id": 133,
@@ -1887,7 +1888,8 @@
     },
     "answer": "B",
     "explain": "北宋司马光主持编纂《资治通鉴》，是一部编年体通史。",
-    "is_new": false
+    "is_new": false,
+    "afterCutoff": 1084
   },
   {
     "id": 136,
@@ -2013,7 +2015,8 @@
     },
     "answer": "D",
     "explain": "1069年，宋神宗任用王安石主持变法，目的是摆脱统治危机、实现富国强兵。",
-    "is_new": true
+    "is_new": true,
+    "afterCutoff": 1069
   },
   {
     "id": 145,
@@ -2027,7 +2030,8 @@
     },
     "answer": "C",
     "explain": "青苗法在每年青黄不接时由官府贷款或贷谷给农民，秋收后加息偿还，限制了高利贷盘剥。",
-    "is_new": true
+    "is_new": true,
+    "afterCutoff": 1069
   },
   {
     "id": 146,
@@ -2055,7 +2059,8 @@
     },
     "answer": "D",
     "explain": "北宋科学家沈括著《梦溪笔谈》，记载了活字印刷术等科技成就，被誉为'中国科学史上的坐标'。",
-    "is_new": true
+    "is_new": true,
+    "afterCutoff": 1088
   },
   {
     "id": 148,
@@ -2069,7 +2074,8 @@
     },
     "answer": "C",
     "explain": "北宋画家张择端的《清明上河图》描绘了东京汴河沿岸的繁华景象，是研究宋代城市生活的重要资料。",
-    "is_new": true
+    "is_new": true,
+    "afterCutoff": 1100
   },
   {
     "id": 149,

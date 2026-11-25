@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>北宋赶考记 · 系统一览</title>
+<style>
+  :root{
+    --paper:#efe6cd; --paper2:#f7f1de; --ink:#2f2719; --ink2:#5a4f3c; --ink3:#8b7a5d;
+    --red:#a63a2c; --gold:#9a813d; --blue:#46626b; --green:#67703f;
+    --line:rgba(47,39,25,.2); --line2:rgba(47,39,25,.1);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; color:var(--ink); background:var(--paper);
+    font-family:"Songti SC","STSong","Noto Serif CJK SC","Source Han Serif SC",serif;
+    background-image:
+      radial-gradient(120% 70% at 10% 0%, rgba(255,252,240,.9), transparent 60%),
+      radial-gradient(90% 60% at 100% 100%, rgba(176,152,105,.22), transparent 65%),
+      repeating-linear-gradient(0deg, rgba(140,115,70,.035) 0 1px, transparent 1px 3px);
+    line-height:1.75;
+  }
+  .wrap{max-width:1120px; margin:0 auto; padding:54px 28px 80px}
+  header.hero{border-bottom:2px solid var(--ink); padding-bottom:26px; margin-bottom:38px; position:relative}
+  .kicker{font-size:12.5px; letter-spacing:.32em; color:var(--red); margin:0 0 12px}
+  h1{font-size:clamp(34px,5.2vw,56px); letter-spacing:.14em; margin:0 0 10px; font-weight:600}
+  .lede{font-size:17px; color:var(--ink2); max-width:46em; margin:0 0 18px}
+  .chips{display:flex; flex-wrap:wrap; gap:8px}
+  .chip{font-size:13px; letter-spacing:.06em; border:1px solid var(--line); background:rgba(255,252,240,.55);
+    padding:4px 10px; color:var(--ink2)}
+  .chip b{color:var(--ink); font-weight:600}
+  .stamp{position:absolute; right:0; top:4px; width:66px; height:66px; border:3px solid var(--red); color:var(--red);
+    display:flex; align-items:center; justify-content:center; font-size:22px; letter-spacing:.1em; transform:rotate(4deg); opacity:.85}
+
+  section{margin:46px 0 0}
+  h2{font-size:13px; letter-spacing:.34em; color:var(--red); margin:0 0 6px; font-weight:600}
+  h2 + .h2sub{font-size:26px; letter-spacing:.08em; margin:0 0 20px; font-weight:600}
+  .note{font-size:14.5px; color:var(--ink3); margin:10px 0 0}
+
+  /* ---- 循环 ---- */
+  .flow{display:grid; grid-template-columns:repeat(5,1fr); gap:0; border:1px solid var(--line); background:rgba(255,252,240,.5)}
+  .flow .node{padding:18px 16px 20px; position:relative; border-right:1px dashed var(--line)}
+  .flow .node:last-child{border-right:none}
+  .flow .no{font-size:11.5px; letter-spacing:.2em; color:var(--red)}
+  .flow .t{font-size:17px; font-weight:600; margin:4px 0 6px; letter-spacing:.04em}
+  .flow .d{font-size:13.5px; color:var(--ink2); line-height:1.8}
+  .loopback{margin:10px 0 0; font-size:13.5px; color:var(--ink3); display:flex; gap:10px; align-items:center}
+  .loopback::before{content:""; width:34px; height:1px; background:var(--line); display:block}
+  .branches{display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:14px}
+  .branch{border-left:3px solid var(--gold); background:rgba(255,252,240,.45); padding:12px 14px}
+  .branch b{display:block; font-size:15px; margin-bottom:2px}
+  .branch span{font-size:13.5px; color:var(--ink2)}
+
+  /* ---- 十二幕 ---- */
+  .scenes{display:grid; grid-template-columns:repeat(4,1fr); gap:10px; counter-reset:s}
+  .scene{border:1px solid var(--line); background:rgba(255,252,240,.5); padding:12px 14px 14px; position:relative; counter-increment:s}
+  .scene::before{content:counter(s,decimal-leading-zero); position:absolute; top:8px; right:10px; font-size:11px; color:var(--ink3); letter-spacing:.1em}
+  .scene .day{font-size:12px; color:var(--red); letter-spacing:.1em}
+  .scene .name{font-size:15.5px; font-weight:600; margin:3px 0 4px}
+  .scene .tag{font-size:12px; color:var(--ink3)}
+  .scene.travel{border-style:dashed}
+  .scene.gate{border-left:3px solid var(--gold)}
+  .scene.exam{border-left:3px solid var(--blue)}
+  .scene.ending{border-left:3px solid var(--red)}
+  .scene .dot{display:inline-block; width:6px; height:6px; background:var(--red); border-radius:50%; margin-right:4px; vertical-align:1px}
+
+  /* ---- 管线 ---- */
+  .pipe{display:grid; grid-template-columns:1.05fr auto .85fr auto 1.05fr; gap:12px; align-items:stretch}
+  .pipe .col{border:1px solid var(--line); background:rgba(255,252,240,.5); padding:16px 18px}
+  .pipe h3{font-size:14px; letter-spacing:.2em; margin:0 0 10px; color:var(--red)}
+  .pipe ul{margin:0; padding-left:1.1em; font-size:13.5px; color:var(--ink2); line-height:1.95}
+  .pipe code,code{font-family:"SF Mono",Menlo,Consolas,monospace; font-size:12.5px; background:rgba(47,39,25,.07); padding:1px 4px}
+  .pipe .arrow{align-self:center; text-align:center; color:var(--ink3); font-size:22px}
+
+  /* ---- 测试 ---- */
+  .tests{display:grid; grid-template-columns:repeat(5,1fr); gap:0; border:1px solid var(--line)}
+  .test{padding:14px 14px 16px; border-right:1px dashed var(--line); background:rgba(255,252,240,.5)}
+  .test:last-child{border-right:none}
+  .test .n{font-size:20px; font-weight:600; color:var(--red); letter-spacing:.02em}
+  .test .k{font-size:13px; letter-spacing:.12em; color:var(--ink3); margin:2px 0 6px}
+  .test .c{font-size:12.5px; color:var(--ink2); font-family:"SF Mono",Menlo,monospace; overflow-wrap:break-word}
+
+  /* ---- 证据 ---- */
+  .tiers{display:grid; grid-template-columns:repeat(3,1fr); gap:12px}
+  .tier{border:1px solid var(--line); background:rgba(255,252,240,.55); padding:16px 18px}
+  .tier .h{display:flex; align-items:baseline; gap:10px; margin-bottom:6px}
+  .tier .h b{font-size:24px; letter-spacing:.1em}
+  .tier.ji .h b{color:var(--green)} .tier.tui .h b{color:var(--gold)} .tier.she .h b{color:var(--red)}
+  .tier .h span{font-size:12.5px; color:var(--ink3); letter-spacing:.1em}
+  .tier p{margin:0; font-size:13.5px; color:var(--ink2)}
+  .cutoff{margin-top:14px; border-left:3px solid var(--red); background:rgba(166,58,44,.06); padding:12px 16px; font-size:14px; color:var(--ink2)}
+  .cutoff b{color:var(--ink)}
+
+  footer{margin-top:56px; border-top:1px solid var(--line); padding-top:18px; font-size:13px; color:var(--ink3); display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap}
+  footer code{color:var(--ink2)}
+
+  @media (max-width:900px){
+    .flow{grid-template-columns:1fr}
+    .flow .node{border-right:none; border-bottom:1px dashed var(--line)}
+    .scenes{grid-template-columns:repeat(2,1fr)}
+    .pipe{grid-template-columns:1fr}
+    .pipe .arrow{display:none}
+    .tests{grid-template-columns:1fr 1fr}
+    .test{border-bottom:1px dashed var(--line)}
+    .tiers{grid-template-columns:1fr}
+    .branches{grid-template-columns:1fr}
+    .stamp{display:none}
+  }
+  @media print{
+    body{background:#fff}
+    .wrap{padding:0}
+    section{break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <p class="kicker">docs/architecture-explainer.html · 自包含，无外部依赖</p>
+  <h1>北宋赶考记 · 系统一览</h1>
+  <p class="lede">一个约 7.7 MB 的单文件 HTML，如何把十二幕行程、五十七个词条、一百五十道题、四位一体的测试装进一次双击里。</p>
+  <div class="chips">
+    <span class="chip"><b>1057</b> 嘉祐二年</span>
+    <span class="chip"><b>12</b> 幕</span>
+    <span class="chip"><b>4</b> 行动点／日</span>
+    <span class="chip"><b>57</b> 词条</span>
+    <span class="chip"><b>150</b> 题</span>
+    <span class="chip"><b>0</b> 外部依赖</span>
+  </div>
+  <div class="stamp">嘉祐</div>
+</header>
+
+<section>
+  <h2>01 · DAILY LOOP</h2>
+  <div class="h2sub">每天四个行动点，夜里结算，三十天走完一科</div>
+  <div class="flow">
+    <div class="node">
+      <div class="no">01</div>
+      <div class="t">日始 · 入幕</div>
+      <div class="d">按日切场景；赶路日先扣 2 点行动。<br>第 8 日山匪、第 11 日水匪、第 12 日虹桥、第 15 日门税为固定遭遇。</div>
+    </div>
+    <div class="node">
+      <div class="no">02</div>
+      <div class="t">事件判定</div>
+      <div class="d">第 3 日起 50% 触发一次小事件，按场景过滤，一局只出现一次；「贵人」权重减半。</div>
+    </div>
+    <div class="node">
+      <div class="no">03</div>
+      <div class="t">行动 ×4</div>
+      <div class="d">温书、歇息、宴饮、拜访、打听、题诗、抄书……各耗 1 点；答对才加智力，答错也挡住夜里衰减。</div>
+    </div>
+    <div class="node">
+      <div class="no">04</div>
+      <div class="t">入夜结算</div>
+      <div class="d">未维护的属性 −1；精力 ≤ 2 时 45% 再 −1；扣食宿。考试日与放榜段不结算衰减。</div>
+    </div>
+    <div class="node">
+      <div class="no">05</div>
+      <div class="t">次日 / 终局</div>
+      <div class="d">属性归零即终：胸无点墨、病卧逆旅、孤身无援、困于逆旅。否则进入下一日。</div>
+    </div>
+  </div>
+  <p class="loopback">回到 01，直到第 25 日进贡院</p>
+
+  <div class="branches">
+    <div class="branch"><b>省试 · 第 25–27 日</b><span>三场各 5 题（诗赋／论／策论）；答对 &lt; 8 题落第</span></div>
+    <div class="branch"><b>殿试 · 第 29 日</b><span>3 题，计入结局分数</span></div>
+    <div class="branch"><b>放榜 · 第 28 / 30 日</b><span>查榜 → 琼林宴 → 状元／一甲／二甲／同进士／特奏名</span></div>
+  </div>
+  <p class="note">数值均为游戏设定（见词条「行动点」「考运」「诗品」与 README §五）；制度名目据《宋史·选举志一》。</p>
+</section>
+
+<section>
+  <h2>02 · TWELVE SCENES</h2>
+  <div class="h2sub">一条从临川到汴京的线，十二个可停留的节点</div>
+  <div class="scenes">
+    <div class="scene"><div class="day">第 1–2 日</div><div class="name">临川 · 家塾</div><div class="tag">hub · 乡先生</div></div>
+    <div class="scene"><div class="day">第 3 日</div><div class="name">长亭 · 饯别</div><div class="tag">choice · 受赠旧书</div></div>
+    <div class="scene"><div class="day">第 4–6 日</div><div class="name">官道 · 驿站</div><div class="tag">hub · 苏轼／苏辙</div></div>
+    <div class="scene travel"><div class="day">第 7–9 日</div><div class="name">山路 · 风雨</div><div class="tag"><span class="dot"></span>第 8 日山匪</div></div>
+    <div class="scene travel"><div class="day">第 10–11 日</div><div class="name">汴河 · 舟中</div><div class="tag"><span class="dot"></span>第 11 日水匪 · 苏洵</div></div>
+    <div class="scene"><div class="day">第 12 日</div><div class="name">虹桥 · 汴河闸口</div><div class="tag">hub · 候闸半日</div></div>
+    <div class="scene travel"><div class="day">第 13–14 日</div><div class="name">汴河 · 舟中</div><div class="tag">travel · 系舟守夜</div></div>
+    <div class="scene gate"><div class="day">第 15 日</div><div class="name">汴京 · 城门</div><div class="tag">gate · 门税 · 投状 · 寻住处 · 踩点</div></div>
+    <div class="scene"><div class="day">第 16–19 日</div><div class="name">御街 · 酒楼</div><div class="tag">hub · 投行卷 · 五位大儒</div></div>
+    <div class="scene"><div class="day">第 20–24 日</div><div class="name">国子监 · 书库</div><div class="tag">hub · 抄书换钱</div></div>
+    <div class="scene exam"><div class="day">第 25–27 日</div><div class="name">贡院 · 号舍</div><div class="tag">exam · 锁院三场</div></div>
+    <div class="scene ending"><div class="day">第 28–30 日</div><div class="name">琼林苑 · 放榜</div><div class="tag">ending · 查榜 · 殿试 · 琼林宴</div></div>
+  </div>
+  <p class="note">虚线为赶路日（行动点 −2）；红点为固定遭遇；地名与制度名均可在游戏内点开「词条」查看释义与出处。</p>
+</section>
+
+<section>
+  <h2>03 · BUILD PIPELINE</h2>
+  <div class="h2sub">数据与画面分离，一个 Python 脚本产出两种发布物</div>
+  <div class="pipe">
+    <div class="col">
+      <h3>源</h3>
+      <ul>
+        <li><code>game.template.html</code> — 规则、文案、CSS</li>
+        <li><code>data/quiz_150.json</code> — 题库（含 afterCutoff）</li>
+        <li><code>data/glossary.json</code> — 词条（据／推断／设）</li>
+        <li><code>assets/*.jpg</code> — 场景与画轴</li>
+      </ul>
+    </div>
+    <div class="arrow">→</div>
+    <div class="col">
+      <h3>构建</h3>
+      <ul>
+        <li><code>python3 build.py</code></li>
+        <li>题库／词条注入占位符</li>
+        <li>图片 base64 内嵌</li>
+        <li>生成 <code>词条表.md</code></li>
+        <li><code>--dist</code>：转 WebP、外链</li>
+      </ul>
+    </div>
+    <div class="arrow">→</div>
+    <div class="col">
+      <h3>产物</h3>
+      <ul>
+        <li><code>北宋赶考记.html</code> — 单文件，双击即玩</li>
+        <li><code>index.html</code> — GitHub Pages 入口（同内容）</li>
+        <li><code>dist/</code> — 拆分资源，上 Cloudflare Pages</li>
+        <li><code>词条表.md</code> — 可打印的史料清单</li>
+      </ul>
+    </div>
+  </div>
+  <p class="note">单文件是"离线可玩"的承诺；<code>dist/</code> 是"手机 4G 也能开"的答案。两者同一份模板，不允许各自漂移。</p>
+</section>
+
+<section>
+  <h2>04 · TEST LAYERS</h2>
+  <div class="h2sub">四层闸门 + 一层模拟，从 1 秒到 8 秒，挡住不同种类的错</div>
+  <div class="tests">
+    <div class="test"><div class="n">1</div><div class="k">构建门</div><div class="c">python3 build.py</div></div>
+    <div class="test"><div class="n">45</div><div class="k">数据守卫</div><div class="c">data_test.js</div></div>
+    <div class="test"><div class="n">73</div><div class="k">逻辑用例</div><div class="c">poem 8 · dialogue 11 · walkthrough 54</div></div>
+    <div class="test"><div class="n">7</div><div class="k">浏览器 E2E</div><div class="c">tests/e2e.spec.ts</div></div>
+    <div class="test"><div class="n">180</div><div class="k">平衡模拟</div><div class="c">sim.js（只报告）</div></div>
+  </div>
+  <p class="note">一条命令：<code>./test.sh</code>；加浏览器：<code>./test.sh --e2e</code>。全流程测试固定随机种子，三个种子分别跑，失败即非零退出。</p>
+</section>
+
+<section>
+  <h2>05 · EVIDENCE</h2>
+  <div class="h2sub">每个词条都要能回答：这是原文，还是转述，还是我编的</div>
+  <div class="tiers">
+    <div class="tier ji">
+      <div class="h"><b>据</b><span>原文可引 · 5 条</span></div>
+      <p>有直接引文，例如行卷、温卷出赵彦卫《云麓漫钞》卷八；长亭出李白《菩萨蛮》。</p>
+    </div>
+    <div class="tier tui">
+      <div class="h"><b>推断</b><span>据书转述 · 49 条</span></div>
+      <p>只到书名／篇名一级，用「所述」标明，不假装是原文。</p>
+    </div>
+    <div class="tier she">
+      <div class="h"><b>设</b><span>游戏设定 · 3 条</span></div>
+      <p>行动点、考运、诗品：先把"这是游戏"说清楚，再谈像不像。</p>
+    </div>
+  </div>
+  <div class="cutoff">
+    <b>1057 截断：</b>王安石变法（1069）、《资治通鉴》成书（1084）、《梦溪笔谈》（1088）、《清明上河图》（约 1100）等 6 道题已标 <code>afterCutoff</code>，不进入省试与殿试抽题池——1057 年的举子不该考到 12 年后的事。
+  </div>
+  <p class="note">题库不逐题标出处（通行历史知识，只承担题型）；引证在词条，年代边界在 <code>afterCutoff</code>。口径见 <code>docs/evidence.md</code> §3。</p>
+</section>
+
+<footer>
+  <span>北宋赶考记 · 嘉祐二年 ｜ 单文件 HTML ｜ 无外部依赖</span>
+  <span>重新生成：<code>python3 build.py</code> ｜ 校验：<code>./test.sh --e2e</code></span>
+</footer>
+
+</div>
+</body>
+</html>

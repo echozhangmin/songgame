@@ -9,7 +9,8 @@ function readFile(p){
 function mkEl(){
   return { innerHTML:'', remove:function(){}, appendChild:function(){},
            insertAdjacentHTML:function(){}, addEventListener:function(){},
-           dataset:{}, style:{}, className:'', disabled:false };
+           setAttribute:function(){}, querySelector:function(){ return null; },
+           focus:function(){}, dataset:{}, style:{}, className:'', disabled:false };
 }
 globalThis.document = {
   getElementById:function(){ return mkEl(); },
@@ -19,26 +20,43 @@ globalThis.document = {
 };
 globalThis.localStorage = { getItem:function(){ return null; }, setItem:function(){}, removeItem:function(){} };
 
-var HTML = '/Users/min/Documents/deepseek-harness/default-workspace/song-exam/北宋赶考记.html';
+var PWD = ObjC.unwrap($.NSProcessInfo.processInfo.environment.objectForKey('PWD')) || '.';
+var HTML = PWD + '/北宋赶考记.html';
 var html = readFile(HTML);
 var m = html.match(/<script>([\s\S]*)<\/script>/);
 var code = m[1].replace('"use strict";', '');
 code += '\n;__T = {SCENES:SCENES, ACT:ACT, DIALOGUES:DIALOGUES, NPCS:NPCS, POEM_THEMES:POEM_THEMES, THEME_WORDS:THEME_WORDS,' +
-        'freshState:freshState, doAct:doAct, endDay:endDay, chooseEvent:chooseEvent,' +
+        'freshState:freshState, doAct:doAct, endDay:endDay, chooseEvent:chooseEvent, usable:usable,' +
         'submitPoem:submitPoem, openPoem:openPoem, answer:answer, continueAfterAnswer:continueAfterAnswer,' +
         'nextExamQuestion:nextExamQuestion, nextPalaceQuestion:nextPalaceQuestion, startPalace:startPalace,' +
         'finishEnding:finishEnding, failExam:failExam, saveGame:saveGame,' +
         'setS:function(z){S=z;}, getS:function(){return S;}};';
 eval(code);
-var T = __T, fail = 0;
+var T = __T, fail = 0, checks = 0;
+
+/* 固定随机种子：事件、题诗、病倒都不再让结果时红时绿 */
+(function seedRandom(seed){
+  var a = seed >>> 0;
+  Math.random = function(){
+    a = (a + 0x6D2B79F5) >>> 0;
+    var t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+})(parseInt(ObjC.unwrap($.NSProcessInfo.processInfo.environment.objectForKey('SEED')) || '20261118', 10));
+
+/* 夜里结算前把三属性补到安全线：本文件只测流程，不测数值平衡 */
+function topUp(){
+  ['zhi','jing','yuan'].forEach(function(k){ if (S()[k] < 9) S()[k] = 9; });
+  if (S().money < 10) S().money = 10;
+}
 
 /* 安全推进：一夜一步，每夜先把三属性补到安全线，over 停 */
 function advanceTo(targetDay){
   var guard = 0;
   while (S().day < targetDay && S().phase !== 'over' && guard++ < 40){
     if (S().event){ if (!S().event.done) T.chooseEvent(0); S().event = null; }
-    ['zhi','jing','yuan'].forEach(function(k){ if (S()[k] < 9) S()[k] = 9; });
-    if (S().money < 10) S().money = 10;
+    topUp();
     T.endDay();
   }
   if (S().phase === 'over'){
@@ -47,15 +65,17 @@ function advanceTo(targetDay){
     console.log('    [末行记] ' + (S().log[0] ? S().log[0].t : '') + ' ／ ' + (S().log[1] ? S().log[1].t : ''));
   }
   ok(S().day === targetDay && S().phase !== 'over', '推进到第' + targetDay + '日（day=' + S().day + ' phase=' + S().phase + '）');
+  if (S().phase === 'over') throw new Error('主角在第 ' + S().day + ' 日死亡：' + (((S().ending||{}).title)||'') + '（流程无法继续）');
 }
 
-function ok(cond, name){ console.log((cond ? 'PASS' : 'FAIL') + '  ' + name); if (!cond) fail++; }
+function ok(cond, name){ checks++; console.log((cond ? 'PASS' : 'FAIL') + '  ' + name); if (!cond) fail++; }
 function S(){ return T.getS(); }
 
 /* ===== 第 1–2 日 家塾 ===== */
 var s = T.freshState();
 T.setS(s);
 ok(S().day === 1 && S().scene === 0 && S().ap === 4, '开局面板：第1日·家塾·4行动点');
+ok(T.ACT.master.hint.indexOf('座谈') >= 0, '拜访大儒按钮提示含「座谈」（可发现性回归）');
 T.doAct('study');
 ok(S().pending && S().pending.kind === 'study', '温书弹出题目');
 T.answer('ABCD'.indexOf(S().pending.q.answer));
@@ -109,6 +129,7 @@ T.endDay();
 ok(S().day === 7 && S().scene === 3 && S().ap === 2, '第7日山道：赶路日只剩2行动点（day=' + S().day + ' scene=' + S().scene + ' ap=' + S().ap + '）');
 T.doAct('guard');
 ok(S().safe.shan === true, '结伴同行置 safe.shan');
+topUp();
 T.endDay();
 ok(S().day === 8, '进入第8日（实为 ' + S().day + '）');
 ok(S().event && S().event.bandit === true, '第8日山匪必发弹窗');
@@ -119,9 +140,11 @@ if (S().event){
   ok(S().event.done === true, '山匪三选一可结算');
   S().event = null;
 }
+topUp();
 T.endDay();
 ok(S().day === 9, '进入第9日（实为 ' + S().day + '）');
 if (S().event){ T.chooseEvent(0); S().event = null; }
+topUp();
 T.endDay();
 ok(S().day === 10, '进入第10日（实为 ' + S().day + '）');
 if (S().event){ T.chooseEvent(0); S().event = null; }
@@ -164,8 +187,7 @@ while (!(S().event && S().event.tag === 'talk') && S().phase === 'play' && tries
   T.doAct('master');
   if (!(S().event && S().event.tag === 'talk') && S().ap < 1){
     if (S().event){ if (!S().event.done) T.chooseEvent(0); S().event = null; }
-    ['zhi','jing','yuan'].forEach(function(k){ if (S()[k] < 9) S()[k] = 9; });
-    if (S().money < 10) S().money = 10;
+    topUp();
     T.endDay();
   }
 }
@@ -193,6 +215,8 @@ for (var r = 0; r < 3; r++){
   T.endDay();
 }
 ok(S().exam.total === examRight, '省试三场计分：' + S().exam.total + '/' + examRight);
+ok((S().exam.queue || []).every(function(q){ return T.usable(q); }), '省试抽到的题都不晚于 1057');
+ok((S().exam.palaceQueue || []).every(function(q){ return T.usable(q); }), '殿试抽到的题都不晚于 1057');
 ok(S().day === 28, '进入第28日');
 
 /* ===== 第 28 日 查榜 → 殿试 ===== */
@@ -219,8 +243,18 @@ ok(S().poems && S().poems.length >= 1, '诗囊有诗（' + (S().poems || []).len
 T.saveGame();
 ok(true, '结局后存档不报错（saveGame 对 over 态短路）');
 
-if (S().phase === 'over'){
-  console.log('== 流程中断：主角已死（' + ((S().ending||{}).title||'') + '），后续断言跳过 ==');
-} else {
-  console.log(fail === 0 ? '== 全流程审计通过 ==' : ('== ' + fail + ' 处 FAIL =='));
+/* 回归：未决事件挂着就寝，应自动清除并进入次日（2026-11-13 用户反馈） */
+var probe = T.freshState();
+T.setS(probe);
+probe.event = { title:'未决事件', text:'', choice:[{label:'甲'}], done:false };
+T.endDay();
+ok(!probe.event && probe.day === 2, '未决事件挂着就寝：自动清除并进入次日');
+
+if (S().phase === 'over' && (S().ending || {}).kind === 'fail'){
+  console.log('== 流程中断：主角失败离场（' + ((S().ending||{}).title||'') + '） ==');
+  throw new Error('流程在第 ' + S().day + ' 日中断，' + fail + ' 处 FAIL');
 }
+console.log(fail === 0
+  ? '== 全流程审计通过：' + checks + ' 条断言 =='
+  : ('== ' + fail + ' / ' + checks + ' 处 FAIL =='));
+if (fail) throw new Error(fail + ' 处断言失败');

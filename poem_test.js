@@ -10,7 +10,8 @@ function readFile(p){
 function mkEl(){
   return { innerHTML:'', remove:function(){}, appendChild:function(){},
            insertAdjacentHTML:function(){}, addEventListener:function(){},
-           dataset:{}, style:{}, className:'', disabled:false };
+           setAttribute:function(){}, querySelector:function(){ return null; },
+           focus:function(){}, dataset:{}, style:{}, className:'', disabled:false };
 }
 globalThis.document = {
   getElementById:function(){ return mkEl(); },
@@ -20,7 +21,8 @@ globalThis.document = {
 };
 globalThis.localStorage = { getItem:function(){ return null; }, setItem:function(){}, removeItem:function(){} };
 
-var HTML = '/Users/min/Documents/deepseek-harness/default-workspace/song-exam/北宋赶考记.html';
+var PWD = ObjC.unwrap($.NSProcessInfo.processInfo.environment.objectForKey('PWD')) || '.';
+var HTML = PWD + '/北宋赶考记.html';
 var html = readFile(HTML);
 var m = html.match(/<script>([\s\S]*)<\/script>/);
 var code = m[1].replace('"use strict";', '');
@@ -57,3 +59,4 @@ t('8 句数不齐（应中品）', 'shan',
   '远山如黛水如烟\n一棹春风过江南', '中品');
 
 console.log(fail === 0 ? '== 全部通过 ==' : ('== ' + fail + ' 例失败 =='));
+if (fail) throw new Error(fail + ' 例失败');

@@ -8,7 +8,8 @@ function readFile(p){
 function mkEl(){
   return { innerHTML:'', remove:function(){}, appendChild:function(){},
            insertAdjacentHTML:function(){}, addEventListener:function(){},
-           dataset:{}, style:{}, className:'', disabled:false };
+           setAttribute:function(){}, querySelector:function(){ return null; },
+           focus:function(){}, dataset:{}, style:{}, className:'', disabled:false };
 }
 globalThis.document = {
   getElementById:function(){ return mkEl(); },
@@ -18,7 +19,8 @@ globalThis.document = {
 };
 globalThis.localStorage = { getItem:function(){ return null; }, setItem:function(){}, removeItem:function(){} };
 
-var HTML = '/Users/min/Documents/deepseek-harness/default-workspace/song-exam/北宋赶考记.html';
+var PWD = ObjC.unwrap($.NSProcessInfo.processInfo.environment.objectForKey('PWD')) || '.';
+var HTML = PWD + '/北宋赶考记.html';
 var html = readFile(HTML);
 var m = html.match(/<script>([\s\S]*)<\/script>/);
 if (!m) throw new Error('未找到 script 块');

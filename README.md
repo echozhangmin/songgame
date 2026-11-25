@@ -1,10 +1,20 @@
 # 北宋赶考记 · 嘉祐二年
 
-仓库：https://github.com/echozhangmin/songgame
+仓库：https://github.com/echozhangmin/songgame ｜ 在线玩：https://songgame.pages.dev/
 
 一个**单文件 HTML** 的北宋科举模拟游戏：临川举子正月初十启程，三十日后在汴京应省试、殿试。
 双击 `北宋赶考记.html` 即可在浏览器里玩，不联网、不装依赖。
-启动先进**开始页**：可「继续上次」（显示上次行至第几日、在哪一幕、三项属性）或「重新开始」；进度每一步自动存 localStorage。
+启动先进**开始页**：可「继续上次」（显示上次行至第几日、在哪一幕、三项属性）或「重新开始」；进度每一步自动存 localStorage。温书时**答错的题会进「错题本」**，下次温书优先重练；答对即移出。
+
+| 想做什么 | 一句话 |
+|---|---|
+| 课前自检 | `./preflight.sh` |
+| 跑全部检查 | `./test.sh`（加浏览器：`./test.sh --e2e`） |
+| 重新生成单文件 | `python3 build.py` |
+| 生成可上 Cloudflare 的拆分站 | `python3 build.py --dist` → `deploy-pages.sh` |
+| 看设计/证据 | [docs/plan.md](docs/plan.md) · [docs/evidence.md](docs/evidence.md) · [架构图](docs/architecture-explainer.html) |
+| 课堂演示脚本 | [docs/demo-7min.md](docs/demo-7min.md) · [测试说明](docs/test-plan.md) |
+| 给 agent 的约定 | [AGENTS.md](AGENTS.md) |
 
 > **为什么是嘉祐二年（1057）**：这一榜是欧阳修主考、梅尧臣点检试卷，苏轼、苏辙、曾巩、曾布、程颢、张载、吕惠卿同年登第，号称科举史上最豪华的一榜。把主角放在这一年，你才能在汴京的酒楼里真的遇见这些人。
 > 十二幕：家塾、长亭、驿站、山道、汴河（上）、**虹桥闸口**、汴河（下）、城门、酒楼、书库、号舍、放榜。
@@ -97,9 +107,15 @@
 
 ## 二点六、词条（释义与史料）
 
-正文里带虚线的小词可以点开，看释义与出处；**动作按钮名字后面带「解」小字的**也能点（不会触发动作）；顶栏「词条」打开索引，共 **54 条**。完整清单（含释义、出处、备注）见 [词条表.md](词条表.md)。
+正文里带虚线的小词可以点开，看释义与出处；**动作按钮名字后面带「解」小字的**也能点（不会触发动作）；顶栏「词条」打开索引，共 **57 条**。完整清单（含释义、档位、出处、备注）见 [词条表.md](词条表.md)。
 
-每个词条分三部分：**释义**、**出处**、**备注**。出处分两档，避免把转述冒充原文：
+每个词条分四部分：**释义**、**档位**、**出处**、**备注**。档位按证据强度分三档（与 [docs/evidence.md](docs/evidence.md) 一致）：
+
+- **据**（5 条）：有原文可引，词条页标「原文可据」；
+- **推断**（49 条）：据某书/篇转述，词条页标「据书转述」；
+- **设**（3 条：行动点、考运、诗品）：游戏机制，词条页标「游戏设定」。
+
+出处分两档，避免把转述冒充原文：
 
 - **原文**：确定原文的才加引号，例如
   - 行卷 —— 赵彦卫《云麓漫钞》卷八：“唐之举人，先藉当世显人，以姓名达之主司，然后以所业投献；逾数日又投，谓之温卷。”
@@ -142,6 +158,8 @@
 
 ## 四、考试与结局
 
+> **关于题目的出处**：150 道题是通行的中学历史知识，作用是把宋代科举的"考"做成可玩的题型，**不逐题标注出处，也不冒充史料引证**。作品中需要引证的是词条与人物台词——57 条词条逐条有出处和「据/推断/设」档位；年代边界由 `afterCutoff` 守（史事晚于 1057 的 6 题不入考场）。理由与对外口径见 [docs/evidence.md](docs/evidence.md) §3。
+
 - **省试**：第一场诗赋（先秦・秦汉）、第二场论（魏晋・隋唐）、第三场策论（五代北宋・隋唐），各 5 题，共 15 题。（据《宋史·选举志一》"诗赋为第一场，论第二场，策第三场"校正：专场经义系熙宁后之制。）
 - **殿试**：3 题。
 - 省试答对 <8 题直接落第；≥8 题入殿试。
@@ -174,33 +192,53 @@ score     = ( 省试正确率 × 0.62 × zhiCoef
 | 食宿 | 第 1–15 日 1 贯／日；第 16 日起 2 贯／日；考试日与放榜日 1 贯 |
 | 衰减 | 未维护的属性 -1／日 |
 | 病倒 | 精力 ≤2 时 45% 概率再 -1 |
-| 存档 | 每次行动后写入 localStorage；刷新可续玩，重开清档 |
+| 存档 | 每次行动后写入 localStorage，带 `SAVE_VERSION`；旧档加载时补默认值，未来版本存档拒绝读取；重开清档 |
 
-## 六、无头测试
-
-用 macOS 自带的 JavaScriptCore（JXA）跑游戏逻辑，不需要浏览器：
+## 六、测试（一条命令）
 
 ```bash
-osascript -l JavaScript sim.js                     # 180 局平衡测试
-MODE=neglectYuan osascript -l JavaScript sim.js     # 验证「孤身无援」可触发
-MODE=neglectJing osascript -l JavaScript sim.js     # 验证「病卧逆旅」可触发
+./test.sh          # 构建 + pytest + 题诗 + 座谈 + 数据守卫 + 全流程×3 种子 + 平衡模拟
+./test.sh --e2e    # 再加 Playwright 浏览器测试（需先 npm install）
+
+# 首次准备（Python 数据测试）
+python3 -m venv .venv && .venv/bin/pip install -r requirements-dev.txt
 ```
 
-55%／70%／85% 三档作答正确率各跑 60 局：正常经营不会崩盘。2026-11-02 基线（sim 策略修复后）：55% 档同进士 17／特奏名 12／二甲 19／落第 6；70% 档二甲 26／一甲 15；85% 档一甲 31／状元 15（约四分之一）。全程仅 5/180 局「困于逆旅」（第 24–28 日盘缠见底）——sim 现在会真实支付事件开销（山匪舍财、门税、住处、桥头看房），期末盘缠从旧版的 40+ 贯收紧到个位数，更接近真实玩家。
+| 层 | 文件 | 管什么 | 数量 |
+|---|---|---|---|
+| 构建 | `build.py` | 占位符、题库条数、产物可生成 | — |
+| 数据（pytest） | `tests/test_data.py` | 题库结构、1057 截断、词条据/推断/设、场景图、产物完整性、MCP 配置 | 13 条 |
+| 数据（JXA） | `data_test.js` | 抽题池、错题本、旧档迁移等运行时行为 | 45 条 |
+| 逻辑 | `poem_test.js` / `dialogue_test.js` | 题诗四标准三档 / 大儒座谈 15 话题 | 8 + 11 例 |
+| 全流程 | `walkthrough_test.js` | 家塾→长亭→驿→山匪→虹桥→城门→行卷座谈→省试→殿试→琼林宴，含存档与结局 | 54 条断言 × 3 种子 |
+| 浏览器 | `tests/e2e.spec.ts` | 0 console error、0 断链、续玩、Esc、手机版面 | 7 条（桌面+手机） |
+| 平衡 | `sim.js` | 180 局三档答题水平 | 只报告 |
 
-2026-11-04 基线（温书改**答对才加智力**后）：55% 档同进士 20／二甲 19／一甲 7／特奏名 7／落第 7；70% 档二甲 26／一甲 22／状元 2；85% 档一甲 28／状元 15；**零死亡**。注：sim 策略是"温书磨满"型，智力仍会到顶（期末均 10）——本改动对行动点有限、行动多样的人类玩家影响更直接：答错一次就是白耗一点精力。
+- **全流程测试固定随机种子**（`SEED=1|2|3`），事件、题诗、病倒不再让结果时红时绿；死亡会立刻抛错并打印死因。
+- **浏览器测试用系统 Chrome**（`channel: 'chrome'`），不必下载 Chromium；线上冒烟：`PLAYWRIGHT_BASE_URL=https://… npx playwright test`。
+- **1057 截断**在 `data_test.js` 里守：史事晚于嘉祐二年的题必须带 `afterCutoff`，且不得进入省试/殿试抽题池（现有 6 道：王安石变法 3 题、《资治通鉴》《梦溪笔谈》《清明上河图》各 1 题）。
 
-> sim 策略修复记录（2026-11-02）：旧策略不认识第 15 日城门动作集（无 rest，回精力正解是「寻住处」），且不结算任何二选一事件（门税／桥头／山匪／书肆等形同虚设）、无视 hideIf（一次性动作可重复点）——导致 175/180 局在第 15 日「病卧逆旅」。修复：`chooseAction` 加 lodge 优先级与"无回精力手段时停做耗精力事"护栏；行动表过滤 `hideIf`；主循环经 `chooseEvent` 按 cost/gain 评分结算事件；`__G` 导出 `chooseEvent`。游戏本体无改动。
+### 平衡基线（180 局，未播种，一次实跑示例）
 
-题诗判定用例已入库：`osascript -l JavaScript poem_test.js`（八例，直调 `gradePoem`）——抄示范《山居秋暝》、默写《春晓》《登鹳雀楼》（名句库）、白话诗（投勤学/山川）均判**下品**（态度问题，人缘 −1）；齐句离题、句数不齐判**中品**（水平问题）；自写切题齐句文言诗判上品。
+```
+二甲进士 63 · 一甲进士 40 · 同进士出身 35 · 状元 20 · 特奏名 15 · 落第 6 · 困于逆旅 1
+死亡 1 / 180
+```
+
+每次跑会有 ±几局浮动，以 `./test.sh` 当场输出为准。sim 策略是"温书磨满"型，智力仍到顶（期末均 10）——对行动点有限、行动多样的人类玩家影响更直接：答错一次就是白耗一点精力。
+
+> 历史记录：2026-11-02 修 sim 策略（第 15 日不认识「寻住处」、二选一事件不结算、一次性动作可重复点），曾导致 175/180 局「病卧逆旅」；2026-11-04 温书改为答对才加智力。
+
+题诗判定用例（`poem_test.js` 八例）：抄示范《山居秋暝》、默写《春晓》《登鹳雀楼》（名句库）、白话诗（投勤学/山川）均判**下品**（态度问题，人缘 −1）；齐句离题、句数不齐判**中品**（水平问题）；自写切题齐句文言诗判上品。
 
 ## 七、重新生成
 
 ```bash
-python3 build.py     # 读 game.template.html + ../history-quiz/quiz_150.json → 北宋赶考记.html
+python3 build.py           # → 北宋赶考记.html + index.html（单文件，图片内嵌）
+python3 build.py --dist    # → dist/（WebP 外链 + og.jpg + _headers，给 Cloudflare）
 ```
 
-题库（150 道）来自 `../history-quiz/quiz_150.json`，生成时会把 ASCII 单引号规范成中文引号。
+题库（150 道）来自 `data/quiz_150.json`（找不到时才回落到 `../history-quiz/quiz_150.json`），生成时会把 ASCII 单引号规范成中文引号。
 改题目只改题库；改规则、文案、数值、人物只改 `game.template.html`。
 内嵌图片分两层：**共用底图** `assets/scene_bg.jpg`（进京赶考场景）与页眉画轴图 `assets/scroll.jpg`，生成时均以 base64 内嵌进 HTML（画轴占位符替换全部出现处，含开始页）；**分场景插图**按文件名约定 `assets/scene_<场景id>.jpg`（如 `scene_changting.jpg`），build 时自动扫进 `SCENE_ART` 表内嵌，无图场景回落共用底图。场景 id：jiaxu／changting／yizhan／shandao／bianhe（两段汴河共用）／hongqiao／chengmen／jiulou／shuku／gongyuan／fangbang。换图：覆盖对应文件或按命名新添，再跑 `build.py`。
 
@@ -209,14 +247,27 @@ python3 build.py     # 读 game.template.html + ../history-quiz/quiz_150.json �
 1. ~~诗的好坏只由字数决定~~ **已两次收紧（2026-11-04 拍板）**：四重标准——字数对齐＋**非白话**＋**非默写**（18 首示范诗＋约 60 句唐宋名句库）＋切题；并**恢复三档**：白话/默写判**下品**（当众出丑，人缘 −1），离题/不齐判中品（评语仍鼓励）。判定细节与八例用例见 §二、§六（`poem_test.js`）。对仗仍不参与给分，只作评语点缀。
 2. **人物只出现一次**：每人遇过一次就不再出现，30 天里最多遇见 10 位。想让人物贯穿全程（例如苏轼考前考后各一场），可以改成按日解锁的多段对话。
 3. ~~智力会顶满~~ **已收紧（2026-11-04 拍板）**：温书改为**答对才 +1**（答错仍给解析、仍置"温过书"挡夜衰减）——低答题水平下智力增长明显放缓。是否进一步把初始智力 5 降 3，再议。
-4. **盘缠仍偏宽**：实测平均剩 12 贯。题诗奖励 +2～5 贯之后更宽了，可以考虑把京城房钱涨到 3 贯。
-5. **场景插图**：分场景插图机制已就位（`assets/scene_<场景id>.jpg`，build 自动内嵌，无图场景回落共用横幅 `assets/scene_bg.jpg`）。已配第二幕长亭一张（`scene_changting.jpg`，1600px JPEG）；其余 11 张待配，全配后注意单文件体积（每张约 +650 KB base64，必要时把质量降到 70 以下或 1400px）。页面另有几片桂花与叶子徐徐飘落的点缀（纯 CSS 动画、`pointer-events:none`，不挡操作；`prefers-reduced-motion` 时自动关闭）。
+4. **盘缠仍偏宽**：180 局 sim 期末平均只剩约 6–7 贯，但人类玩家题诗换钱后会更宽；可以考虑把京城房钱涨到 3 贯。
+5. **场景插图**：分场景插图机制已就位（`assets/scene_<场景id>.jpg`，build 自动内嵌，无图场景回落共用横幅 `assets/scene_bg.jpg`）。十二幕中已有十张分场景图（长亭、驿站、山道、汴河、虹桥、城门、酒楼、书库、号舍、放榜），**只剩家塾（`jiaxu`）仍用共用底图**。单文件版每张以 base64 内嵌；`python3 build.py --dist` 会把它们转成 WebP 外链（约 100–200 KB/张），4G 限速实测：拆分版首屏 1.9 秒，单文件版 38 秒。页面另有几片桂花与叶子徐徐飘落的点缀（纯 CSS 动画、`pointer-events:none`，不挡操作；`prefers-reduced-motion` 时自动关闭）。
 
 ---
 
 ## 九、发布
 
-每次改完，一条命令发布到 GitHub（仓库：https://github.com/echozhangmin/songgame ）：
+### Cloudflare Pages（推荐，线上正式地址）
+
+```bash
+python3 build.py --dist        # 生成 dist/：index.html + assets/*.webp + og.jpg + _headers
+./deploy-pages.sh              # 首次先 npx wrangler login；项目名默认 songgame
+```
+
+- `dist/` 是拆分版：HTML 约 160 KB，场景图按需加载，Cloudflare 边缘缓存；
+- 分享卡 `dist/og.jpg` 一并上传，发链接给朋友时不再是一条裸链接；
+- 自定义域名或项目名不同：`SITE_URL=https://你的域名 PAGES_PROJECT=项目名 ./deploy-pages.sh`。
+
+### GitHub Pages（备用镜像，单文件入口）
+
+每次改完，一条命令发布到 GitHub（仓库：https://echozhangmin/songgame ）：
 
 ```bash
 ./deploy.sh "这次改了什么"
@@ -234,3 +285,18 @@ python3 build.py     # 读 game.template.html + ../history-quiz/quiz_150.json �
 一两分钟后可访问 **https://echozhangmin.github.io/songgame/** ，手机浏览器也能玩（进度存在该浏览器的 localStorage 里，与本地文件不互通）。
 
 > 注意：Pages 是公开站点，任何拿到链接的人都能玩；页面里不含任何私密数据。
+
+---
+
+## 十、Week 10 交付对照
+
+| 课堂要展示 | 本仓库对应 |
+|---|---|
+| 公开线上 URL | Cloudflare Pages（`./deploy-pages.sh`）＋ GitHub Pages 镜像 |
+| Ideation 闭环 | [`docs/plan.md`](docs/plan.md)（范围、non-goals、`/goal` 声明） |
+| 自己的项目示意图 | [`docs/architecture-explainer.html`](docs/architecture-explainer.html)（12 幕 + 每日循环 + 数据管线 + 测试层） |
+| 现场跑的测试 | `./test.sh` → 45 条数据守卫 + 73 条逻辑断言 + 180 局模拟；`./test.sh --e2e` 再加 7 条浏览器用例 |
+| 自动浏览器闭环 | [`opencode.json`](opencode.json) 的 `@playwright/mcp` ＋ [`tests/e2e.spec.ts`](tests/e2e.spec.ts) |
+| 两位朋友反馈 → 回归测试 | [`docs/user-feedback.md`](docs/user-feedback.md)：题目偏难 → 不降难度 → 错题本 + 三条断言 |
+| 一个真实困难 | 单文件 7.9 MB 在 4G 下 38 秒 → `dist/` 拆 WebP 后 1.9 秒；见 [`docs/evidence.md`](docs/evidence.md) 与 §九 |
+| 史料边界 | [`docs/evidence.md`](docs/evidence.md)：据 5 / 推断 49 / 设 3；1057 截断 6 题不入考场 |

@@ -4,6 +4,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>北宋赶考记 · 嘉祐二年</title>
+<meta name="description" content="单文件北宋科举模拟：临川举子正月初十启程，三十日后在汴京应省试、殿试。十二幕、五十七个词条、十八个题诗题材。">
+<meta name="theme-color" content="#e5d8ba">
+<link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA2NCA2NCc+PHJlY3Qgd2lkdGg9JzY0JyBoZWlnaHQ9JzY0JyByeD0nOScgZmlsbD0nI2U1ZDhiYScvPjxyZWN0IHg9JzQuNScgeT0nNC41JyB3aWR0aD0nNTUnIGhlaWdodD0nNTUnIHJ4PSc0JyBmaWxsPSdub25lJyBzdHJva2U9JyNhNjNhMmMnIHN0cm9rZS13aWR0aD0nNCcvPjxyZWN0IHg9JzE4JyB5PScxOScgd2lkdGg9JzYnIGhlaWdodD0nMjYnIGZpbGw9JyMzMzI5MWMnLz48cmVjdCB4PScyOScgeT0nMTQnIHdpZHRoPSc2JyBoZWlnaHQ9JzM2JyBmaWxsPScjMzMyOTFjJy8+PHJlY3QgeD0nNDAnIHk9JzIxJyB3aWR0aD0nNicgaGVpZ2h0PScyMicgZmlsbD0nIzMzMjkxYycvPjwvc3ZnPg==">
+<meta property="og:type" content="website">
+<meta property="og:title" content="北宋赶考记 · 嘉祐二年">
+<meta property="og:description" content="单文件北宋科举模拟：三十日赴京，省试、殿试、放榜。">
+<meta property="og:url" content="https://echozhangmin.github.io/songgame/">
+<meta property="og:image" content="https://echozhangmin.github.io/songgame/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
 <style>
 :root{
   --paper:#e5d8ba; --paper2:#d9caa6; --paper3:#cfbf98;
@@ -48,7 +57,10 @@ body::after{
   100%{clip-path:inset(0 0 0 0); opacity:1; transform:rotate(-1.2deg) translateX(0)}
 }
 .head .meta{margin-left:auto; text-align:right; font-size:14.5px; color:var(--ink2); line-height:1.9}
-.head .meta button{background:none;border:none;color:var(--ink2);font-size:15.5px;letter-spacing:.05em;text-decoration:underline;text-underline-offset:3px;padding:0;cursor:pointer}
+.head .meta-date{display:block}
+.head .meta-acts{display:inline-flex; gap:2px; margin-top:2px}
+.head .meta button{background:none;border:none;color:var(--ink2);font-size:15.5px;letter-spacing:.05em;text-decoration:underline;text-underline-offset:3px;padding:6px 8px;min-height:34px;cursor:pointer;border-radius:2px}
+.head .meta button:hover{color:var(--ink); background:rgba(53,42,28,.07)}
 
 /* ---------- 主体 ---------- */
 .main{display:grid; grid-template-columns:1.55fr .95fr; gap:22px; margin-top:20px; align-items:stretch}
@@ -79,10 +91,11 @@ body::after{
 .stage-foot b{color:var(--ink2); font-weight:600}
 .acts{display:grid; grid-template-columns:repeat(auto-fill,minmax(168px,1fr)); gap:10px; position:relative}
 button{font-family:inherit; cursor:pointer; color:var(--ink)}
+button:focus-visible, textarea:focus-visible{outline:2px solid var(--red); outline-offset:2px}
 .act{background:rgba(250,246,232,.6); border:1px solid var(--line); padding:12px 14px; text-align:left;
   transition:.16s; position:relative; border-radius:2px}
 .act b{display:block; font-size:16.5px; font-weight:600; letter-spacing:.06em}
-.act span{display:block; font-size:13px; color:var(--ink3); margin-top:5px; letter-spacing:.04em}
+.act span{display:block; font-size:13.5px; color:var(--ink2); margin-top:5px; letter-spacing:.04em}
 .act:hover:not(:disabled){background:rgba(53,42,28,.055); border-color:rgba(53,42,28,.45); transform:translateY(-1px)}
 .act:disabled{opacity:.38; cursor:not-allowed}
 .act.primary{background:rgba(166,58,44,.08); border-color:rgba(166,58,44,.32)}
@@ -174,6 +187,21 @@ button{font-family:inherit; cursor:pointer; color:var(--ink)}
   .card.stage::before{height:208px}
   .sheet{padding:24px 20px}
 }
+@media (max-width:520px){
+  #app{padding:18px 14px 30px}
+  .head{flex-wrap:wrap; align-items:flex-start; gap:10px}
+  .head h1{font-size:27px; letter-spacing:.16em; flex:1 1 100%}
+  .head h1 small{font-size:12.5px; letter-spacing:.18em; margin-top:6px; line-height:1.9}
+  .scroll{display:none}
+  .head .meta{margin-left:0; width:100%; order:3; text-align:left;
+    display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:4px 10px;
+    border-top:1px dashed var(--line); padding-top:8px; font-size:14px}
+  .head .meta-date{display:inline}
+  .head .meta button{font-size:14.5px; min-height:38px; padding:6px 10px}
+  .stage{padding-top:146px}
+  .sheet{padding:22px 18px 20px; max-height:92vh}
+  .acts{grid-template-columns:1fr}
+}
 
 /* ---------- 桂花与叶 · 徐徐飘落 ---------- */
 #petals{position:fixed; inset:0; overflow:hidden; pointer-events:none; z-index:6}
@@ -248,14 +276,17 @@ const SCENES = [
    desc:'榜下人潮如墙。榜文贴出那一刻，有人抚掌大笑，有人掩面而去。'}
 ];
 
-// 分场景插图：assets/scene_<场景id>.jpg 由 build.py 按文件名 base64 内嵌成此表；无图场景回落共用 __SCENE_BG__
+// 分场景插图：assets/scene_<场景id>.jpg 由 build.py 按文件名 base64 内嵌成此表；无图场景回落共用 scene_bg.jpg
 const SCENE_ART = __SCENE_ART__;
 
 const EXAM_ROUNDS = ['第一场 · 诗赋', '第二场 · 论', '第三场 · 策论'];
+// 嘉祐二年（1057）放榜；史事更晚的题（王安石变法、资治通鉴成书等）不入考场
+const CUTOFF_YEAR = 1057;
+const usable = q => !q.afterCutoff || q.afterCutoff <= CUTOFF_YEAR;
 const EXAM_POOLS = [
-  q => q.era === '先秦' || q.era === '秦汉',
-  q => q.era === '魏晋南北朝' || q.era === '隋唐',
-  q => q.era === '五代与北宋' || q.era === '隋唐'
+  q => usable(q) && (q.era === '先秦' || q.era === '秦汉'),
+  q => usable(q) && (q.era === '魏晋南北朝' || q.era === '隋唐'),
+  q => usable(q) && (q.era === '五代与北宋' || q.era === '隋唐')
 ];
 const MASTER_LINES = [
   '“为文先为气，气盛则言宜。”',
@@ -553,7 +584,7 @@ let pendingSave = null;
 function freshState(){
   return {
     day:1, scene:0, ap:4,
-    zhi:5, jing:5, yuan:5, money:60,
+    zhi:5, jing:5, yuan:5, money:60, wrong:[],
     flags:{gift:null, master:0, rumor:false, entered:false, juan:false, juanReply:false},
     maintained:{zhi:false, jing:false, yuan:false},
     log:[], phase:'play', pending:null, feedback:null, help:false,
@@ -582,7 +613,12 @@ function pickQuestion(poolFn){
   return q;
 }
 function startStudy(){
-  S.pending = {q: pickQuestion(() => true), kind:'study'};
+  /* 错题本：温书先重练答错过的题；没有错题才随机抽 */
+  const wrongPool = QUESTIONS.filter(q => S.wrong.indexOf(q.id) >= 0);
+  const q = wrongPool.length
+    ? wrongPool[Math.floor(Math.random() * wrongPool.length)]
+    : pickQuestion(() => true);
+  S.pending = {q, kind:'study'};
   S.feedback = null;
 }
 function startExamRound(){
@@ -612,8 +648,8 @@ function finishExamRound(){
 function startPalace(){
   const picked = [];
   for (let i=0;i<3;i++){
-    let q = pickQuestion(() => true), guard = 0;
-    while (picked.some(p => p.id === q.id) && guard++ < 30) q = pickQuestion(() => true);
+    let q = pickQuestion(usable), guard = 0;
+    while (picked.some(p => p.id === q.id) && guard++ < 30) q = pickQuestion(usable);
     picked.push(q);
   }
   S.exam.palaceQueue = picked; S.exam.pcur = 0;
@@ -894,8 +930,15 @@ function answer(i){
   if (!S.pending || S.feedback) return;
   const q = S.pending.q, my = LETTERS[i], ok = my === q.answer;
   if (S.pending.kind === 'study'){
-    if (ok) addStat('zhi', 1);
-    log(ok ? '此题你答得干脆，心中又亮了一分。' : '此题答错，你把出处又看了一遍。');
+    if (ok){
+      addStat('zhi', 1);
+      S.wrong = S.wrong.filter(id => id !== q.id);
+      log('此题你答得干脆，心中又亮了一分。');
+    } else {
+      if (S.wrong.indexOf(q.id) < 0) S.wrong.push(q.id);
+      if (S.wrong.length > 40) S.wrong.shift();
+      log('此题答错，已记入错题本；下次温书先练它。');
+    }
   } else if (S.pending.kind === 'exam'){
     if (ok) S.exam.correct++;
     log(ok ? '笔下一气，未曾迟疑。' : '笔尖顿了顿，终究写错了出处。');
@@ -1169,10 +1212,12 @@ function finishEnding(){
 
 /* ============================ 存档 ============================ */
 const SAVE_KEY = 'song-exam-save-v1';
+const SAVE_VERSION = 4;   // 加字段时递增；旧档用 freshState 补齐默认值
 function saveGame(){
   if (!S || S.phase === 'over') return;
   try{
     const c = JSON.parse(JSON.stringify(S));
+    c.v = SAVE_VERSION;
     c.pending = null; c.feedback = null; c.poem = null; c.letter = null; c.event = null;
     c.log = c.log.slice(0, 12);
     localStorage.setItem(SAVE_KEY, JSON.stringify(c));
@@ -1184,9 +1229,11 @@ function loadGame(){
     if (!raw) return null;
     const g = JSON.parse(raw);
     if (!g || !g.day || g.phase === 'over') return null;
-    g.pending = null; g.feedback = null; g.help = false;
-    if (typeof g.ap !== 'number' || g.ap < 0 || g.ap > 4) g.ap = 4;
-    return g;
+    if (g.v && g.v > SAVE_VERSION) return null;        // 未来版本存档：宁可不读，也别读坏
+    const merged = Object.assign(freshState(), g);     // 旧档缺的字段补默认值，避免 S.talked 之类报错
+    merged.pending = null; merged.feedback = null; merged.help = false;
+    if (typeof merged.ap !== 'number' || merged.ap < 0 || merged.ap > 4) merged.ap = 4;
+    return merged;
   }catch(e){ return null; }
 }
 function clearSave(){ try{ localStorage.removeItem(SAVE_KEY); }catch(e){} }
@@ -1267,7 +1314,7 @@ function render(){
   app.innerHTML = `
   <header class="head">
     <h1>北宋赶考记<small>嘉祐二年 · 丁酉 · 临川举子赴京应省试</small></h1>
-    ${S.phase === 'over' ? '' : `<div class="meta">第 ${S.day} 日 / 30 · ${dateLabel(S.day)}<br><button data-act="help">凡例</button> · <button data-act="glossIndex">词条</button> · <button data-act="restart">重开</button></div>`}
+    ${S.phase === 'over' ? '' : `<div class="meta"><span class="meta-date">第 ${S.day} 日 / 30 · ${dateLabel(S.day)}</span><span class="meta-acts"><button data-act="help" aria-label="打开凡例">凡例</button><button data-act="glossIndex" aria-label="打开词条索引">词条</button><button data-act="restart" aria-label="重新开始">重开</button></span></div>`}
     <img class="scroll${scrollPlayed ? '' : ' unroll'}" src="data:image/jpeg;base64,__SCROLL_IMG__" alt="赴京应试 · 画轴" title="赴京应试">
   </header>
   <div class="main"${S.phase === 'over' ? ' style="grid-template-columns:1fr"' : ''}>
@@ -1314,7 +1361,7 @@ function renderTitle(){
       <div class="rules">
         <div class="rules-h">规则速览</div>
         <ul>
-          <li><b>每天 4 点行动</b>：温书、歇息、交游各占 1 点；温书会抽一道题，答对再加智力。</li>
+          <li><b>每天 4 点行动</b>：温书、歇息、交游各占 1 点；温书会抽一道题，答对再加智力。答错的题进「错题本」，下次温书优先重练。</li>
           <li><b>入夜结算</b>：当天没做的那一类事，对应属性 -1。任一项归零，旅程即止（智力→胸无点墨、精力→病卧逆旅、人缘→孤身无援）。</li>
           <li><b>赶路日</b>（山道、汴河）行动点只有 2 点，必有一样要放下。</li>
           <li><b>到汴京后</b>入贡院：省试三场共 15 题，再殿试 3 题，按正确率与三项属性定等第。</li>
@@ -1483,7 +1530,7 @@ function renderOverlay(){
     });
     html = `<div class="overlay" id="overlay"><div class="sheet">
       <div class="stamp">词</div>
-      <div class="qtag">词条</div>
+      <div class="qtag">词条 · ${g.tag === '据' ? '原文可据' : g.tag === '设' ? '游戏设定' : '据书转述'}</div>
       <h3>${esc(S.gloss)}</h3>
       <p class="scene-desc" style="font-size:17.5px; line-height:2">${esc(g.def)}</p>
       ${srcHtml}
@@ -1598,6 +1645,14 @@ function renderOverlay(){
     document.body.insertAdjacentHTML('beforeend', html);
     const ov = document.getElementById('overlay');
     if (ov && ov.querySelectorAll) annotateTerms(ov);
+    if (ov){
+      if (ov.setAttribute){
+        ov.setAttribute('role', 'dialog');
+        ov.setAttribute('aria-modal', 'true');
+      }
+      const first = ov.querySelector ? ov.querySelector('button:not(:disabled)') : null;
+      if (first && first.focus){ try { first.focus({ preventScroll: true }); } catch(e){} }
+    }
   }
 }
 
@@ -1662,6 +1717,13 @@ function handleClick(ev){
 
 function bindEvents(){
   document.addEventListener('click', handleClick);
+  // Esc 只关"可放弃"的说明层；题目、事件、诗笺、短笺必须做出选择
+  document.addEventListener('keydown', function(ev){
+    if (ev.key !== 'Escape') return;
+    if (S.help){ S.help = false; render(); ev.preventDefault(); return; }
+    if (S.gloss){ S.gloss = null; render(); ev.preventDefault(); return; }
+    if (S.glossIndex){ S.glossIndex = false; render(); ev.preventDefault(); return; }
+  });
 }
 
 /* ============================ 启动 ============================ */

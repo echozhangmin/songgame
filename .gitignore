@@ -2,3 +2,22 @@
 snap-*.html
 _site/
 .DS_Store
+
+# Godot 导入缓存
+godot/.godot/
+
+# 前端测试与构建产物
+node_modules/
+test-results/
+playwright-report/
+dist/
+
+# 本地 npm 缓存（避免 ~/.npm 权限问题）
+.npm-cache/
+.venv/
+
+# 浏览器检查截图
+artifacts/
+
+# Playwright MCP 探索快照（工作产物）
+.playwright-mcp/
